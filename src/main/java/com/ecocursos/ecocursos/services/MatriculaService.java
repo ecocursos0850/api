@@ -362,15 +362,15 @@ public class MatriculaService {
             condicao = " AND ";
         }
         if (ano != null) {
-            query += condicao + " YEAR(m.dataMatricula) = :ano";
+            query += condicao + " YEAR(m.pedido.dataPedido) = :ano";
             condicao = " AND ";
         }
         if (mes != null) {
-            query += condicao + " MONTH(m.dataMatricula) = :mes";
+            query += condicao + " MONTH(m.pedido.dataPedido) = :mes";
             condicao = " AND ";
         }
         if (mes == null && ano == null) {
-            query += " AND MONTH(m.dataMatricula) = :mes AND YEAR(m.dataMatricula) = :year";
+            query += " AND MONTH(m.pedido.dataPedido) = :mes AND YEAR(m.pedido.dataPedido) = :year";
         }
         System.out.println(query);
         var q = entityManager.createQuery(query, Matricula.class);
