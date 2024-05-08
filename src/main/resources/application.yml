@@ -1,0 +1,53 @@
+spring:
+  task:
+    scheduling:
+      pool:
+        size: 5
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ecocursos
+    url: jdbc:mysql://195.35.40.252:3306/ecocursos_hmg?zeroDateTimeBehavior=convertToNull&&serverTimezone=UTC&useLegacyDatetimeCode=false
+    password: T3k#T3f8
+  jpa:
+    generate-ddl: true
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+    database: MYSQL
+    databasePlatform: org.hibernate.dialect.MySQLDialect
+  main:
+    allow-circular-references: true
+  jackson:
+    default-property-inclusion: non-null
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: cerickandrade@gmail.com
+    password: zykevfixgfbyxaaq
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+application:
+  security:
+    jwt:
+      secret-key: '404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970'
+      expiration: '640800000'
+      refresh-token:
+        expiration: '604800000'
+server:
+  port: 8080
+#  ssl:
+#    certificate: /etc/ssl/certificate.crt  
+#    certificatePrivateKey: /etc/ssl/private/private.key
+#    trustCertificate: /etc/ssl/ca_bundle.crt
+
