@@ -3,6 +3,7 @@ package com.ecocursos.ecocursos.controllers;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.UUID;
 import java.util.List;
 
 import lombok.SneakyThrows;
@@ -51,13 +52,26 @@ public class MaterialCursoController {
     @SneakyThrows
     @PostMapping("{id}/upload")
     public ResponseEntity<Void> upload(@PathVariable Integer id, @RequestParam("file") MultipartFile file) {
-        byte[] bytes = file.getBytes();
-        Path path = Paths.get("/var/www/html/Materiais/" + file.getOriginalFilename());
-        Files.write(path, bytes);
-        MaterialCurso materialCurso = service.listarById(id);
-        materialCurso.setLink(file.getOriginalFilename());
-        service.salvar(materialCurso);
-        return ResponseEntity.noContent().build();
+        try {
+            byte[] bytes = file.getBytes();
+            String originalFilename = file.getOriginalFilename();
+            String fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
+            
+            // Gerando um nome de arquivo único usando UUID
+            String randomFileName = UUID.randomUUID().toString().replace("-", "") + fileExtension;
+            
+            Path path = Paths.get("/var/www/html/Materiais/" + randomFileName);
+            Files.write(path, bytes);
+            
+            MaterialCurso materialCurso = service.listarById(id);
+            materialCurso.setLink(randomFileName);
+            service.salvar(materialCurso);
+            
+            return ResponseEntity.noContent().build();
+        } catch (IOException e) {
+            // Tratar exceção de IO, se necessário
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @DeleteMapping("{id}")
