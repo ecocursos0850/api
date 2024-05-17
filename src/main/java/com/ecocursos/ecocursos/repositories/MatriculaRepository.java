@@ -31,15 +31,15 @@ public interface MatriculaRepository extends JpaRepository<Matricula, Integer> {
     @Query("SELECT COUNT(m) FROM Matricula m WHERE m.status = 4")
     Integer totalMatriculasLiberadoParceiro();
 
-    @Query("SELECT COUNT(m) FROM Matricula m WHERE MONTH(m.dataMatricula) = :month AND m.afiliado = :afiliado")
-    Integer matriculaMesAfiliado(@Param(("month")) Integer month, @Param("afiliado") Afiliado afiliado);
+    @Query("SELECT COUNT(m) FROM Matricula m WHERE MONTH(m.dataMatricula) = :month AND YEAR(m.dataMatricula) = :year AND m.afiliado = :afiliado")
+    Integer matriculaMesAfiliado(@Param(("month")) Integer month, @Param(("year")) Integer year, @Param("afiliado") Afiliado afiliado);
 
-    @Query("SELECT COUNT(m) FROM Matricula m WHERE MONTH(m.dataMatricula) = :month AND m.afiliado = :afiliado AND m.curso.tipoCurso = 0")
-    Integer matriculaMesAfiliadoCursoLivre(@Param(("month")) Integer month, @Param("afiliado") Afiliado afiliado);
+    @Query("SELECT COUNT(m) FROM Matricula m WHERE MONTH(m.dataMatricula) = :month AND YEAR(m.dataMatricula) =:year AND m.afiliado = :afiliado AND m.curso.tipoCurso = 0")
+    Integer matriculaMesAfiliadoCursoLivre(@Param(("month")) Integer month, @Param(("year")) Integer year, @Param("afiliado") Afiliado afiliado);
 
 
-    @Query("SELECT COUNT(m) FROM Matricula m WHERE MONTH(m.dataMatricula) = :month AND m.afiliado = :afiliado AND m.curso.categoria.titulo = 'PÓS-GRADUAÇÃO / MBA'")
-    Integer matriculaMesAfiliadoPosGraduacao(@Param(("month")) Integer month, @Param("afiliado") Afiliado afiliado);
+    @Query("SELECT COUNT(m) FROM Matricula m WHERE MONTH(m.dataMatricula) = :month AND YEAR(m.dataMatricula) =:year  AND m.afiliado = :afiliado AND m.curso.categoria.titulo = 'PÓS-GRADUAÇÃO / MBA'")
+    Integer matriculaMesAfiliadoPosGraduacao(@Param(("month")) Integer month, @Param(("year")) Integer year, @Param("afiliado") Afiliado afiliado);
 //    @Query("SELECT m.curso, COUNT(m) as quantidadeMatriculas FROM Matricula m GROUP BY m.curso ORDER BY quantidadeMatriculas DESC")
 
     @Query("SELECT m.curso, COUNT(m) as quantidadeMatriculas " +
