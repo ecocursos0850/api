@@ -400,8 +400,8 @@ public class MatriculaService {
         for (Integer mes : mesesNumericos ) {
             MatriculaMes matriculaMes = new MatriculaMes();
             matriculaMes.setMes(mes);
-            matriculaMes.setTotal(repository.matriculaMesAfiliadoCursoLivre(mes, afiliadoService.listarById(afiliado)));
-            matriculaMes.setTotalCursoLivre(repository.matriculaMesAfiliadoPosGraduacao(mes  ,afiliadoService.listarById(afiliado)));
+            matriculaMes.setTotal(repository.matriculaMesAfiliadoCursoLivre(mes, LocalDate.now().getYear(), afiliadoService.listarById(afiliado)));
+            matriculaMes.setTotalCursoLivre(repository.matriculaMesAfiliadoPosGraduacao(mes, LocalDate.now().getYear(), afiliadoService.listarById(afiliado)));
             matriculasMes.add(matriculaMes);
         }
         return matriculasMes;
@@ -435,7 +435,7 @@ public class MatriculaService {
         for (Integer mes : mesesNumericos ) {
             MatriculaMes matriculaMes = new MatriculaMes();
             matriculaMes.setMes(mes);
-            matriculaMes.setTotal(repository.matriculaMesAfiliado(mes, afiliadoService.listarById(afiliado)));
+            matriculaMes.setTotal(repository.matriculaMesAfiliado(mes, LocalDate.now().getYear(), afiliadoService.listarById(afiliado)));
             matriculasMes.add(matriculaMes);
         }
         return matriculasMes;
