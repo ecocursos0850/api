@@ -31,11 +31,12 @@ public class PedidoPosGraduacaoPortalService {
     }
 
     private void enviarEmail(PedidoPosGraduacaoPortal pedidoPosGraduacaoPortal) {
-        String mensagem = "Seus dados de acesso são:\n" +
-                "Usuario: " + pedidoPosGraduacaoPortal.getLogin() + "\n" +
-                "Senha:" + pedidoPosGraduacaoPortal.getSenha();
+        String assunto = "🎓🚀 Acesso à Pós-graduação! Vem por aqui!";
+        String destinatario = pedidoPosGraduacaoPortal.getPedido().getAluno().getEmail();
+        String login = pedidoPosGraduacaoPortal.getLogin();
+        String senha = pedidoPosGraduacaoPortal.getSenha();
         EmailUtil sender = new EmailUtil();
-        sender.sender("Dados de acesso", mensagem, pedidoPosGraduacaoPortal.getPedido().getAluno().getEmail(), "cerickandrade@gmail.com");
+        sender.requestPostgraduate(assunto, login, senha, destinatario);
     }
 
 }
