@@ -378,7 +378,14 @@ public class AlunoService {
                 try {
                     log.info("Enviando email para aluno: " + x.getNome());
                     CupomDesconto cupomDesconto = cupomDescontoService.gerarCupomDescontoAniversario(x);
-                    sender.sender("Feliz aniversario, temos um presente para você", "Parabéns pelo aniversário e para comemorar essa data, estamos lhe oferecendo um cupom de desconto:" + cupomDesconto.getCodigo(), x.getEmail(), "cerickandrade@gmail.com");
+                    if(x.getEmail() == "angelolefundes@yahoo.com.br"){
+                        String assunto = "🎁 " + x.getNome() + ", Ecocursos quer te dar um presente!";
+                        String destinatario = x.getEmail(); 
+                        String nome = x.getNome();
+                        String presente = cupomDesconto.getCodigo();
+                        sender.happyBirthday(assunto, presente, nome, destinatario);
+                    }
+                    //sender.sender("Feliz aniversario, temos um presente para você", "Parabéns pelo aniversário e para comemorar essa data, estamos lhe oferecendo um cupom de desconto:" + cupomDesconto.getCodigo(), x.getEmail(), "cerickandrade@gmail.com");
                     x.setEmailAniversario(true);
                     repository.save(x);
                 } catch (Exception e) {
@@ -461,11 +468,10 @@ public class AlunoService {
                 // Enviar e-mail de recuperação de senha
                 EmailUtil sender = new EmailUtil();
                 String assunto = "Recuperação de Senha";
-                String mensagem = "Sua nova senha é: " + novaSenha;
                 String destinatario = aluno.getEmail(); 
                 String nome = aluno.getNome();
 
-                sender.sendEmailByApi(assunto, mensagem, novaSenha, nome, destinatario);
+                sender.resetPassword(assunto, novaSenha, nome, destinatario);
 
 
             } else {
