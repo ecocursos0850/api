@@ -26,7 +26,7 @@ public class EmailUtil {
         javaMailSender.send(message);
     }
 
-    public String resetPassword(String assunto ,String mensagem, String novaSenha, String nome, String destinatario) {
+    public String resetPassword(String assunto, String novaSenha, String nome, String destinatario) {
         try {
             // Construa a URL do endpoint
             URL url = new URL("https://srv448021.hstgr.cloud/php_api/email/resetPassword");
