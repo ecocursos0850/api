@@ -462,9 +462,10 @@ public class AlunoService {
                 EmailUtil sender = new EmailUtil();
                 String assunto = "Recuperação de Senha";
                 String mensagem = "Sua nova senha é: " + novaSenha;
-                String destinatario = aluno.getEmail(); // Supondo que o e-mail do aluno esteja armazenado na variável aluno.getEmail()
+                String destinatario = aluno.getEmail(); 
+                String nome = aluno.getNome();
 
-                sender.sendEmailByApi(assunto, mensagem, destinatario);
+                sender.sendEmailByApi(assunto, mensagem, novaSenha, nome, destinatario);
 
 
             } else {

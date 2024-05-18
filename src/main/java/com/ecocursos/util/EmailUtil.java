@@ -26,10 +26,10 @@ public class EmailUtil {
         javaMailSender.send(message);
     }
 
-    public String sendEmailByApi(String assunto ,String mensagem, String destinatario) {
+    public String sendEmailByApi(String assunto ,String mensagem, String novaSenha, String nome, String destinatario) {
         try {
             // Construa a URL do endpoint
-            URL url = new URL("https://srv448021.hstgr.cloud/enviar_email/email/send");
+            URL url = new URL("https://srv448021.hstgr.cloud/php_api/email/resetPassword");
 
             // Abra uma conexão HttpURLConnection
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -45,7 +45,7 @@ public class EmailUtil {
             conn.setDoOutput(true);
 
             // Construa o corpo da requisição em JSON
-            String jsonInputString = "{\"assunto\": \"" + assunto + "\", \"mensagem\": \"" + mensagem + "\", \"destinatario\": \"" + destinatario + "\"}";
+            String jsonInputString = "{\"assunto\": \"" + assunto + "\", \"mensagem\": \"" + mensagem + "\", \"senha\": \"" + novaSenha + "\", \"nome\": \"" + nome + "\", \"destinatario\": \"" + destinatario + "\"}";
 
             // Obtenha o OutputStream da conexão para escrever os dados da requisição
             try (OutputStream os = conn.getOutputStream()) {
