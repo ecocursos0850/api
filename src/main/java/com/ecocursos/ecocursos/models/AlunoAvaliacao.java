@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 public class AlunoAvaliacao {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTIDENTITYO)
     private Integer id;
 
     @ManyToOne
