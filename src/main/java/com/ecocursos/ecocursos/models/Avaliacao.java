@@ -16,6 +16,7 @@ import lombok.Data;
 public class Avaliacao {
     
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String titulo;
