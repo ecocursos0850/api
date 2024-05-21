@@ -31,7 +31,7 @@ public interface MatriculaRepository extends JpaRepository<Matricula, Integer> {
     @Query("SELECT COUNT(m) FROM Matricula m WHERE m.status = 4")
     Integer totalMatriculasLiberadoParceiro();
 
-    @Query("SELECT COUNT(m) FROM Matricula m WHERE MONTH(m.dataMatricula) = :month AND YEAR(m.dataMatricula) = :year AND m.afiliado = :afiliado AND m.pedido.status = 1 AND m.valorCurso != '0.0'")
+    @Query("SELECT COUNT(m) FROM Matricula m WHERE MONTH(m.pedido.dataPedido) = :month AND YEAR(m.pedido.dataPedido) = :year AND m.afiliado = :afiliado AND m.pedido.status = 1 AND m.valorCurso != '0.0'")
     Integer matriculaMesAfiliado(@Param(("month")) Integer month, @Param(("year")) Integer year, @Param("afiliado") Afiliado afiliado);
 
     @Query("SELECT COUNT(m) FROM Matricula m WHERE MONTH(m.dataMatricula) = :month AND YEAR(m.dataMatricula) =:year AND m.afiliado = :afiliado AND m.pedido.status = 1")
