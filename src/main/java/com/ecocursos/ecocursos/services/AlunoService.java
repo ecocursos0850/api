@@ -458,7 +458,7 @@ public class AlunoService {
         try {
             if (alunoRepository.existsByCpf(map.get("cpf")) && alunoRepository.existsByEmail(map.get("email"))) { // Mudança aqui de CPF pra Email
                 Aluno aluno = alunoRepository.findByCpf(map.get("cpf"));
-                String novaSenha = PasswordGenerator.generateRandomPassword(10); // Gerar senha aleatória
+                String novaSenha = PasswordGenerator.generateRandomPassword(5); // Gerar senha aleatória
                 String senhaCriptografada = DigestUtils.md5DigestAsHex(novaSenha.getBytes()); // Criptografar senha usando MD5
 
                 
