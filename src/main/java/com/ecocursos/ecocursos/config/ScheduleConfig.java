@@ -29,7 +29,7 @@ public class ScheduleConfig {
         pedidoService.atualizarFaturaEmAnalise();
     }
 
-    @Scheduled(cron = "* 16 * * *")
+    @Scheduled(cron = "10 16 * * *")
     private void verificarAniversarioAluno() {
         alunoService.verificarAniversarioAluno();
     }
