@@ -28,7 +28,7 @@ public class AvaliacaoService {
     }
 
     public List<Avaliacao> listarByFilter(String nome, Integer page) {
-        String query = "SELECT a FROM Avaliacao a ";
+        String query = "SELECT DISTINCT a FROM Avaliacao a ";
         String condicao = " WHERE ";
 
         if (nome != null) {
