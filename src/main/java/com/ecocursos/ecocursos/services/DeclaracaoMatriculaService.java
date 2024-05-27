@@ -46,9 +46,9 @@ public class DeclaracaoMatriculaService {
     private final EntityManager entityManager;
     private final CursoService cursoService;
 
-    private static final String BACKGROUND = "https://codetide.com.br/arquivos/bg.png";
-    private static final String ASSINATURA = "https://codetide.com.br/arquivos/assinatura.png";
-    private static final String LOGO = "https://www.ecocursos.com.br/assets/images/Logo1.png";
+    private static final String BACKGROUND = "https://srv448021.hstgr.cloud/arquivos/imgs/bg_certificado.png";
+    private static final String ASSINATURA = "https://srv448021.hstgr.cloud/arquivos/imgs/assinatura.png";
+    private static final String LOGO = "https://srv448021.hstgr.cloud/arquivos/imgs/logo.png";
 
     private void buscarExternos(DeclaracaoMatricula declaracaoMatricula) {
         declaracaoMatricula.setMatricula(matriculaService.listarById(declaracaoMatricula.getMatricula().getId()));
