@@ -17,7 +17,7 @@ import lombok.Data;
 public class AvaliacaoResposta {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String descricao;
     private Integer ordem;
