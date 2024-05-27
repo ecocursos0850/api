@@ -140,14 +140,18 @@ public class DeclaracaoMatriculaService {
     }
 
     public DeclaracaoMatricula salvar(DeclaracaoMatricula declaracaoMatricula) {
-        if(declaracaoMatricula.getStatus() == StatusDeclaracaoMatricula.AGUARDANDO) {
-            declaracaoMatricula.setAprovado(false);
-        } else {
-            declaracaoMatricula.setAprovado(true);
+        try {
+            if(declaracaoMatricula.getStatus() == StatusDeclaracaoMatricula.AGUARDANDO) {
+                declaracaoMatricula.setAprovado(false);
+            } else {
+                declaracaoMatricula.setAprovado(true);
+            }
+            buscarExternos(declaracaoMatricula);
+            declaracaoMatricula.setDataCadastro(LocalDate.now());
+            return repository.save(declaracaoMatricula);
+        } catch(Exception e) {
+            throw new ErrorException(e.getMessage());
         }
-        buscarExternos(declaracaoMatricula);
-        declaracaoMatricula.setDataCadastro(LocalDate.now());
-        return repository.save(declaracaoMatricula);
     }
 
     public DeclaracaoMatricula alterar(Integer id, DeclaracaoMatricula declaracaoMatricula) {
