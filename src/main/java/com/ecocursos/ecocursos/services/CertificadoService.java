@@ -35,9 +35,9 @@ import lombok.SneakyThrows;
 @Service
 public class CertificadoService {
 
-    private static final String BACKGROUND = "https://srv448021.hstgr.cloud/arquivos/bg.png";
-    private static final String ASSINATURA = "https://srv448021.hstgr.cloud/arquivos/assinatura.png";
-    private static final String LOGO = "https://www.ecocursos.com.br/Images/logo.png";
+    private static final String BACKGROUND = "https://srv448021.hstgr.cloud/arquivos/imgs/bg_certificado.png";
+    private static final String ASSINATURA = "https://srv448021.hstgr.cloud/arquivos/imgs/assinatura.png";
+    private static final String LOGO = "https://srv448021.hstgr.cloud/arquivos/imgs/logo.png";
 
     @Autowired
     private CertificadoRepository certificadoRepository;
