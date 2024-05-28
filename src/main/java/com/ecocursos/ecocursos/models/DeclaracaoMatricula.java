@@ -31,7 +31,7 @@ public class DeclaracaoMatricula {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @JsonIncludeProperties({"id"})
+    @JsonIncludeProperties({"id", "nome"})
     @ManyToOne
     @JoinColumn(name = "aluno_id")
     private Aluno aluno;

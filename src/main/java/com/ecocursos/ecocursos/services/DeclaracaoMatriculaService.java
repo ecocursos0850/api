@@ -155,10 +155,15 @@ public class DeclaracaoMatriculaService {
     }
 
     public DeclaracaoMatricula alterar(Integer id, DeclaracaoMatricula declaracaoMatricula) {
-        DeclaracaoMatricula declaracaoMatriculaExistente = listarById(id);
-        declaracaoMatricula.setId(id);
-        declaracaoMatricula.setDataCadastro(declaracaoMatriculaExistente.getDataCadastro());
-        return repository.save(declaracaoMatricula);
+        try {
+            DeclaracaoMatricula declaracaoMatriculaExistente = listarById(id);
+            declaracaoMatricula.setId(id);
+            declaracaoMatricula.setDataCadastro(declaracaoMatriculaExistente.getDataCadastro());
+            declaracaoMatricula.setMatricula(declaracaoMatriculaExistente.getMatricula());
+            return repository.save(declaracaoMatricula);
+        } catch (Exception e) {
+            throw new ErrorException("Erro ao alterar declaração de matrícula");
+        }
     }
 
     public void deletar(Integer id) {
