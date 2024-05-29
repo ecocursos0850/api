@@ -32,7 +32,7 @@ public class AvaliacaoService {
         String condicao = " WHERE ";
 
         if (nome != null) {
-            query += condicao + " a.titulo LIKE CONCAT('%',:nome, '%')";
+            query += condicao + " a.curso.titulo LIKE CONCAT('%',:nome, '%')";
             condicao = " AND ";
         }
         var q = em.createQuery(query, Avaliacao.class);
