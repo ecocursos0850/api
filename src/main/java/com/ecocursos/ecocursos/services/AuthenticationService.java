@@ -108,8 +108,11 @@ public class AuthenticationService {
       var resultUser = em.createQuery(queryUser, User.class);
       resultUser.setParameter("id", obj.getUser().getId());
       User user = (User) resultUser.getSingleResult();
+      String jwt = jwtService.generateToken(user);
+      saveUserToken(user, jwt);
       return AuthenticationResponse.builder()
-            .accessToken(obj.getToken())
+            .accessToken(jwt)
+            .refreshToken(jwtService.generateRefreshToken(user))
             .role(user.getRole())
             .id(user.getIdentificador())
             .idUser(user.getId())
