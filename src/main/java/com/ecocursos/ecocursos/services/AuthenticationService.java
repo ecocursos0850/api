@@ -28,6 +28,7 @@ import com.ecocursos.ecocursos.repositories.TokenRepository;
 import com.ecocursos.ecocursos.repositories.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import jakarta.persistence.EntityManager;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -43,6 +44,7 @@ public class AuthenticationService {
   private final AuthenticationManager authenticationManager;
   private final AlunoService alunoService;
   private final AfiliadoService afiliadoService;
+  private final EntityManager em;
 
   public List<User> listar() {
     return repository.findAll();
@@ -93,7 +95,29 @@ public class AuthenticationService {
               .build();
   }
 
-  public AuthenticationResponse authenticate(AuthenticationRequest request) {
+  public AuthenticationResponse authenticate(AuthenticationRequest request, String token) {
+    if (token != null) {
+      String query = "SELECT t FROM Token t WHERE t.token = :token";
+      var result = em.createQuery(query, Token.class);
+      result.setParameter("token", token);
+      Token obj = (Token) result.getSingleResult();
+      if (obj.isExpired()) {
+        throw new ErrorException("Sessão expirada!");
+      }
+      String queryUser = "SELECT u FROM User u WHERE u.id = :id";
+      var resultUser = em.createQuery(queryUser, User.class);
+      resultUser.setParameter("id", obj.getUser().getId());
+      User user = (User) resultUser.getSingleResult();
+      String jwt = jwtService.generateToken(user);
+      saveUserToken(user, jwt);
+      return AuthenticationResponse.builder()
+            .accessToken(jwt)
+            .refreshToken(jwtService.generateRefreshToken(user))
+            .role(user.getRole())
+            .id(user.getIdentificador())
+            .idUser(user.getId())
+            .build();
+    }
     User exists = repository.findByEmail(request.getEmail()).orElse(null);
     // if(exists == null) {
     //   if(alunoService.existsByEmail(request.getEmail())) {

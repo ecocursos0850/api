@@ -71,6 +71,10 @@ public class AlunoService {
         this.userRepository = userRepository;
     }
 
+    public Aluno listarByEmail(String email) {
+        return alunoRepository.findByEmail(email);
+    }
+
     public List<Aluno> listar() {
         return repository.findAll();
     }

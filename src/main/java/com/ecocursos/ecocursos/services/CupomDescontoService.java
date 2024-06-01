@@ -1,5 +1,6 @@
 package com.ecocursos.ecocursos.services;
 
+import com.ecocursos.ecocursos.exceptions.ErrorException;
 import com.ecocursos.ecocursos.exceptions.ObjectNotFoundException;
 import com.ecocursos.ecocursos.models.Aluno;
 import com.ecocursos.ecocursos.models.CupomDesconto;
@@ -16,6 +17,26 @@ import java.util.List;
 public class CupomDescontoService {
 
     private final CupomDescontoRepository repository;
+
+    private void validarStatus(CupomDesconto cupomDesconto) {
+        try {
+            if (cupomDesconto.getStatus().equals(Status.INATIVO)) {
+                throw new ErrorException("Cupom de desconto está inválido");
+            }
+        } catch(Exception e) {
+            throw new ErrorException(e.getMessage());
+        }
+    }
+
+    private void validarValidade(CupomDesconto cupomDesconto) {
+        try {
+            if (LocalDate.now().isAfter(cupomDesconto.getDataValidade())) {
+                throw new ErrorException("Cumpom de desconto está com a validade vencida");
+            }
+        } catch (Exception e) {
+            throw new ErrorException(e.getMessage());
+        }
+    }
 
     public List<CupomDesconto> listar() {
         return repository.findAll();
@@ -61,6 +82,15 @@ public class CupomDescontoService {
     }
 
     public CupomDesconto findByCodigo(String cupom) {
-        return repository.findByCodigo(cupom).orElseThrow(() -> new ObjectNotFoundException("Cupom de desconto não encontrado"));
+        try {
+            CupomDesconto cupomDesconto = repository.findByCodigo(cupom).orElseThrow(() -> new ObjectNotFoundException("Cupom de desconto não encontrado"));
+            validarValidade(cupomDesconto);
+            validarStatus(cupomDesconto);
+            return cupomDesconto;
+        } catch (Exception e) {
+            throw new ErrorException("Erro ao buscar cupom de desconto por código");
+        }
     }
+
+    
 }
