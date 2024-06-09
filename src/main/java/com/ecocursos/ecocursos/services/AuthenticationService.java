@@ -67,7 +67,16 @@ public class AuthenticationService {
     var savedUser = repository.save(user);
     var jwtToken = jwtService.generateToken(user);
     var refreshToken = jwtService.generateRefreshToken(user);
+
+    // Envio de email informando sobre o registro
+    EmailUtil sender = new EmailUtil();
+    String assunto = "💜😀Bem-vindo à Ecocursos!💜😄";
+    String destinatario = request.getEmail(); 
+    String nome = request.getNome();
+    sender.requestRegister(assunto, nome, destinatario);
+
     saveUserToken(savedUser, jwtToken);
+
     // updateUser(savedUser);
     return AuthenticationResponse.builder()
         .accessToken(jwtToken)
