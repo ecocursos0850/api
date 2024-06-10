@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
+import com.ecocursos.util.EmailUtil;
 
 import com.ecocursos.ecocursos.exceptions.ErrorException;
 import com.ecocursos.ecocursos.exceptions.ObjectNotFoundException;
