@@ -118,10 +118,10 @@ public class EmailUtil {
         }
     }
 
-    public String requestPostgraduate(String assunto, String login, String senha, String destinatario) {
+    public String requestPostGraduate(String assunto, String login, String senha, String destinatario) {
         try {
             // Construa a URL do endpoint
-            URL url = new URL("https://srv448021.hstgr.cloud/php_api/email/requestPostgraduate");
+            URL url = new URL("https://srv448021.hstgr.cloud/php_api/email/requestPostGraduate");
 
             // Abra uma conexão HttpURLConnection
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -164,10 +164,10 @@ public class EmailUtil {
         }
     }
 
-    public String requestRegister(String assunto, String nome, String destinatario) {
+    public String requestPostRegister(String assunto, String nome, String destinatario) {
         try {
             // Construa a URL do endpoint
-            URL url = new URL("https://srv448021.hstgr.cloud/php_api/email/requestRegister");
+            URL url = new URL("https://srv448021.hstgr.cloud/php_api/email/requestPostRegister");
 
             // Abra uma conexão HttpURLConnection
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();

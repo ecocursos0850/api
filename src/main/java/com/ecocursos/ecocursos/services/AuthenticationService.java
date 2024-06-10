@@ -73,7 +73,7 @@ public class AuthenticationService {
     String assunto = "💜😀Bem-vindo à Ecocursos!💜😄";
     String destinatario = request.getEmail(); 
     String nome = request.getNome();
-    sender.requestRegister(assunto, nome, destinatario);
+    sender.requestPostRegister(assunto, nome, destinatario);
 
     saveUserToken(savedUser, jwtToken);
 

@@ -36,7 +36,7 @@ public class PedidoPosGraduacaoPortalService {
         String login = pedidoPosGraduacaoPortal.getLogin();
         String senha = pedidoPosGraduacaoPortal.getSenha();
         EmailUtil sender = new EmailUtil();
-        sender.requestPostgraduate(assunto, login, senha, destinatario);
+        sender.requestPostGraduate(assunto, login, senha, destinatario);
     }
 
 }
