@@ -74,7 +74,7 @@ public class CertificadoService {
     public void salvarByMatricula(Matricula matricula) {
         Certificado certificado = new Certificado();
         certificado.setMatricula(matricula);
-        certificado.setDataCadastro(LocalDateTime.now().plusHours(9));
+        certificado.setDataCadastro(LocalDateTime.now());
         certificadoRepository.save(certificado);
     }
 
