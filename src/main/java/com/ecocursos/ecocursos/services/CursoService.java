@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.ecocursos.ecocursos.exceptions.ErrorException;
 import com.ecocursos.ecocursos.models.Categoria;
 import com.ecocursos.ecocursos.models.Curso;
 import com.ecocursos.ecocursos.models.SubCategoria;
@@ -118,9 +119,7 @@ public class CursoService {
 
 
     public Curso listarById(Integer id) {
-        Curso curso = repository.findById(id).get();
-//        curso.setMateriais(materialCursoRepository.findAllByCurso(curso));
-        return repository.findById(id).orElse(null);
+        return repository.findById(id).orElseThrow(() -> new ErrorException("Erro ao buscar curso"));
     }
 
     public Curso salvar(Curso curso) {

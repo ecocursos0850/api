@@ -178,6 +178,12 @@ public class MatriculaController {
         return ResponseEntity.ok().body(service.atualizarDataMatricula(id, dataMatricula));
     }
 
+    @PutMapping("{id}/alterar/curso/{idCurso}")
+    public ResponseEntity<Void> atualizarMatriculaCurso(@PathVariable Integer id, @PathVariable Integer idCurso) {
+        service.alterarCurso(id, idCurso);
+        return ResponseEntity.noContent().build();
+    }
+
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deletar(@PathVariable Integer id) {
         service.deletar(id);
