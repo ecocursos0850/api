@@ -178,9 +178,9 @@ public class MatriculaController {
         return ResponseEntity.ok().body(service.atualizarDataMatricula(id, dataMatricula));
     }
 
-    @PutMapping("{id}/alterar/curso/{idCurso}")
-    public ResponseEntity<Void> atualizarMatriculaCurso(@PathVariable Integer id, @PathVariable Integer idCurso) {
-        service.alterarCurso(id, idCurso);
+    @PutMapping("{id}/alterar/curso/{idCurso}/usuario/{idUsuario}")
+    public ResponseEntity<Void> atualizarMatriculaCurso(@PathVariable Integer id, @PathVariable Integer idCurso, @PathVariable Integer idUsuario) {
+        service.alterarCurso(id, idCurso, idUsuario);
         return ResponseEntity.noContent().build();
     }
 
