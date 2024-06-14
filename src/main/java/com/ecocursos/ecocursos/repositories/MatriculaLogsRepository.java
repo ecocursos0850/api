@@ -9,6 +9,6 @@ import com.ecocursos.ecocursos.models.MatriculaLogs;
 
 public interface MatriculaLogsRepository extends JpaRepository<MatriculaLogs, Integer> {
  
-    List<MatriculaLogs> listarByMatricula(Matricula matricula);
+    List<MatriculaLogs> findAllByMatricula(Matricula matricula);
 
 }
