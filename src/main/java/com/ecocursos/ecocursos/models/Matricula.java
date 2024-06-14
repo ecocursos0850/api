@@ -92,6 +92,10 @@ public class Matricula {
     @OneToOne
     private Certificado certificado;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "matricula")
+    private List<MatriculaLogs> logs;
+
     public Matricula() {
         this.dataMatricula = LocalDateTime.now();
     }
