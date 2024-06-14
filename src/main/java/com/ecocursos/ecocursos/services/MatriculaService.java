@@ -7,24 +7,35 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import com.ecocursos.ecocursos.models.*;
-import com.ecocursos.ecocursos.models.dtos.MatriculaMes;
-import com.ecocursos.ecocursos.models.enums.*;
-import com.ecocursos.ecocursos.repositories.AlunoAvaliacaoRepository;
-
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.Query;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.ecocursos.ecocursos.exceptions.ErrorException;
+import com.ecocursos.ecocursos.models.Afiliado;
+import com.ecocursos.ecocursos.models.Aluno;
+import com.ecocursos.ecocursos.models.AlunoAvaliacao;
+import com.ecocursos.ecocursos.models.Curso;
+import com.ecocursos.ecocursos.models.EntradaCaixa;
+import com.ecocursos.ecocursos.models.Matricula;
+import com.ecocursos.ecocursos.models.MatriculaLogs;
+import com.ecocursos.ecocursos.models.Pedido;
+import com.ecocursos.ecocursos.models.User;
+import com.ecocursos.ecocursos.models.dtos.MatriculaMes;
+import com.ecocursos.ecocursos.models.enums.StatusAvaliacaoMatricula;
+import com.ecocursos.ecocursos.models.enums.StatusPedido;
+import com.ecocursos.ecocursos.models.enums.TipoCurso;
+import com.ecocursos.ecocursos.models.enums.TipoEntradaCaixa;
+import com.ecocursos.ecocursos.models.enums.TipoPagamento;
 import com.ecocursos.ecocursos.repositories.AfiliadoRepository;
+import com.ecocursos.ecocursos.repositories.AlunoAvaliacaoRepository;
 import com.ecocursos.ecocursos.repositories.MatriculaRepository;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
+import com.ecocursos.ecocursos.repositories.UserRepository;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 
 @Service
 public class MatriculaService {
@@ -55,6 +66,10 @@ public class MatriculaService {
     private CertificadoService certificadoService;
     @Autowired
     private ParceiroService parceiroService;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private MatriculaLogsService matriculaLogsService;
 
         private void completarCampos(Matricula matricula) {
             if (matricula.getPedido() != null) {
@@ -408,7 +423,7 @@ public class MatriculaService {
     }
 
     public Matricula listarById(Integer id) {
-        return repository.findById(id).orElse(null);
+        return repository.findById(id).orElseThrow(() -> new ErrorException("Não foi possivel encontrar a matrícula"));
     }
 
     public List<Matricula> listarByAluno(Integer id, Integer page) {
@@ -545,5 +560,30 @@ public class MatriculaService {
         }
         matriculaExistente.setNota(alunoAvaliacao.getNota());
         repository.save(matriculaExistente);
+    }
+
+    public void alterarCurso(Integer id, Integer idCurso, Integer idUsuario) {
+        try {
+            Matricula matricula = listarById(id);
+            Curso curso = cursoService.listarById(idCurso);
+            matricula.setCurso(curso);
+            Matricula result = repository.save(matricula);
+            criarMatriculaLogs(idUsuario, result);
+        } catch(Exception e) {
+            throw new ErrorException("Erro ao alterar curso de matrícula");
+        }
+    }
+
+    private void criarMatriculaLogs(Integer id, Matricula result) {
+        if (result != null) {
+            User user = userRepository.findByIdentificador(id);
+            MatriculaLogs matriculaLogs = MatriculaLogs.builder()
+                .data(LocalDate.now())
+                .descricao("Curso alterado pelo usuário: " + user.getFirstname())
+                .matricula(result)
+                .usuario(user)
+                .build();
+            matriculaLogsService.salvar(matriculaLogs);
+        }
     }
 }
