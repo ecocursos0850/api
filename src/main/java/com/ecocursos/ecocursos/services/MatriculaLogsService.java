@@ -23,7 +23,8 @@ public class MatriculaLogsService {
 
     public List<MatriculaLogs> listarByMatricula(Integer idMatricula) {
         try {
-            return repository.findAllByMatricula(matriculaService.listarById(idMatricula));
+            List<MatriculaLogs> list = repository.findAllByMatricula(matriculaService.listarById(idMatricula)); 
+            return list;
         } catch(Exception e) {
             throw new ErrorException("Erro ao listar logs de matrículas por matrícula");
         }

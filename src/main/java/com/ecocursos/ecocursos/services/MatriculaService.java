@@ -577,13 +577,12 @@ public class MatriculaService {
     private void criarMatriculaLogs(Integer id, Matricula result) {
         if (result != null) {
             User user = userRepository.findById(id).get();
-            MatriculaLogs matriculaLogs = MatriculaLogs.builder()
-                .data(LocalDate.now())
-                .descricao("Curso alterado pelo usuário: " + user.getFirstname())
-                .matricula(result)
-                .usuario(user)
-                .build();
-            matriculaLogsService.salvar(matriculaLogs);
+            MatriculaLogs log = new MatriculaLogs();
+            log.setData(LocalDate.now());
+            log.setDescricao("Curso alterado pelo usuário: " + user.getFirstname());
+            log.setMatricula(result);
+            log.setUsuario(user);
+            matriculaLogsService.salvar(log);
         }
     }
 }
