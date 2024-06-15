@@ -576,7 +576,7 @@ public class MatriculaService {
 
     private void criarMatriculaLogs(Integer id, Matricula result) {
         if (result != null) {
-            User user = userRepository.findByIdentificador(id);
+            User user = userRepository.findById(id).get();
             MatriculaLogs matriculaLogs = MatriculaLogs.builder()
                 .data(LocalDate.now())
                 .descricao("Curso alterado pelo usuário: " + user.getFirstname())
