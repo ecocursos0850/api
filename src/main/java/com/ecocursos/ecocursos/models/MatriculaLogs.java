@@ -2,7 +2,6 @@ package com.ecocursos.ecocursos.models;
 
 import java.time.LocalDate;
 
-import com.azure.core.annotation.Generated;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 
@@ -14,14 +13,11 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "matricula_logs")
 @Data
-@Builder
 public class MatriculaLogs {
 
     @Id
@@ -42,5 +38,7 @@ public class MatriculaLogs {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd")
     private LocalDate data;
+
+    public MatriculaLogs() {}
     
 }

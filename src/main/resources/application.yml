@@ -10,7 +10,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: ecocursos
-    url: jdbc:mysql://195.35.40.252:3306/ecocursos_hmg?zeroDateTimeBehavior=convertToNull&&serverTimezone=UTC&useLegacyDatetimeCode=false
+    url: jdbc:mysql://195.35.40.252:3306/ecocursos?zeroDateTimeBehavior=convertToNull&&serverTimezone=UTC&useLegacyDatetimeCode=false
     password: T3k#T3f8
   jpa:
     generate-ddl: true
