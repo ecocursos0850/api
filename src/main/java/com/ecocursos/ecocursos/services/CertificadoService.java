@@ -16,8 +16,10 @@ import com.ecocursos.ecocursos.exceptions.ObjectNotFoundException;
 import com.ecocursos.ecocursos.models.Certificado;
 import com.ecocursos.ecocursos.models.DeclaracaoMatricula;
 import com.ecocursos.ecocursos.models.Matricula;
+import com.ecocursos.ecocursos.models.MatriculaLogs;
 import com.ecocursos.ecocursos.models.enums.StatusDeclaracaoMatricula;
 import com.ecocursos.ecocursos.repositories.CertificadoRepository;
+import com.ecocursos.ecocursos.repositories.UserRepository;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
@@ -51,6 +53,12 @@ public class CertificadoService {
     @Autowired
     private MatriculaService matriculaService;
 
+    @Autowired
+    private MatriculaLogsService matriculaLogsService;
+
+    @Autowired
+    private UserRepository userRepository;
+
     public List<Certificado> listar() {
         return certificadoRepository.findAll();
     }
@@ -71,11 +79,21 @@ public class CertificadoService {
         return certificadoRepository.findByMatricula(matriculaService.listarById(id));
     }
 
-    public void salvarByMatricula(Matricula matricula) {
+    public void salvarByMatricula(Matricula matricula, Integer idUsuario) {
         Certificado certificado = new Certificado();
         certificado.setMatricula(matricula);
         certificado.setDataCadastro(LocalDateTime.now());
         certificadoRepository.save(certificado);
+        criarMatriculaLogs(matricula, idUsuario);
+    }
+ 
+    private void criarMatriculaLogs(Matricula matricula, Integer idUsuario) {
+        MatriculaLogs logs = new MatriculaLogs();
+        logs.setData(LocalDate.now());
+        logs.setDescricao("Certificado gerado");
+        logs.setMatricula(matricula);
+        logs.setUsuario(userRepository.findById(idUsuario).get());
+        matriculaLogsService.salvar(logs);
     }
 
     @SneakyThrows

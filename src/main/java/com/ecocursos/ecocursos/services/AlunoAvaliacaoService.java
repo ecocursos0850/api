@@ -53,7 +53,7 @@ public class AlunoAvaliacaoService {
         return repository.findByMatricula(matriculaService.listarById(id));
     }
 
-    public AlunoAvaliacao alterarByMatricula(Integer id, AlunoAvaliacao alunoAvaliacao) {
+    public AlunoAvaliacao alterarByMatricula(Integer id, AlunoAvaliacao alunoAvaliacao, Integer idUsuario) {
         Matricula matricula = matriculaService.listarById(id);
         AlunoAvaliacao alunoEncontradoByMatricula = listarByMatricula(id);
         alunoAvaliacao.setId(alunoEncontradoByMatricula.getId());
@@ -62,7 +62,7 @@ public class AlunoAvaliacaoService {
         alunoAvaliacao.setDataLimite(alunoEncontradoByMatricula.getDataLimite());
         if(alunoAvaliacao.isAprovado()) {
             matricula.setStatus(StatusAvaliacaoMatricula.APROVADO);
-            certificadoService.salvarByMatricula(matricula);
+            certificadoService.salvarByMatricula(matricula, idUsuario);
             alunoAvaliacao.setFinalizada(true);
         } else {
             matricula.setStatus(StatusAvaliacaoMatricula.REPROVADO);

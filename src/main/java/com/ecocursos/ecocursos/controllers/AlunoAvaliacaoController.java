@@ -34,8 +34,8 @@ public class AlunoAvaliacaoController {
     }
 
     @PutMapping("matricula/{id}")
-    public ResponseEntity<AlunoAvaliacao> alterarByMatricula(@PathVariable Integer id, @RequestBody AlunoAvaliacao  alunoAvaliacao) {
-        return ResponseEntity.ok().body(service.alterarByMatricula(id, alunoAvaliacao));
+    public ResponseEntity<AlunoAvaliacao> alterarByMatricula(@PathVariable Integer id, @RequestBody AlunoAvaliacao  alunoAvaliacao, @RequestParam(name = "usuario") Integer idUsuario) {
+        return ResponseEntity.ok().body(service.alterarByMatricula(id, alunoAvaliacao, idUsuario));
     }
 
     @PostMapping

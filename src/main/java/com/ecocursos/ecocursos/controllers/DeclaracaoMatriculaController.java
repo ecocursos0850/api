@@ -84,20 +84,20 @@ public class DeclaracaoMatriculaController {
     }
 
     @PostMapping
-    public ResponseEntity<DeclaracaoMatricula> salvar(@RequestBody DeclaracaoMatricula declaracaoMatricula) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.salvar(declaracaoMatricula));
+    public ResponseEntity<DeclaracaoMatricula> salvar(@RequestBody DeclaracaoMatricula declaracaoMatricula, @RequestParam(name = "usuario") Integer idUsuario) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.salvar(declaracaoMatricula, idUsuario));
     }
 
     @SneakyThrows
     @PostMapping("{id}/upload")
-    public ResponseEntity<Void> upload(@PathVariable Integer id, @RequestParam("file") MultipartFile file) {
+    public ResponseEntity<Void> upload(@PathVariable Integer id, @RequestParam("file") MultipartFile file, @RequestParam(name = "usuario") Integer idUsuario) {
         byte[] bytes = file.getBytes();
         Path path = Paths.get("/var/www/html/Declaracao/" + file.getOriginalFilename());
         Files.write(path, bytes);
 
         DeclaracaoMatricula declaracaoMatricula = service.listarById(id);
         declaracaoMatricula.setAnexoComprovante(file.getOriginalFilename());
-        service.salvar(declaracaoMatricula);
+        service.salvar(declaracaoMatricula, idUsuario);
         return ResponseEntity.noContent().build();
     }
 

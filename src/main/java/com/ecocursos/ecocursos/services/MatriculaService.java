@@ -549,17 +549,17 @@ public class MatriculaService {
         return repository.listarByMes(LocalDateTime.now().getMonthValue(), LocalDateTime.now().getYear(), pageable);
     }
 
-    public void finalizarAvaliacao(AlunoAvaliacao alunoAvaliacao, Integer matricula) {
+    public void finalizarAvaliacao(AlunoAvaliacao alunoAvaliacao, Integer matricula, Integer idUsuario) {
         Matricula matriculaExistente = listarById(matricula);
         matriculaExistente.setAcertos(alunoAvaliacao.getAcertos());
         if (alunoAvaliacao.isAprovado()) {
-            certificadoService.salvarByMatricula(matriculaExistente);
+            certificadoService.salvarByMatricula(matriculaExistente, idUsuario);
             matriculaExistente.setStatus(StatusAvaliacaoMatricula.APROVADO);
         } else {
             matriculaExistente.setStatus(StatusAvaliacaoMatricula.REPROVADO);
         }
         matriculaExistente.setNota(alunoAvaliacao.getNota());
-        repository.save(matriculaExistente);
+        Matricula result = repository.save(matriculaExistente);
     }
 
     public void alterarCurso(Integer id, Integer idCurso, Integer idUsuario) {
