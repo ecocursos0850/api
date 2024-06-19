@@ -16,8 +16,10 @@ import org.springframework.stereotype.Service;
 
 import com.ecocursos.ecocursos.exceptions.ObjectNotFoundException;
 import com.ecocursos.ecocursos.models.DeclaracaoMatricula;
+import com.ecocursos.ecocursos.models.MatriculaLogs;
 import com.ecocursos.ecocursos.models.enums.StatusDeclaracaoMatricula;
 import com.ecocursos.ecocursos.repositories.DeclaracaoMatriculaRepository;
+import com.ecocursos.ecocursos.repositories.UserRepository;
 import com.itextpdf.html2pdf.ConverterProperties;
 import com.itextpdf.html2pdf.HtmlConverter;
 import com.itextpdf.layout.property.UnitValue;
@@ -45,6 +47,8 @@ public class DeclaracaoMatriculaService {
     private final MatriculaService matriculaService;
     private final EntityManager entityManager;
     private final CursoService cursoService;
+    private final MatriculaLogsService matriculaLogsService;
+    private final UserRepository userRepository;
 
     private static final String BACKGROUND = "https://srv448021.hstgr.cloud/arquivos/imgs/bg_certificado.png";
     private static final String ASSINATURA = "https://srv448021.hstgr.cloud/arquivos/imgs/assinatura.png";
@@ -139,7 +143,7 @@ public class DeclaracaoMatriculaService {
         return repository.findAllByAluno(alunoService.listarById(id));
     }
 
-    public DeclaracaoMatricula salvar(DeclaracaoMatricula declaracaoMatricula) {
+    public DeclaracaoMatricula salvar(DeclaracaoMatricula declaracaoMatricula, Integer idUsuario) {
         try {
             if(declaracaoMatricula.getStatus() == StatusDeclaracaoMatricula.AGUARDANDO) {
                 declaracaoMatricula.setAprovado(false);
@@ -148,10 +152,20 @@ public class DeclaracaoMatriculaService {
             }
             buscarExternos(declaracaoMatricula);
             declaracaoMatricula.setDataCadastro(LocalDate.now());
+            criarMatriculaLogs(declaracaoMatricula, idUsuario);
             return repository.save(declaracaoMatricula);
         } catch(Exception e) {
             throw new ErrorException(e.getMessage());
         }
+    }
+
+    private void criarMatriculaLogs(DeclaracaoMatricula declaracaoMatricula, Integer idUsuario) {
+        MatriculaLogs logs = new MatriculaLogs();
+        logs.setData(LocalDate.now());
+        logs.setDescricao("Usuário solicitou declaração");
+        logs.setMatricula(declaracaoMatricula.getMatricula());
+        logs.setUsuario(userRepository.findById(idUsuario).get());
+        matriculaLogsService.salvar(logs);
     }
 
     public DeclaracaoMatricula alterar(Integer id, DeclaracaoMatricula declaracaoMatricula) {

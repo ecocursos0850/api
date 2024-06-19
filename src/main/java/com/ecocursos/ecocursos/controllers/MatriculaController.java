@@ -153,8 +153,8 @@ public class MatriculaController {
     }
 
     @PostMapping("{id}/finalizar/avaliacao")
-    public ResponseEntity<Void> finalizarAvaliacao(@RequestBody AlunoAvaliacao alunoAvaliacao, @PathVariable Integer id) {
-        service.finalizarAvaliacao(alunoAvaliacao, id);
+    public ResponseEntity<Void> finalizarAvaliacao(@RequestBody AlunoAvaliacao alunoAvaliacao, @PathVariable Integer id, @RequestParam(name = "usuario") Integer idUsuario) {
+        service.finalizarAvaliacao(alunoAvaliacao, id, idUsuario);
         return ResponseEntity.noContent().build();
     }
 
