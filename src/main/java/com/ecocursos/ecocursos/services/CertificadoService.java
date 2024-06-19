@@ -148,8 +148,8 @@ public class CertificadoService {
         title.setSpacingAfter(20f);
         Aluno alunoExistente = alunoService.listarById(matricula.getAluno().getId());
         if (alunoExistente != null) {
-            Parceiro parceiro = parceiroService.listarById(alunoExistente.getParceiro().getId());
-            if (parceiro != null) {
+            if (alunoExistente.getParceiro() != null) {
+                Parceiro parceiro = parceiroService.listarById(alunoExistente.getParceiro().getId());
                 Image logoParceiro = Image.getInstance(parceiro.getLogo(), false);
                 logoParceiro.scaleToFit(100, 350);
                 logoParceiro.setAlignment(Element.ALIGN_RIGHT);
