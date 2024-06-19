@@ -13,10 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ecocursos.ecocursos.exceptions.ObjectNotFoundException;
+import com.ecocursos.ecocursos.models.Aluno;
 import com.ecocursos.ecocursos.models.Certificado;
 import com.ecocursos.ecocursos.models.DeclaracaoMatricula;
 import com.ecocursos.ecocursos.models.Matricula;
 import com.ecocursos.ecocursos.models.MatriculaLogs;
+import com.ecocursos.ecocursos.models.Parceiro;
 import com.ecocursos.ecocursos.models.enums.StatusDeclaracaoMatricula;
 import com.ecocursos.ecocursos.repositories.CertificadoRepository;
 import com.ecocursos.ecocursos.repositories.UserRepository;
@@ -58,6 +60,9 @@ public class CertificadoService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired 
+    private ParceiroService parceiroService;
 
     public List<Certificado> listar() {
         return certificadoRepository.findAll();
@@ -141,6 +146,16 @@ public class CertificadoService {
         cargaHoraria.setAlignment(Element.ALIGN_CENTER);
         cidade.setAlignment(Element.ALIGN_CENTER);
         title.setSpacingAfter(20f);
+        Aluno alunoExistente = alunoService.listarById(matricula.getAluno().getId());
+        if (alunoExistente != null) {
+            Parceiro parceiro = parceiroService.listarById(alunoExistente.getParceiro().getId());
+            if (parceiro != null) {
+                Image logoParceiro = Image.getInstance(parceiro.getLogo(), false);
+                logoParceiro.scaleToFit(100, 350);
+                logoParceiro.setAlignment(Element.ALIGN_RIGHT);
+                paragraphPrincipal.add(logoParceiro);
+            }
+        }
         paragraphPrincipal.add(title);
         paragraphPrincipal.add(content);
         paragraphPrincipal.add(aluno);
@@ -149,6 +164,7 @@ public class CertificadoService {
         paragraphPrincipal.add(cursoNome);
         paragraphPrincipal.add(cargaHoraria);
         paragraphPrincipal.add(cidade);
+        
         document.add(new Chunk().setLineHeight(150f));
         cidade.setSpacingAfter(2f);
         paragraphPrincipal.add(assinatura);
