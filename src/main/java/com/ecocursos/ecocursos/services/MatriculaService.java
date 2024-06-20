@@ -565,6 +565,9 @@ public class MatriculaService {
     public void alterarCurso(Integer id, Integer idCurso, Integer idUsuario) {
         try {
             Matricula matricula = listarById(id);
+            if (matricula.getStatus().equals(StatusAvaliacaoMatricula.APROVADO) || matricula.getStatus().equals(StatusAvaliacaoMatricula.REPROVADO)) {
+                throw new ErrorException("Não foi possível realizar a troca do curso, aluno já realizou a avaliação");
+            } 
             Curso curso = cursoService.listarById(idCurso);
             matricula.setCurso(curso);
             Matricula result = repository.save(matricula);
