@@ -157,7 +157,7 @@ public class CertificadoService {
                 float margemDireita = -190f;
                 float posX = PageSize.A4.getWidth() - margemDireita - logoParceiro.getScaledWidth();
                 
-                logoParceiro.setAbsolutePosition(posX, document.getPageSize().getHeight() - document.topMargin() - logoParceiro.getScaledHeight());
+                logoParceiro.setAbsolutePosition(posX, document.getPageSize().getHeight() - document.topMargin() - 60);
         
                 PdfContentByte canvas = writer.getDirectContent();
                 canvas.addImage(logoParceiro);
