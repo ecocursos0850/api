@@ -145,17 +145,25 @@ public class CertificadoService {
         cursoNome.setAlignment(Element.ALIGN_CENTER);
         cargaHoraria.setAlignment(Element.ALIGN_CENTER);
         cidade.setAlignment(Element.ALIGN_CENTER);
-        title.setSpacingAfter(20f);
         Aluno alunoExistente = alunoService.listarById(matricula.getAluno().getId());
         if (alunoExistente != null) {
             if (alunoExistente.getParceiro() != null) {
                 Parceiro parceiro = parceiroService.listarById(alunoExistente.getParceiro().getId());
                 Image logoParceiro = Image.getInstance(parceiro.getLogo(), false);
                 logoParceiro.scaleToFit(100, 350);
-                logoParceiro.setAlignment(Element.ALIGN_RIGHT);
-                paragraphPrincipal.add(logoParceiro);
+                //logoParceiro.setAlignment(Element.ALIGN_RIGHT);
+                //paragraphPrincipal.add(logoParceiro);
+
+                float margemDireita = -190f;
+                float posX = PageSize.A4.getWidth() - margemDireita - logoParceiro.getScaledWidth();
+                
+                logoParceiro.setAbsolutePosition(posX, document.getPageSize().getHeight() - document.topMargin() - logoParceiro.getScaledHeight());
+        
+                PdfContentByte canvas = writer.getDirectContent();
+                canvas.addImage(logoParceiro);
             }
         }
+        title.setSpacingAfter(20f);
         paragraphPrincipal.add(title);
         paragraphPrincipal.add(content);
         paragraphPrincipal.add(aluno);
