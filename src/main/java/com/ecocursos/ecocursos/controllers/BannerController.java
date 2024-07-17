@@ -40,7 +40,7 @@ public class BannerController {
     @PostMapping("{id}/upload")
     public void upload(@PathVariable Integer id, @RequestParam("file") MultipartFile file) {
         byte[] bytes = file.getBytes();
-        Path path = Paths.get("/var/www/html/Banner/" + file.getOriginalFilename());
+        Path path = Paths.get("/var/www/html/arquivos/imgs/Banner/" + file.getOriginalFilename());
         Files.write(path, bytes);
 
         Banner banner = service.listarById(id);
