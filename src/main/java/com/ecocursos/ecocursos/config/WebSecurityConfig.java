@@ -29,7 +29,6 @@ public class WebSecurityConfig {
         .authorizeHttpRequests()
         .requestMatchers("/api/v1/auth/**", "/api/v1/auth/authenticate", "/v3/api-docs", "/swagger-ui.html", "/swagger-ui/index.html", "/aluno", "/aluno/search","/aluno/recuperar", "/banner")
         .permitAll()
-        .and()
         .anyRequest()
         .authenticated()
         .and()
