@@ -24,7 +24,9 @@ public class CategoriaService {
     private DescontoCategoriaParceiroService dcpService;
 
     public List<Categoria> listar() {
-        return repository.findAll();
+        List<Categoria> lista = repository.findAll();
+        lista.stream().forEach(x -> x.setCursos(null));
+        return lista;
     } 
 
     public Categoria salvar(Categoria categoria) {

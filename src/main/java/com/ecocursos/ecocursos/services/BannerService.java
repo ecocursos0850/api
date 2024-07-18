@@ -2,6 +2,7 @@ package com.ecocursos.ecocursos.services;
 
 import com.ecocursos.ecocursos.exceptions.ErrorException;
 import com.ecocursos.ecocursos.exceptions.ObjectNotFoundException;
+import com.ecocursos.ecocursos.models.Banner;
 import com.ecocursos.ecocursos.models.BannerSite;
 import com.ecocursos.ecocursos.repositories.BannerRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +16,7 @@ public class BannerService {
 
     private final BannerRepository repository;
 
-    public List<BannerSite> listar() {
+    public List<Banner> listar() {
         try {
             return repository.findAll();
         } catch (Exception e) {
@@ -23,7 +24,7 @@ public class BannerService {
         }
     }
 
-    public BannerSite listarById(Integer id) {
+    public Banner listarById(Integer id) {
         try  {
             return repository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Banner não encontrado"));
         } catch (Exception e) {
@@ -31,7 +32,7 @@ public class BannerService {
         }
     }
 
-    public BannerSite salvar(BannerSite banner) {
+    public Banner salvar(Banner banner) {
         try {
             return repository.save(banner);
         } catch (Exception e) {
@@ -39,9 +40,9 @@ public class BannerService {
         }
     }
 
-    public BannerSite alterar(Integer id, BannerSite site) {
+    public Banner alterar(Integer id, Banner site) {
         try {
-            BannerSite bannerSiteExistente = listarById(id);
+            Banner  bannerSiteExistente = listarById(id);
             site.setId(id);
             return repository.save(site);
         } catch (Exception e) {
