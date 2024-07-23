@@ -16,6 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CupomDescontoService {
 
+    private final AlunoService alunoService;
     private final CupomDescontoRepository repository;
 
     private void validarStatus(CupomDesconto cupomDesconto) {
@@ -51,6 +52,7 @@ public class CupomDescontoService {
         cupomDesconto.setStatus(Status.ATIVO);
         cupomDesconto.setDataValidade(cupomDesconto.getDataCadastro());
         cupomDesconto.setLimiteUso(Status.INATIVO);
+        cupomDesconto.setAluno(aluno);
         return repository.save(cupomDesconto);
     }
 
@@ -60,6 +62,7 @@ public class CupomDescontoService {
     }
 
     public CupomDesconto salvar(CupomDesconto cupomDesconto) {
+        if (cupomDesconto.getAluno() != null) cupomDesconto.setAluno(alunoService.listarById(cupomDesconto.getAluno().getId()));
         cupomDesconto.setDataCadastro(LocalDate.now());
         return repository.save(cupomDesconto);
     }
