@@ -21,7 +21,7 @@ import lombok.SneakyThrows;
 @Service
 public class AsaasService {
 
-    private static final String token = "$aact_YTU5YTE0M2M2N2I4MTliNzk0YTI5N2U5MzdjNWZmNDQ6OjAwMDAwMDAwMDAwMDAzNTcwNTg6OiRhYWNoXzc4ODU5YjkzLTdjNzEtNGY4OS05ODEyLTE3ZjdlYWJmNzdjMA==";
+    private static final String token = "$aact_YTU5YTE0M2M2N2I4MTliNzk0YTI5N2U5MzdjNWZmNDQ6OjAwMDAwMDAwMDAwMDAzNTcwNTg6OiRhYWNoXzMxY2M5OThiLTQ1YmItNDRiOS04ZmQ3LThkMzMwODA5YzlmYg==";
     private static final String url = "https://api.asaas.com/v3";
 
     public JsonObject getAll(String url) {
@@ -52,6 +52,7 @@ public class AsaasService {
                     .uri(this.url + "/" + url)
                     .headers(header -> {
                         header.set("access_token", token);
+                        header.set("User-Agent", "Ecocursos");
                         header.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
                         header.setContentType(MediaType.APPLICATION_JSON);
                     })
@@ -73,6 +74,7 @@ public class AsaasService {
                 .uri(this.url + "/" + url)
                 .headers(header -> {
                     header.set("access_token", token);
+                    header.set("User-Agent", "Ecocursos");
                     header.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
                     header.setContentType(MediaType.APPLICATION_JSON);
                 })
@@ -88,6 +90,7 @@ public class AsaasService {
                     .uri(this.url + "/" + url)
                     .headers(header -> {
                         header.set("access_token", token);
+                        header.set("User-Agent", "Ecocursos");
                         header.setContentType(MediaType.APPLICATION_JSON);
                     })
                     .retrieve()
@@ -107,6 +110,7 @@ public class AsaasService {
                     .uri(this.url + "/" + url)
                     .headers(header -> {
                         header.set("access_token", token);
+                        header.set("User-Agent", "Ecocursos");
                         header.setContentType(MediaType.APPLICATION_JSON);
                     })
                     .retrieve()
