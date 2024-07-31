@@ -86,19 +86,23 @@ public class Aluno {
     private String observacao;
 
     public static Map<String, Object> convertToAsaas(Aluno aluno) {
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("name", aluno.getNome());
-        map.put("cpfCnpj", aluno.getCpf());
-        map.put("email", aluno.getEmail());
-        map.put("phone", aluno.getCelular());
-        map.put("address", aluno.getLogradouro());
-        map.put("addressNumber", aluno.getNumero());
-        map.put("complement", aluno.getComplemento());
-        map.put("province", aluno.getCidade());
-        map.put("postalCode", aluno.getCep());
-        map.put("notificationDisabled", "true");
-        map.put("additionalEmails", aluno.getEmail());
-        return map;
+        try {
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("name", aluno.getNome());
+            map.put("cpfCnpj", aluno.getCpf() );
+            map.put("email", aluno.getEmail());
+            map.put("phone", aluno.getCelular());
+            map.put("address", aluno.getLogradouro());
+            map.put("addressNumber", aluno.getNumero());
+            map.put("complement", aluno.getComplemento());
+            map.put("province", aluno.getCidade());
+            map.put("postalCode", aluno.getCep());
+            map.put("notificationDisabled", "true");
+            map.put("additionalEmails", aluno.getEmail());
+            return map;
+        } catch(Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
 }
