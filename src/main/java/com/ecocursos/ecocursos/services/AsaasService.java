@@ -21,7 +21,7 @@ import lombok.SneakyThrows;
 @Service
 public class AsaasService {
 
-    private static final String token = "$aact_YTU5YTE0M2M2N2I4MTliNzk0YTI5N2U5MzdjNWZmNDQ6OjAwMDAwMDAwMDAwMDAzNTcwNTg6OiRhYWNoXzMxY2M5OThiLTQ1YmItNDRiOS04ZmQ3LThkMzMwODA5YzlmYg==";
+    private static final String token = "$aact_YTU5YTE0M2M2N2I4MTliNzk0YTI5N2U5MzdjNWZmNDQ6OjAwMDAwMDAwMDAwMDAzNTcwNTg6OiRhYWNoXzdjMTc0YTFmLTczZmQtNGY0Zi04Y2I1LTE3YzhlMTkwZDBjMg==";
     private static final String url = "https://api.asaas.com/v3";
 
     public JsonObject getAll(String url) {

@@ -112,6 +112,13 @@ public class PedidoController {
         return ResponseEntity.status(HttpStatus.OK).body(service.generateDirectBilling(map));
     }
 
+    // @PostMapping("webhook")
+    // public String webhook(@RequestBody Object entity) 
+        
+    //     return entity;
+    // }
+    
+
     @PostMapping("{id}/matricula")
     public ResponseEntity<String> gerarMatriculaByPedido(@PathVariable Integer id) {
         service.criarMatriculaByPedido(id);
