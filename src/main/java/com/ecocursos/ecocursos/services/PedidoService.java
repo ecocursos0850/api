@@ -459,6 +459,32 @@ public class PedidoService {
         }
     }
 
+    public void atualizatStatusPagamentoWebhook(String referencia, String status) {
+        try {
+            Pedido pedido = repository.findByReferencia(referencia);
+            StatusPedido statusPedido = StatusPedido.PENDENTE;
+            if (status.equals("CONFIRMED") || status.equals("RECEIVED")) {
+                statusPedido = StatusPedido.PAGO;
+            }
+            if (status.equals("PENDING")) {
+                statusPedido = StatusPedido.PENDENTE;
+            }
+            if (status.equals("canceled")) {
+                statusPedido = StatusPedido.CANCELADO;
+            }
+            if (status.equals("REFUNDED")) {
+                statusPedido = StatusPedido.REEMBOLSADO;
+            }
+            if (status.equals("OVERDUE")) {
+                statusPedido = StatusPedido.EXPIRADO;
+            }
+            pedido.setStatus(statusPedido);
+            repository.save(pedido);
+        } catch(Exception e) {
+            throw new ErrorException("Erro ao atualizar status de cobrança do ASAAS");
+        }
+    }
+
     private void atualizarStatusCobrancaAsaas(String referencia, Pedido pedido) {
         JsonObject object = asaasService.getBy(String.format("payments/%s/status", referencia));
         pedido.setStatus(converterStatus(pedido, object));

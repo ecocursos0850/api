@@ -23,6 +23,8 @@ import com.ecocursos.ecocursos.models.dtos.PedidosPorEstado;
 import com.ecocursos.ecocursos.models.enums.StatusPedido;
 import com.ecocursos.ecocursos.models.enums.TipoCurso;
 import com.ecocursos.ecocursos.services.PedidoService;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 @RestController
 @RequestMapping(value = "pedido")
@@ -112,11 +114,19 @@ public class PedidoController {
         return ResponseEntity.status(HttpStatus.OK).body(service.generateDirectBilling(map));
     }
 
-    // @PostMapping("webhook")
-    // public String webhook(@RequestBody Object entity) 
+    @PostMapping("webhook")
+    public ResponseEntity<Void> webhook(@RequestBody Object entity) { 
+        Gson gson = new Gson();
+        JsonObject jsonObject = gson.fromJson(entity.toString(), JsonObject.class);
         
-    //     return entity;
-    // }
+        JsonObject payment = jsonObject.getAsJsonObject("payment");
+        String status = payment.get("status").getAsString();
+        String id = payment.get("id").getAsString();
+
+        service.atualizatStatusPagamentoWebhook(id, status);
+
+        return ResponseEntity.noContent().build();
+    }
     
 
     @PostMapping("{id}/matricula")
