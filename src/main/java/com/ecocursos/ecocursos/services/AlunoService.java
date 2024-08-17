@@ -101,8 +101,8 @@ public class AlunoService {
         aluno.setSenha(DigestUtils.md5DigestAsHex(aluno.getSenha().getBytes()));
         Aluno result = repository.save(aluno);
         // registrarAlunoIugu(aluno, result);
-        criarAlunoAsaas(result);
         registrarUsuarioLogin(senhaLimpa, result);
+        criarAlunoAsaas(result);
         User user = userRepository.findByEmail(result.getEmail())
                 .orElseThrow(() -> new ObjectNotFoundException("Usuário não encontrado"));
         result.setUsuario(user);
