@@ -33,7 +33,9 @@ public interface PedidoRepository extends JpaRepository<Pedido, Integer>{
     @Query("SELECT COUNT(p) FROM Pedido p WHERE p.status = 1")
     Integer tamanhoTotalListaPago();
 
-    @Query("SELECT SUM(p.total) FROM Pedido p WHERE p.status = 1 AND MONTH(p.dataPedido) = :mes AND YEAR(p.dataPedido) = :year AND p.status = 1")
+    @Query(value = "select sum(p.total) from pedido p \n" + //
+            "inner join matricula m on m.pedido_id = p.id \n" + //
+            "where p.status = 1 and MONTH(p.data_pedido) = :mes and YEAR(p.data_pedido) = :year and m.status != 4;", nativeQuery = true)
     Double pegarValorTotalMes(@Param("mes") Integer mes, @Param("year") Integer year);
 
     @Query("SELECT SUM(p.total) FROM Pedido p WHERE p.status = 1 AND p.referencia <> null AND MONTH(p.dataPedido) = :mes AND YEAR(p.dataPedido) = :year AND p.status = 1")
