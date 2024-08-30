@@ -248,7 +248,7 @@ public class PedidoService {
                     valorTotalMes = valor + valorDeclaracao;
                 } else {
                     valorTotalMes = valorDeclaracao;
-                }
+                }   
                 faturamentoTotal.setTotalDeclaracao(valorDeclaracao);
             } else {
                 valorTotalMes = repository.pegarValorTotalMes(mes, LocalDateTime.now().getYear());
