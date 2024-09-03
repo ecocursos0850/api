@@ -1,7 +1,12 @@
 package com.ecocursos.ecocursos.services;
 
 import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicReference;
 
+import org.apache.camel.CamelContext;
+import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.impl.DefaultCamelContext;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.BodyInserters;
@@ -21,8 +26,10 @@ import lombok.SneakyThrows;
 @Service
 public class AsaasService {
 
-    private static final String token = "$aact_YTU5YTE0M2M2N2I4MTliNzk0YTI5N2U5MzdjNWZmNDQ6OjAwMDAwMDAwMDAwMDAzNTcwNTg6OiRhYWNoXzdjMTc0YTFmLTczZmQtNGY0Zi04Y2I1LTE3YzhlMTkwZDBjMg==";
+    private static final String token = "$aact_YTU5YTE0M2M2N2I4MTliNzk0YTI5N2U5MzdjNWZmNDQ6OjAwMDAwMDAwMDAwMDAzNTcwNTg6OiRhYWNoXzdkZTJkZjhkLTY4ZTktNGFkZS05MjgxLWI0ZjNhNDM4ODQyYQ==";
     private static final String url = "https://api.asaas.com/v3";
+
+    private CamelContext camelContext;
 
     public JsonObject getAll(String url) {
         try {
@@ -46,10 +53,34 @@ public class AsaasService {
     @SneakyThrows
     public JsonObject save(String url, Object object) {
         try {
+
+            camelContext = new DefaultCamelContext();
+
             final Gson gson = Converters.registerLocalDateTime(new GsonBuilder()).create();
+
+            AtomicReference<String> resposta = new AtomicReference<>();
+
+//            camelContext.addRoutes(new RouteBuilder() {
+//                @Override
+//                public void configure() throws Exception {
+//                    from("direct:start")
+//                            .setHeader("CamelHttpMethod", constant("GET"))
+//                            .setHeader("access_token", constant(token.toString()))
+//                            .setHeader("accept", constant("application/json"))
+//                            .setHeader("User-Agent", constant("Ecocursos-HOMO"))
+//                            .setHeader("Content-Type", constant("application/json"))
+//                            // .setBody(constant(gson.toJson(object)))
+//                            .to(AsaasService.url + url)
+//                            .process(exchange -> {
+//                                resposta.set(exchange.getIn().getBody(String.class));
+//                                System.out.println(resposta.get().toString());
+//                            });
+//
+//                }
+//            }) ;
             System.out.println(gson.toJson(object));
             String webClient = WebClient.builder().build().post()
-                    .uri(this.url + "/" + url)
+                    .uri(AsaasService.url + "/" + url)
                     .headers(header -> {
                         header.set("access_token", token);
                         header.set("User-Agent", "Ecocursos");
@@ -59,14 +90,19 @@ public class AsaasService {
                     .body(BodyInserters.fromValue(gson.toJson(object)))
                     .retrieve()
                     .bodyToMono(String.class).block();
+            // camelContext.start();
+
             JsonElement element = JsonParser.parseString(webClient);
             JsonObject json = element.getAsJsonObject();
+
+            // camelContext.stop();
+
             return json;
         } catch (Exception e) {
             System.out.println(e.getMessage()); 
             e.getMessage();
+            return null;
         }
-        return null;
     }
 
     public JsonObject getBy(String url) {
