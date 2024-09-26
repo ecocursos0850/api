@@ -12,7 +12,9 @@ import org.jsoup.Jsoup;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.ecocursos.ecocursos.exceptions.ObjectNotFoundException;
 import com.ecocursos.ecocursos.models.DeclaracaoMatricula;
@@ -160,12 +162,16 @@ public class DeclaracaoMatriculaService {
     }
 
     private void criarMatriculaLogs(DeclaracaoMatricula declaracaoMatricula, Integer idUsuario) {
-        MatriculaLogs logs = new MatriculaLogs();
-        logs.setData(LocalDate.now());
-        logs.setDescricao("Usuário solicitou declaração");
-        logs.setMatricula(declaracaoMatricula.getMatricula());
-        logs.setUsuario(userRepository.findById(idUsuario).get());
-        matriculaLogsService.salvar(logs);
+        try {
+            MatriculaLogs logs = new MatriculaLogs();
+            logs.setData(LocalDate.now());
+            logs.setDescricao("Usuário solicitou declaração");
+            logs.setMatricula(declaracaoMatricula.getMatricula());
+            logs.setUsuario(userRepository.findById(idUsuario).get());
+            matriculaLogsService.salvar(logs);
+        } catch(Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Erro ao salvar declaração");
+        }
     }
 
     public DeclaracaoMatricula alterar(Integer id, DeclaracaoMatricula declaracaoMatricula) {
