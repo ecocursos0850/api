@@ -366,7 +366,7 @@ public class MatriculaService {
             map.put("aluno", parameters.get("aluno"));
             map.put("parceiro", parameters.get("parceiro"));
             map.put("dataInicio", parameters.get("dataInicio"));
-            map.put("dataFinal", parameters.get("dataFinal"));
+            map.put("dataFinal", parameters.get("dataFinal"));  
 
             JasperPrint print = JasperFillManager.fillReport(jasperReport, map, connection);
             connection.close();    
