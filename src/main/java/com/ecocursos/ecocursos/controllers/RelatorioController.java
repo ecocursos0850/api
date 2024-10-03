@@ -36,7 +36,7 @@ public class RelatorioController {
     @PostMapping("parceiro")
     public ResponseEntity<RelatorioResponse> parceiro(@RequestBody Map<String, Object> param) {
         RelatorioResponse relatorioResponse = RelatorioResponse.builder()
-            .pdf(service.gerarPdfRelatorio(param, "src/main/resources/relatorios/matricula.jrxml"))
+            .pdf(service.gerarPdfRelatorio(param, "src/main/resources/relatorios/parceiro.jrxml"))
             .build();
         return ResponseEntity.status(HttpStatus.CREATED).body(relatorioResponse);
     }

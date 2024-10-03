@@ -28,7 +28,7 @@ public class RelatorioService {
     
     public byte[] gerarPdfRelatorio(Map<String, Object> params, String jasperPath) {
         try(Connection connection = jdbcTemplate.getDataSource().getConnection()) {
-            String caminhoJasper = "src/main/resources/relatorios/matricula.jrxml";
+            String caminhoJasper = jasperPath;
             JasperReport jasperReport =  JasperCompileManager.compileReport(caminhoJasper);
 
             JasperPrint print = JasperFillManager.fillReport(jasperReport, params, connection);
