@@ -25,7 +25,7 @@ public class RelatorioController {
     @Autowired
     private RelatorioService service;
 
-    @PostMapping("matricula")
+    @PostMapping("matriculas")
     public ResponseEntity<RelatorioResponse> matricula(@RequestBody Map<String, Object> param) {
         RelatorioResponse relatorioResponse = RelatorioResponse.builder()
             .pdf(service.gerarPdfRelatorio(param, "src/main/resources/relatorios/matricula.jrxml"))
@@ -33,11 +33,43 @@ public class RelatorioController {
         return ResponseEntity.status(HttpStatus.CREATED).body(relatorioResponse);
     }
 
-    @PostMapping("parceiro")
+    @PostMapping("parceiros")
     public ResponseEntity<RelatorioResponse> parceiro(@RequestBody Map<String, Object> param) {
         RelatorioResponse relatorioResponse = RelatorioResponse.builder()
             .pdf(service.gerarPdfRelatorio(param, "src/main/resources/relatorios/parceiro.jrxml"))
             .build();
+        return ResponseEntity.status(HttpStatus.CREATED).body(relatorioResponse);
+    }
+
+    @PostMapping("declaracoes")
+    public ResponseEntity<RelatorioResponse> declaracoes(@RequestBody Map<String, Object> param) {
+        RelatorioResponse relatorioResponse = RelatorioResponse.builder()
+            .pdf(service.gerarPdfRelatorio(param, "src/main/resources/relatorios/declaracao.jrxml"))
+            .build();
+        return ResponseEntity.status(HttpStatus.CREATED).body(relatorioResponse);
+    }
+
+    @PostMapping("aluno")
+    public ResponseEntity<RelatorioResponse> aluno(@RequestBody Map<String, Object> param) {
+        RelatorioResponse relatorioResponse = RelatorioResponse.builder()
+            .pdf(service.gerarPdfRelatorio(param, "src/main/resources/relatorios/aluno.jrxml"))
+            .build();
+        return ResponseEntity.status(HttpStatus.CREATED).body(relatorioResponse);
+    }
+
+    @PostMapping("financeiro")
+    public ResponseEntity<RelatorioResponse> financeiro(@RequestBody Map<String, Object> param) {
+        RelatorioResponse relatorioResponse = RelatorioResponse.builder()
+                .pdf(service.gerarPdfRelatorio(param, "src/main/resources/relatorios/financeiro.jrxml"))
+                .build();
+        return ResponseEntity.status(HttpStatus.CREATED).body(relatorioResponse);
+    }
+
+    @PostMapping("vendas")
+    public ResponseEntity<RelatorioResponse> vendas(@RequestBody Map<String, Object> param) {
+        RelatorioResponse relatorioResponse = RelatorioResponse.builder()
+                .pdf(service.gerarPdfRelatorio(param, "src/main/resources/relatorios/vendas.jrxml"))
+                .build();
         return ResponseEntity.status(HttpStatus.CREATED).body(relatorioResponse);
     }
     

@@ -1,6 +1,7 @@
 package com.ecocursos.ecocursos.controllers;
 
 import com.ecocursos.ecocursos.models.Aluno;
+import com.ecocursos.ecocursos.models.dtos.AlunoDTO;
 import com.ecocursos.ecocursos.services.AlunoService;
 
 import org.apache.catalina.connector.Response;
@@ -28,6 +29,11 @@ public class AlunoController {
     @GetMapping
     public ResponseEntity<List<Aluno>> listar() {
         return ResponseEntity.ok().body(service.listar());
+    }
+
+    @GetMapping("dto")
+    public ResponseEntity<List<AlunoDTO>> listarDTO() {
+        return ResponseEntity.ok().body(service.listarDTO());
     }
 
     @GetMapping("search")

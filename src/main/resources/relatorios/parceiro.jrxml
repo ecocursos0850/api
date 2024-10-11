@@ -41,8 +41,8 @@
 	<parameter name="sexo" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select cp.cpf, p.nome, cp.nome as nome_cpf  from cpf_parceiro cp
-inner join parceiro p on p.id = $P{parceiro}
-where (p.id = $P{parceiro} or $P{parceiro} is null)]]>
+	inner join parceiro p on p.id = $P{parceiro}
+	where (p.id = $P{parceiro} or $P{parceiro} is null)]]>
 	</queryString>
 	<field name="cpf" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="cpf"/>
@@ -139,7 +139,4 @@ where (p.id = $P{parceiro} or $P{parceiro} is null)]]>
 			</textField>
 		</band>
 	</detail>
-	<columnFooter>
-		<band height="20"/>
-	</columnFooter>
 </jasperReport>

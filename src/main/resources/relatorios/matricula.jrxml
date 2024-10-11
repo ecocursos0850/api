@@ -47,7 +47,7 @@ inner join parceiro p on p.id = a.parceiro_id
 WHERE (m.curso_id = $P{curso} OR $P{curso} IS NULL)
 AND (m.aluno_id = $P{aluno} OR $P{aluno} IS NULL)
 AND (a.parceiro_id = $P{parceiro} OR $P{parceiro} IS NULL)
-and m.data_matricula between  $P{dataInicio}  and  $P{dataFinal} ]]>
+and m.data_matricula between  $P{dataInicio}  and  $P{dataFinal}]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.name" value="id"/>
@@ -240,7 +240,7 @@ and m.data_matricula between  $P{dataInicio}  and  $P{dataFinal} ]]>
 			</textField>
 		</band>
 	</detail>
-	<columnFooter>
+	<lastPageFooter>
 		<band height="20">
 			<textField pattern="¤#,##0.##;¤-#,##0.##">
 				<reportElement x="600" y="0" width="80" height="20" uuid="65b1b0e5-da81-4d94-9ef9-b71a3fd826be"/>
@@ -251,5 +251,5 @@ and m.data_matricula between  $P{dataInicio}  and  $P{dataFinal} ]]>
 				<textFieldExpression><![CDATA[$V{valor_matricula2}]]></textFieldExpression>
 			</textField>
 		</band>
-	</columnFooter>
+	</lastPageFooter>
 </jasperReport>
