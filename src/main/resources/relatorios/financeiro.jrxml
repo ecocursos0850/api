@@ -164,7 +164,7 @@ and (ec.tipo_pagamento  = $P{tipo_pagamento} or $P{tipo_pagamento} is null)]]>
 				<reportElement x="0" y="1" width="80" height="20" uuid="ba142b57-5aea-4330-8da8-efd845b86faf">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="416473e3-ff72-4514-a863-837af1890cd5"/>
 				</reportElement>
-				<textFieldExpression><![CDATA[$F{tipo_entrada_caixa}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{tipo_entrada_caixa} == 0 ? "Sindicato" : $F{tipo_entrada_caixa} == 1 ? "Venda pelo site" :  "Vendedor"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="280" y="0" width="100" height="20" uuid="25556e3b-08a5-4ddd-8702-dae7b4846cde">
@@ -189,6 +189,7 @@ and (ec.tipo_pagamento  = $P{tipo_pagamento} or $P{tipo_pagamento} is null)]]>
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2ff2b193-dd2c-4188-872c-6b8698e93667"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{data_pagamento}]]></textFieldExpression>
+				<patternExpression><![CDATA[$F{data_pagamento}]]></patternExpression>
 			</textField>
 		</band>
 	</detail>
