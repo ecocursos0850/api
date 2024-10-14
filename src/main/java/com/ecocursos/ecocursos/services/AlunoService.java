@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.Set;
 
 import com.ecocursos.ecocursos.models.*;
+import com.ecocursos.ecocursos.models.dtos.AlunoDTO;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -77,6 +79,10 @@ public class AlunoService {
 
     public List<Aluno> listar() {
         return repository.findAll();
+    }
+
+    public List<AlunoDTO> listarDTO() {
+        return repository.listarDTO();
     }
 
     public List<Aluno> listarAniversariantes(Integer page, Integer size) {

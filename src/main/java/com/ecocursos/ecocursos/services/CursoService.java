@@ -13,6 +13,7 @@ import com.ecocursos.ecocursos.exceptions.ErrorException;
 import com.ecocursos.ecocursos.models.Categoria;
 import com.ecocursos.ecocursos.models.Curso;
 import com.ecocursos.ecocursos.models.SubCategoria;
+import com.ecocursos.ecocursos.models.dtos.CursoDTO;
 import com.ecocursos.ecocursos.models.enums.Status;
 import com.ecocursos.ecocursos.models.enums.TipoCurso;
 import com.ecocursos.ecocursos.repositories.CursoRepository;
@@ -117,6 +118,9 @@ public class CursoService {
         return repository.findAllByCategoriaAndStatus(categoriaService.listarById(id), Status.ATIVO);
     }
 
+    public List<CursoDTO> listarDTO() {
+        return repository.listarDTO();
+    }
 
     public Curso listarById(Integer id) {
         return repository.findById(id).orElseThrow(() -> new ErrorException("Erro ao buscar curso"));

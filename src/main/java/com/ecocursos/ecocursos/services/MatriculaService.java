@@ -1,16 +1,25 @@
 package com.ecocursos.ecocursos.services;
 
+import java.io.File;
+import java.net.URLDecoder;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.sql.Connection;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
+import org.aspectj.weaver.ast.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import com.ecocursos.ecocursos.exceptions.ErrorException;
@@ -36,6 +45,11 @@ import com.ecocursos.ecocursos.repositories.UserRepository;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
 
 @Service
 public class MatriculaService {
@@ -70,6 +84,9 @@ public class MatriculaService {
     private UserRepository userRepository;
     @Autowired
     private MatriculaLogsService matriculaLogsService;
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+    public static final String REPORTS_PATH = "/src/main/relatorios";
 
         private void completarCampos(Matricula matricula) {
             if (matricula.getPedido() != null) {
@@ -333,6 +350,31 @@ public class MatriculaService {
             q.setParameter("status", StatusAvaliacaoMatricula.toEnum(status));
         }
         return q.getResultList();
+    }
+
+    public byte[] gerarPdfRelatorio(Map<String, Object> parameters) {
+        try {
+
+            Connection connection = jdbcTemplate.getDataSource().getConnection();
+            Path currentRelativePath = Paths.get(""); 
+            String caminhoJasper = "src/main/resources/relatorios/matricula.jrxml";
+            String path = Test.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+            String decodedPath = URLDecoder.decode(path, "UTF-8");
+            JasperReport jasperReport =  JasperCompileManager.compileReport(caminhoJasper);
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("curso", parameters.get("curso"));
+            map.put("aluno", parameters.get("aluno"));
+            map.put("parceiro", parameters.get("parceiro"));
+            map.put("dataInicio", parameters.get("dataInicio"));
+            map.put("dataFinal", parameters.get("dataFinal"));  
+
+            JasperPrint print = JasperFillManager.fillReport(jasperReport, map, connection);
+            connection.close();    
+            return JasperExportManager.exportReportToPdf(print);
+
+        } catch(Exception e) {
+            throw new ErrorException("Erro ao gerar relatorio");
+        }
     }
 
     public List<Matricula> findAllByAluno(Aluno aluno) {

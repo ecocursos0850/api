@@ -1,7 +1,11 @@
 package com.ecocursos.ecocursos.controllers;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -98,6 +102,27 @@ public class MatriculaController {
     ) {
         return ResponseEntity.ok().body(service.listarByRelatorio(tipoCurso, categoria, curso, parceiro, dataCadastroInicial, dataCadastroFinal, dataLiberacaoInicial, dataLiberacaoFinal, dataCertificadoInicial, dataCertificadoFinal, estado, status));
     }
+
+    @GetMapping("relatorio-pdf")
+    public ResponseEntity<Map<String, Object>> gerarRelatorioPdf(
+        @RequestParam(required = false) String curso,
+        @RequestParam(required = false) String parceiro,    
+        @RequestParam(required = false) String aluno,
+        @RequestParam(required = false) String dataInicio,
+        @RequestParam(required = false) String dataFinal
+    ) {
+        Map<String, Object> response = new HashMap<>();
+        Map<String, Object> requests = new HashMap<>();
+        if (curso != null) requests.put("curso", curso);
+        if (parceiro != null) requests.put("parceiro", parceiro);
+        if (aluno != null) requests.put("aluno", aluno);
+        if (dataInicio != null) requests.put("dataInicio", dataInicio);
+        if (dataFinal != null) requests.put("dataFinal", dataFinal);
+
+        response.put("pdf", service.gerarPdfRelatorio(requests));
+        return ResponseEntity.ok().body(response);
+    }
+    
 
     @GetMapping("cursos-mais-vendidos")
     public ResponseEntity<List<Curso>> cursosMaisVendidos() {

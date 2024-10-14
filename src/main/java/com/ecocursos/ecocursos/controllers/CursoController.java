@@ -1,6 +1,7 @@
 package com.ecocursos.ecocursos.controllers;
 
 import com.ecocursos.ecocursos.models.*;
+import com.ecocursos.ecocursos.models.dtos.CursoDTO;
 import com.ecocursos.ecocursos.models.enums.TipoCurso;
 import com.ecocursos.ecocursos.services.CursoService;
 import lombok.SneakyThrows;
@@ -29,6 +30,11 @@ public class CursoController {
     @GetMapping
     public ResponseEntity<List<Curso>> listar() {
         return ResponseEntity.ok().body(service.listar());
+    }
+
+    @GetMapping("dto")
+    public ResponseEntity<List<CursoDTO>> listarDTO() {
+        return ResponseEntity.ok().body(service.listarDTO());
     }
 
     @GetMapping("{id}")
