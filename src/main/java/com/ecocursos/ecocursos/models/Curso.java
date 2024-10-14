@@ -35,7 +35,7 @@ public class Curso {
     private Categoria categoria;
 
 
-    @JsonIgnoreProperties({"cursos", "categoria"})
+    @JsonIgnoreProperties({"cursos", "categoria", "status"})
     @ManyToOne
     @JoinColumn(name = "subcategoria_id")
     private SubCategoria subCategoria;

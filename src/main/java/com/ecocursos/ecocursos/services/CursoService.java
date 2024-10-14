@@ -127,8 +127,12 @@ public class CursoService {
     }
 
     public Curso salvar(Curso curso) {
-        curso.setDataCadastro(LocalDateTime.now());
-        return repository.save(curso);
+        try {
+            curso.setDataCadastro(LocalDateTime.now());
+            return repository.save(curso);
+        } catch(Exception e) {
+            throw new ErrorException("Erro ao cadastrar curso");
+        }
     }
 
     public Curso alterar(Integer id, Curso curso) {
