@@ -1,18 +1,20 @@
 package com.ecocursos.ecocursos.services;
 
-import java.util.List;
-
+import com.ecocursos.ecocursos.models.SubCategoria;
+import com.ecocursos.ecocursos.repositories.SubCategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ecocursos.ecocursos.models.SubCategoria;
-import com.ecocursos.ecocursos.repositories.SubCategoriaRepository;
+import java.util.List;
 
 @Service
 public class SubCategoriaService {
     
     @Autowired
     private SubCategoriaRepository repository;
+
+    @Autowired
+    private CategoriaService categoriaService;
 
     public List<SubCategoria> listar() {
         return repository.findAll();
@@ -24,6 +26,10 @@ public class SubCategoriaService {
 
     public SubCategoria salvar(SubCategoria subCategoria) {
         return repository.save(subCategoria);
+    }
+
+    public List<SubCategoria> listarByCategoria(Integer idCategoria) {
+        return repository.findAllByCategoria(categoriaService.listarById(idCategoria));
     }
 
     public SubCategoria alterar(Integer id, SubCategoria subCategoria) {

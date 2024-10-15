@@ -36,6 +36,11 @@ public class SubCategoriaController {
         return ResponseEntity.ok().body(service.listarById(id));
     }
 
+    @GetMapping("categoria/{id}")
+    public ResponseEntity<List<SubCategoria>> listarByCategoria(@PathVariable Integer id) {
+        return ResponseEntity.ok().body(service.listarByCategoria(id));
+    }
+
     @PostMapping
     public ResponseEntity<SubCategoria> salvar(@RequestBody SubCategoria subCategoria) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.salvar(subCategoria));
