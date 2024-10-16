@@ -57,7 +57,11 @@ public class DeclaracaoMatriculaService {
     private static final String LOGO = "https://srv448021.hstgr.cloud/arquivos/imgs/logo.png";
 
     private void buscarExternos(DeclaracaoMatricula declaracaoMatricula) {
-        declaracaoMatricula.setMatricula(matriculaService.listarById(declaracaoMatricula.getMatricula().getId()));
+        try {
+            declaracaoMatricula.setMatricula(matriculaService.listarById(declaracaoMatricula.getMatricula().getId()));
+        } catch (Exception e) {
+            throw new ErrorException("Erro ao buscar externos de declaração");
+        }
     }
 
     public List<DeclaracaoMatricula> listar() {
