@@ -46,8 +46,8 @@ application:
         expiration: '604800000'
 server:
   port: 8080
-#  ssl:
-#    certificate: /etc/ssl/certificate.crt  
-#    certificatePrivateKey: /etc/ssl/private/private.key
-#    trustCertificate: /etc/ssl/ca_bundle.crt
+  ssl:
+    certificate: /etc/ssl/certificate.crt  
+    certificatePrivateKey: /etc/ssl/private/private.key
+    trustCertificate: /etc/ssl/ca_bundle.crt
 
