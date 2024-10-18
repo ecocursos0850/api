@@ -159,7 +159,11 @@ public class CursoService {
     }
 
     public List<Curso> listarByStatus(Integer status) {
-        return repository.findAllByStatus(Status.toEnum(status));
+        try {
+            return repository.findAllByStatus(Status.toEnum(status));
+        } catch(Exception e) {
+            throw new ErrorException("Erro ao listar curso");
+        }
     }
 
     public void deletar(Integer id) {
