@@ -40,12 +40,12 @@
 	<parameter name="status" class="java.lang.String"/>
 	<parameter name="sexo" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select a.id as aluno_id, a.nome as aluno, a.cpf, a.email, m.id as matricula, p.nome, c.titulo as curso, cert.id  as certificado  FROM aluno a
+		<![CDATA[select a.id as aluno_id, a.nome as aluno, a.celular as contato, a.cpf, m.data_matricula, a.email, m.id as matricula, p.nome, c.titulo as curso, cert.id  as certificado  FROM aluno a
 inner join parceiro p on p.id = $P{parceiro}
 INNER join matricula m on m.aluno_id = a.id
 inner join curso c on c.id = m.curso_id 
 left join certificado cert on cert.matricula_id = m.id
-where ($P{parceiro} ||  $P{parceiro} is null)
+where (a.parceiro_id = $P{parceiro} or   $P{parceiro} is null)
 and m.data_matricula between  $P{dataInicio}  and  $P{dataFinal}]]>
 	</queryString>
 	<field name="aluno_id" class="java.lang.Integer">
@@ -58,10 +58,20 @@ and m.data_matricula between  $P{dataInicio}  and  $P{dataFinal}]]>
 		<property name="com.jaspersoft.studio.field.label" value="aluno"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="aluno"/>
 	</field>
+	<field name="contato" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="celular"/>
+		<property name="com.jaspersoft.studio.field.label" value="contato"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="aluno"/>
+	</field>
 	<field name="cpf" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="cpf"/>
 		<property name="com.jaspersoft.studio.field.label" value="cpf"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="aluno"/>
+	</field>
+	<field name="data_matricula" class="java.time.LocalDateTime">
+		<property name="com.jaspersoft.studio.field.name" value="data_matricula"/>
+		<property name="com.jaspersoft.studio.field.label" value="data_matricula"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="matricula"/>
 	</field>
 	<field name="email" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="email"/>
@@ -107,12 +117,16 @@ and m.data_matricula between  $P{dataInicio}  and  $P{dataFinal}]]>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[RELATÓRIO DE ALUNOS POR PARCEIRO]]></text>
+				<text><![CDATA[RELATÓRIO DE MATRÍCULA/PARCEIROS]]></text>
 			</staticText>
 			<image hAlign="Right">
 				<reportElement stretchType="ContainerHeight" x="490" y="-10" width="310" height="53" uuid="d91abcfb-6e70-4744-be20-af85db5a6561"/>
 				<imageExpression><![CDATA["https://www.ecocursos.com.br/assets/images/Logo1.png"]]></imageExpression>
 			</image>
+			<textField pattern="dd/MM/yyyy HH:mm">
+				<reportElement x="0" y="20" width="300" height="20" uuid="85c0d386-29f0-45b2-8279-9a1bb9f760bb"/>
+				<textFieldExpression><![CDATA["Emitido em " ]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>
@@ -124,19 +138,19 @@ and m.data_matricula between  $P{dataInicio}  and  $P{dataFinal}]]>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[ID Aluno]]></text>
+				<text><![CDATA[ID]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="80" y="0" width="120" height="21" uuid="25843d13-0dff-4bca-9f32-976e487abd2c">
+				<reportElement x="80" y="0" width="100" height="21" uuid="25843d13-0dff-4bca-9f32-976e487abd2c">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="65707b26-be26-4228-a54c-b7a292715a16"/>
 				</reportElement>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Aluno]]></text>
+				<text><![CDATA[Nome do aluno]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="200" y="0" width="100" height="21" uuid="0808884e-8844-454e-b2ad-267c83f4327a">
+				<reportElement x="180" y="0" width="100" height="21" uuid="0808884e-8844-454e-b2ad-267c83f4327a">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="30d98ff7-6017-4166-b524-8ad41a372fc2"/>
 				</reportElement>
 				<textElement>
@@ -145,7 +159,7 @@ and m.data_matricula between  $P{dataInicio}  and  $P{dataFinal}]]>
 				<text><![CDATA[CPF]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="380" y="0" width="80" height="21" uuid="4deccba0-d8cb-41f0-a36e-bed36e2d04b4">
+				<reportElement x="650" y="0" width="80" height="21" uuid="4deccba0-d8cb-41f0-a36e-bed36e2d04b4">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="37caf3b7-0e49-4773-bccd-f1f66aea6b9f"/>
 				</reportElement>
 				<textElement>
@@ -154,7 +168,7 @@ and m.data_matricula between  $P{dataInicio}  and  $P{dataFinal}]]>
 				<text><![CDATA[ID Matrícula]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="480" y="0" width="200" height="21" uuid="aa013bb9-ca50-4a37-b052-6b79aae5717d">
+				<reportElement x="505" y="0" width="145" height="21" uuid="aa013bb9-ca50-4a37-b052-6b79aae5717d">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="de24b277-9cc2-4ebe-abab-4f56131a4d8b"/>
 				</reportElement>
 				<textElement>
@@ -163,13 +177,31 @@ and m.data_matricula between  $P{dataInicio}  and  $P{dataFinal}]]>
 				<text><![CDATA[Curso]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="700" y="0" width="100" height="21" uuid="77d786d9-fdae-4b13-9c3f-16f9ca235d9f">
+				<reportElement x="730" y="0" width="70" height="21" uuid="77d786d9-fdae-4b13-9c3f-16f9ca235d9f">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c7bcde42-90c8-4114-a22c-b47a98cde5f5"/>
 				</reportElement>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Certificado Emitido]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="280" y="0" width="100" height="21" uuid="9ab1780d-bc7b-4910-936f-12f4edead870">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d0f4312e-b2c5-4d07-beea-ea3d372b0aca"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Contato]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="380" y="0" width="125" height="21" uuid="92ed6f0d-df4e-44b1-8bed-8e74c96d7be0">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1875c691-3adc-4711-a805-a3abbbab65e3"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data da Matricula]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -182,32 +214,46 @@ and m.data_matricula between  $P{dataInicio}  and  $P{dataFinal}]]>
 				<textFieldExpression><![CDATA[$F{aluno_id}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="80" y="10" width="120" height="20" uuid="1aa24722-49a5-4a83-a518-eb26fa45ad78">
+				<reportElement x="80" y="10" width="100" height="20" uuid="1aa24722-49a5-4a83-a518-eb26fa45ad78">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="65707b26-be26-4228-a54c-b7a292715a16"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{aluno}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="200" y="10" width="100" height="20" uuid="6153a2cb-a69c-4a9c-b7be-b27e4971e857">
+				<reportElement x="180" y="10" width="100" height="20" uuid="6153a2cb-a69c-4a9c-b7be-b27e4971e857">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="30d98ff7-6017-4166-b524-8ad41a372fc2"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{cpf}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="380" y="10" width="80" height="20" uuid="2e8c19f3-fe25-4dfc-b4a3-f90a6e8c4fe3">
+				<reportElement x="650" y="10" width="80" height="20" uuid="2e8c19f3-fe25-4dfc-b4a3-f90a6e8c4fe3">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="37caf3b7-0e49-4773-bccd-f1f66aea6b9f"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{matricula}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="480" y="10" width="200" height="20" uuid="8a18b354-890e-4f61-b7ab-f79277bf8600">
+				<reportElement x="505" y="10" width="145" height="20" uuid="8a18b354-890e-4f61-b7ab-f79277bf8600">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="de24b277-9cc2-4ebe-abab-4f56131a4d8b"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{curso}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="700" y="10" width="100" height="20" uuid="6d667a50-78dd-4f23-9cdc-144f1e45a692"/>
+				<reportElement x="730" y="10" width="70" height="20" uuid="6d667a50-78dd-4f23-9cdc-144f1e45a692"/>
 				<textFieldExpression><![CDATA[$F{certificado} == null ?  "NAO" : "SIM"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="280" y="10" width="100" height="20" uuid="0032e9b8-2cf4-4430-b4ce-d0a0e48a47f3">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d0f4312e-b2c5-4d07-beea-ea3d372b0aca"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{contato}]]></textFieldExpression>
+			</textField>
+			<textField pattern="mm/MM/yyyy">
+				<reportElement x="380" y="10" width="100" height="20" uuid="3cd51934-cb43-4cf3-99da-197a8d751ddd">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1875c691-3adc-4711-a805-a3abbbab65e3"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy").format($F{data_matricula})
+
+]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

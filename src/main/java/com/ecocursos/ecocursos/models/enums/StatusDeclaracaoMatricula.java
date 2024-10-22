@@ -1,4 +1,4 @@
-package com.ecocursos.ecocursos.models.enums;
+    package com.ecocursos.ecocursos.models.enums;
 
 import com.ecocursos.ecocursos.models.DeclaracaoMatricula;
 import com.fasterxml.jackson.annotation.JsonValue;
