@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.21.3.final using JasperReports Library version 6.21.3-4a3078d20785ebe464f18037d738d12fc98c13cf  -->
+<!-- 2024-10-23T06:11:39 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="aluno" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5c724b7e-83d1-42e9-badf-a6492ca4eabe">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sample DB"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Ecocursos"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
 		<box>
@@ -40,7 +41,7 @@
 	<parameter name="status" class="java.lang.String"/>
 	<parameter name="sexo" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select a.id, a.nome, a.sexo as sexo, a.cpf, a.email, a.cidade, p.nome as nome_parceiro
+		<![CDATA[select a.id, a.nome, a.sexo as sexo, a.cpf, a.email, a.cidade, p.nome as nome_parceiro, a.celular
 from aluno a
 inner join parceiro p on p.id = a.parceiro_id
 where (a.parceiro_id = $P{parceiro} or $P{parceiro} is null)
@@ -82,6 +83,11 @@ and (a.sexo = $P{sexo}  or  $P{sexo} is null)]]>
 		<property name="com.jaspersoft.studio.field.label" value="nome_parceiro"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="parceiro"/>
 	</field>
+	<field name="celular" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="celular"/>
+		<property name="com.jaspersoft.studio.field.label" value="celular"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="aluno"/>
+	</field>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -89,7 +95,7 @@ and (a.sexo = $P{sexo}  or  $P{sexo} is null)]]>
 		<band height="10" splitType="Stretch"/>
 	</title>
 	<pageHeader>
-		<band height="44" splitType="Stretch">
+		<band height="43" splitType="Stretch">
 			<staticText>
 				<reportElement style="Table_CH" positionType="Float" mode="Transparent" x="0" y="0" width="300" height="20" uuid="862fba04-0bab-4047-b925-0f5627a6d409"/>
 				<box>
@@ -101,7 +107,7 @@ and (a.sexo = $P{sexo}  or  $P{sexo} is null)]]>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[RELATÓRIO DE ALUNO]]></text>
+				<text><![CDATA[RELATÓRIO DE ALUNOS]]></text>
 			</staticText>
 			<image hAlign="Right">
 				<reportElement stretchType="ContainerHeight" x="490" y="-10" width="310" height="53" uuid="d91abcfb-6e70-4744-be20-af85db5a6561"/>
@@ -118,19 +124,19 @@ and (a.sexo = $P{sexo}  or  $P{sexo} is null)]]>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Código]]></text>
+				<text><![CDATA[ID]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="80" y="0" width="70" height="19" uuid="46ee3068-abf0-4231-8a49-b724c1640236">
+				<reportElement x="80" y="0" width="100" height="19" uuid="46ee3068-abf0-4231-8a49-b724c1640236">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2f903824-8554-4120-94d0-8eb3741d2424"/>
 				</reportElement>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Nome]]></text>
+				<text><![CDATA[Nome do aluno]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="290" y="0" width="100" height="19" uuid="21406471-a40b-4682-ae0e-78160c0a32a8">
+				<reportElement x="280" y="0" width="100" height="19" uuid="21406471-a40b-4682-ae0e-78160c0a32a8">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="59b72ef1-f8e9-4229-af8d-7c6793fd21d5"/>
 				</reportElement>
 				<textElement>
@@ -139,7 +145,7 @@ and (a.sexo = $P{sexo}  or  $P{sexo} is null)]]>
 				<text><![CDATA[CPF]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="400" y="-1" width="100" height="19" uuid="60cc6a7d-a8a0-4aae-acac-e65437869b1a">
+				<reportElement x="380" y="0" width="100" height="19" uuid="60cc6a7d-a8a0-4aae-acac-e65437869b1a">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2121d221-f581-4635-a078-5ff2a304d943"/>
 				</reportElement>
 				<textElement>
@@ -148,7 +154,7 @@ and (a.sexo = $P{sexo}  or  $P{sexo} is null)]]>
 				<text><![CDATA[Email]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="510" y="0" width="130" height="19" uuid="8965abdf-7356-4129-96c1-74fb7c883289">
+				<reportElement x="480" y="0" width="100" height="19" uuid="8965abdf-7356-4129-96c1-74fb7c883289">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3525b3a7-1a82-4819-9536-8d4de6c21473"/>
 				</reportElement>
 				<textElement>
@@ -174,12 +180,21 @@ and (a.sexo = $P{sexo}  or  $P{sexo} is null)]]>
 				</textElement>
 				<text><![CDATA[Sexo]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="580" y="0" width="100" height="19" uuid="bc885f96-9af0-4ec5-9e03-fe83db437a38">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d2ec5cdf-19d2-4d5a-8dfb-2c482e1020d4"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CELULAR]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="20">
+		<band height="21">
 			<textField>
-				<reportElement x="80" y="0" width="80" height="20" uuid="c4970300-173a-4603-a8e3-a93be2c788f7">
+				<reportElement x="80" y="0" width="100" height="20" uuid="c4970300-173a-4603-a8e3-a93be2c788f7">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2f903824-8554-4120-94d0-8eb3741d2424"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
@@ -191,19 +206,19 @@ and (a.sexo = $P{sexo}  or  $P{sexo} is null)]]>
 				<textFieldExpression><![CDATA[$F{sexo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="400" y="-1" width="100" height="21" uuid="0347f3b4-0971-4f25-b866-5e49fd2962db">
+				<reportElement x="380" y="0" width="100" height="21" uuid="0347f3b4-0971-4f25-b866-5e49fd2962db">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1b7f6a05-3435-4100-82d6-81a0574a71b6"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="290" y="0" width="100" height="20" uuid="55c74ade-ccbc-4f16-94d1-6ffb89b0bb13">
+				<reportElement x="280" y="0" width="100" height="20" uuid="55c74ade-ccbc-4f16-94d1-6ffb89b0bb13">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ce70095f-b253-4e13-b245-86cb13c9e5bb"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{cpf}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="510" y="0" width="130" height="20" uuid="d89eecd6-ebbd-49e4-9522-b12dab88e842">
+				<reportElement x="480" y="1" width="100" height="20" uuid="d89eecd6-ebbd-49e4-9522-b12dab88e842">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="96ccfa8f-b605-4942-a54c-2d1a3aff4fbf"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{cidade}]]></textFieldExpression>
@@ -219,6 +234,12 @@ and (a.sexo = $P{sexo}  or  $P{sexo} is null)]]>
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f53edba1-60f8-417e-bf06-0694b436d46d"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="580" y="0" width="100" height="20" uuid="30160367-fc7b-43a5-8e4a-7f8a0b7a97e9">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d2ec5cdf-19d2-4d5a-8dfb-2c482e1020d4"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{celular}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

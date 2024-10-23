@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.21.3.final using JasperReports Library version 6.21.3-4a3078d20785ebe464f18037d738d12fc98c13cf  -->
+<!-- 2024-10-23T06:38:25 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="declaracao" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5c724b7e-83d1-42e9-badf-a6492ca4eabe">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sample DB"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Ecocursos"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
 		<box>
@@ -39,12 +40,16 @@
 	<parameter name="aluno" class="java.lang.String"/>
 	<parameter name="status" class="java.lang.String"/>
 	<parameter name="sexo" class="java.lang.String"/>
+	<parameter name="cpf" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select dm.id, dm.valor, c.titulo, a.nome, a.cpf, dm.data_cadastro from declaracao_matricula dm
+		<![CDATA[select dm.id, dm.valor, c.titulo, a.nome, a.cpf, dm.data_cadastro, p.nome as parceiro, m.id as matricula, dm.status as status from declaracao_matricula dm
 inner join matricula m on m.id = dm.matricula_id
 inner join curso c on c.id = m.curso_id
 inner join aluno a on a.id = m.aluno_id
+inner join parceiro p on p.id = a.parceiro_id
 where (dm.status = $P{status} or $P{status} is null)
+and (a.cpf = $P{cpf} or $P{cpf} is null)
+and (a.parceiro_id = $P{parceiro} or $P{parceiro} is null)
 and dm.data_cadastro between $P{dataInicio} and $P{dataFinal}]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer">
@@ -77,6 +82,21 @@ and dm.data_cadastro between $P{dataInicio} and $P{dataFinal}]]>
 		<property name="com.jaspersoft.studio.field.label" value="data_cadastro"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="declaracao_matricula"/>
 	</field>
+	<field name="parceiro" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nome"/>
+		<property name="com.jaspersoft.studio.field.label" value="parceiro"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="parceiro"/>
+	</field>
+	<field name="matricula" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id"/>
+		<property name="com.jaspersoft.studio.field.label" value="matricula"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="matricula"/>
+	</field>
+	<field name="status" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="status"/>
+		<property name="com.jaspersoft.studio.field.label" value="status"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="declaracao_matricula"/>
+	</field>
 	<variable name="valor1" class="java.lang.Integer" resetType="Column" calculation="Count">
 		<variableExpression><![CDATA[$F{valor}]]></variableExpression>
 	</variable>
@@ -102,7 +122,7 @@ and dm.data_cadastro between $P{dataInicio} and $P{dataFinal}]]>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[RELATÓRIO DE DECLARAÇÃO]]></text>
+				<text><![CDATA[RELATÓRIO DE DECLARAÇÕES]]></text>
 			</staticText>
 			<image hAlign="Right">
 				<reportElement stretchType="ContainerHeight" x="490" y="-10" width="310" height="53" uuid="d91abcfb-6e70-4744-be20-af85db5a6561"/>
@@ -111,18 +131,18 @@ and dm.data_cadastro between $P{dataInicio} and $P{dataFinal}]]>
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="19" splitType="Stretch">
+		<band height="28" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="71" height="19" uuid="2c8a9ea6-a4a7-4acc-b269-649369a96299">
+				<reportElement x="0" y="0" width="80" height="19" uuid="2c8a9ea6-a4a7-4acc-b269-649369a96299">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6bff983e-b4e9-431e-86a6-c059b26a6534"/>
 				</reportElement>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Código]]></text>
+				<text><![CDATA[ID(Declaração)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="480" y="0" width="200" height="19" uuid="46ee3068-abf0-4231-8a49-b724c1640236">
+				<reportElement x="80" y="-1" width="100" height="20" uuid="46ee3068-abf0-4231-8a49-b724c1640236">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2f903824-8554-4120-94d0-8eb3741d2424"/>
 				</reportElement>
 				<textElement>
@@ -131,7 +151,7 @@ and dm.data_cadastro between $P{dataInicio} and $P{dataFinal}]]>
 				<text><![CDATA[Nome]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="80" y="-1" width="100" height="19" uuid="21406471-a40b-4682-ae0e-78160c0a32a8">
+				<reportElement x="180" y="-1" width="100" height="19" uuid="21406471-a40b-4682-ae0e-78160c0a32a8">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="59b72ef1-f8e9-4229-af8d-7c6793fd21d5"/>
 				</reportElement>
 				<textElement>
@@ -149,7 +169,7 @@ and dm.data_cadastro between $P{dataInicio} and $P{dataFinal}]]>
 				<text><![CDATA[Valor]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="180" y="0" width="100" height="19" uuid="d5dccf2f-45cf-4406-9d22-4bef46ac2512">
+				<reportElement x="280" y="-1" width="100" height="19" uuid="d5dccf2f-45cf-4406-9d22-4bef46ac2512">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c82713cb-881f-435e-bbc7-18248ea1c7ea"/>
 				</reportElement>
 				<textElement markup="html">
@@ -158,13 +178,22 @@ and dm.data_cadastro between $P{dataInicio} and $P{dataFinal}]]>
 				<text><![CDATA[Curso]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="280" y="0" width="200" height="19" uuid="6ffe1371-9cd1-4a0b-8f4b-08ec6b5247c1">
+				<reportElement x="380" y="-1" width="100" height="18" uuid="6ffe1371-9cd1-4a0b-8f4b-08ec6b5247c1">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2f903824-8554-4120-94d0-8eb3741d2424"/>
 				</reportElement>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Data de cadastro]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="580" y="0" width="100" height="28" uuid="cb61e665-249b-4137-8c10-a6c23637f05f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d1bac015-8b0b-4422-9477-c99290dd0b41"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Status]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -183,37 +212,51 @@ and dm.data_cadastro between $P{dataInicio} and $P{dataFinal}]]>
 				<textFieldExpression><![CDATA[$F{valor}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="80" y="-1" width="100" height="20" uuid="8c11fc0c-08ff-4419-803f-a60838fdd11f">
+				<reportElement x="180" y="-1" width="100" height="20" uuid="8c11fc0c-08ff-4419-803f-a60838fdd11f">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="00456a4f-b204-49cf-9e5f-206ec78a5da8"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{cpf}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="480" y="0" width="200" height="19" uuid="44d5ff31-3079-4e48-82d4-3314a4d904ae">
+				<reportElement x="80" y="0" width="100" height="19" uuid="44d5ff31-3079-4e48-82d4-3314a4d904ae">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f1b63509-4cbb-46a4-9bc7-050da0e432a9"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="180" y="0" width="100" height="19" uuid="a2323138-236c-4437-b210-2d8131f21005">
+				<reportElement x="280" y="0" width="100" height="19" uuid="a2323138-236c-4437-b210-2d8131f21005">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c82713cb-881f-435e-bbc7-18248ea1c7ea"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{titulo}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="280" y="0" width="200" height="20" uuid="8ef795cd-90f4-4f4c-a4a6-506806890c8b">
+				<reportElement x="380" y="-1" width="100" height="19" uuid="8ef795cd-90f4-4f4c-a4a6-506806890c8b">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b717ad1f-726d-4833-8633-c32dda2d8a53"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{data_cadastro}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="580" y="0" width="100" height="20" uuid="6397e8fe-2e4e-4ea7-ab23-f031aa0ed93e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d1bac015-8b0b-4422-9477-c99290dd0b41"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{status} == 0 ? "APROVADA" : $F{status} == 1 ? "AGUARDANDO" : "REPROVADO"]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
 	<columnFooter>
 		<band height="20">
 			<textField pattern="¤#,##0.##;¤-#,##0.##">
-				<reportElement x="680" y="-1" width="120" height="21" uuid="4ed49156-3e36-4c5a-ac84-c361cecd6b57"/>
+				<reportElement x="690" y="-1" width="110" height="21" uuid="4ed49156-3e36-4c5a-ac84-c361cecd6b57"/>
+				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$V{valor2}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="580" y="0" width="100" height="20" uuid="34870937-c023-4654-a67c-4c3463cf1a5b"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor total]]></text>
+			</staticText>
 		</band>
 	</columnFooter>
 </jasperReport>
