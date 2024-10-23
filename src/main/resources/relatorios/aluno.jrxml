@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.21.3.final using JasperReports Library version 6.21.3-4a3078d20785ebe464f18037d738d12fc98c13cf  -->
+<!-- 2024-10-23T06:11:39 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="aluno" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5c724b7e-83d1-42e9-badf-a6492ca4eabe">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sample DB"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Ecocursos"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
 		<box>
@@ -40,7 +41,7 @@
 	<parameter name="status" class="java.lang.String"/>
 	<parameter name="sexo" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select a.id, a.nome, m.data_matricula, a.sexo as sexo, a.cpf, a.email, a.cidade, p.nome as nome_parceiro, a.celular
+		<![CDATA[select a.id, a.nome, a.sexo as sexo, a.cpf, a.email, a.cidade, p.nome as nome_parceiro, a.celular
 from aluno a
 inner join parceiro p on p.id = a.parceiro_id
 where (a.parceiro_id = $P{parceiro} or $P{parceiro} is null)
@@ -112,10 +113,6 @@ and (a.sexo = $P{sexo}  or  $P{sexo} is null)]]>
 				<reportElement stretchType="ContainerHeight" x="490" y="-10" width="310" height="53" uuid="d91abcfb-6e70-4744-be20-af85db5a6561"/>
 				<imageExpression><![CDATA["https://www.ecocursos.com.br/assets/images/Logo1.png"]]></imageExpression>
 			</image>
-			<textField pattern="dd/MM/yyyy HH:mm">
-				<reportElement x="0" y="20" width="300" height="20" uuid="a948c7b3-00e2-4ac3-b4bb-5daf7c7b7d34"/>
-				<textFieldExpression><![CDATA["Emitido em "  + DATEFORMAT(new java.util.Date(),"dd/MM/yyyy HH:mm")]]></textFieldExpression>
-			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>
