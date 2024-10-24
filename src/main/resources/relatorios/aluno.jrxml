@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.21.3.final using JasperReports Library version 6.21.3-4a3078d20785ebe464f18037d738d12fc98c13cf  -->
-<!-- 2024-10-23T06:11:39 -->
+<!-- 2024-10-24T11:13:22 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="aluno" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5c724b7e-83d1-42e9-badf-a6492ca4eabe">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Ecocursos"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
@@ -95,7 +95,7 @@ and (a.sexo = $P{sexo}  or  $P{sexo} is null)]]>
 		<band height="10" splitType="Stretch"/>
 	</title>
 	<pageHeader>
-		<band height="43" splitType="Stretch">
+		<band height="61" splitType="Stretch">
 			<staticText>
 				<reportElement style="Table_CH" positionType="Float" mode="Transparent" x="0" y="0" width="300" height="20" uuid="862fba04-0bab-4047-b925-0f5627a6d409"/>
 				<box>
@@ -154,7 +154,7 @@ and (a.sexo = $P{sexo}  or  $P{sexo} is null)]]>
 				<text><![CDATA[Email]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="480" y="0" width="100" height="19" uuid="8965abdf-7356-4129-96c1-74fb7c883289">
+				<reportElement x="580" y="-1" width="100" height="19" uuid="8965abdf-7356-4129-96c1-74fb7c883289">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3525b3a7-1a82-4819-9536-8d4de6c21473"/>
 				</reportElement>
 				<textElement>
@@ -181,13 +181,13 @@ and (a.sexo = $P{sexo}  or  $P{sexo} is null)]]>
 				<text><![CDATA[Sexo]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="580" y="0" width="100" height="19" uuid="bc885f96-9af0-4ec5-9e03-fe83db437a38">
+				<reportElement x="480" y="-1" width="100" height="19" uuid="bc885f96-9af0-4ec5-9e03-fe83db437a38">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d2ec5cdf-19d2-4d5a-8dfb-2c482e1020d4"/>
 				</reportElement>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[CELULAR]]></text>
+				<text><![CDATA[Contato]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -218,7 +218,7 @@ and (a.sexo = $P{sexo}  or  $P{sexo} is null)]]>
 				<textFieldExpression><![CDATA[$F{cpf}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="480" y="1" width="100" height="20" uuid="d89eecd6-ebbd-49e4-9522-b12dab88e842">
+				<reportElement x="580" y="0" width="100" height="20" uuid="d89eecd6-ebbd-49e4-9522-b12dab88e842">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="96ccfa8f-b605-4942-a54c-2d1a3aff4fbf"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{cidade}]]></textFieldExpression>
@@ -236,14 +236,11 @@ and (a.sexo = $P{sexo}  or  $P{sexo} is null)]]>
 				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="580" y="0" width="100" height="20" uuid="30160367-fc7b-43a5-8e4a-7f8a0b7a97e9">
+				<reportElement x="480" y="-1" width="100" height="20" uuid="30160367-fc7b-43a5-8e4a-7f8a0b7a97e9">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d2ec5cdf-19d2-4d5a-8dfb-2c482e1020d4"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{celular}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
-	<columnFooter>
-		<band height="20"/>
-	</columnFooter>
 </jasperReport>

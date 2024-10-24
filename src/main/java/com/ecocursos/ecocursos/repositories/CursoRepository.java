@@ -21,8 +21,6 @@ public interface CursoRepository extends JpaRepository<Curso, Integer>{
 
     List<Curso> findAllBySubCategoriaAndStatus(SubCategoria subCategoria, Status status);
 
-    @Query(value = """
-            SELECT  c.id as id, c.titulo as nome FROM curso c
-            """, nativeQuery = true)
+    @Query(value = "SELECT  c.id as id, c.titulo as nome FROM curso c", nativeQuery = true)
     List<CursoDTO> listarDTO();
 }
