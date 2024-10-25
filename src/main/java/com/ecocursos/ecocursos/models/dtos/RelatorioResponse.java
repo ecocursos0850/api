@@ -1,8 +1,15 @@
 package com.ecocursos.ecocursos.models.dtos;
 
-import lombok.Builder;
+public class RelatorioResponse {
+    public byte[] pdf;
 
-@Builder
-public record RelatorioResponse(byte[] pdf) {
-    
+    public RelatorioResponse() {}
+
+    public byte[] getPdf() {
+        return pdf;
+    }
+
+    public void setPdf(byte[] pdf) {
+        this.pdf = pdf;
+    }
 }

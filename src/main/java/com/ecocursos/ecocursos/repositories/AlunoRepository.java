@@ -67,9 +67,7 @@ public interface AlunoRepository extends JpaRepository<Aluno, Integer>{
     @Query(value = "UPDATE Aluno a set a.referencia = :referencia where a.id = :id")
     void saveReferencia(@Param("referencia") String referencia, @Param("id") Integer id);
 
-    @Query(value = """
-            SELECT a.id as id, a.nome as nome  FROM aluno a
-            """, nativeQuery = true)
+    @Query(value = "SELECT a.id as id, a.nome as nome  FROM aluno a", nativeQuery = true)
     List<AlunoDTO> listarDTO();
     
 }

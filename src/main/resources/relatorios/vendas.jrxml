@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.21.3.final using JasperReports Library version 6.21.3-4a3078d20785ebe464f18037d738d12fc98c13cf  -->
+<!-- 2024-10-24T11:38:10 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="vendas" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5c724b7e-83d1-42e9-badf-a6492ca4eabe">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sample DB"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Ecocursos"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
 		<box>
@@ -166,10 +167,10 @@ WHERE
 		<property name="com.jaspersoft.studio.field.label" value="total"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="pedido"/>
 	</field>
-	<variable name="subtotal1" class="java.lang.Double" resetType="Page" calculation="Sum">
+	<variable name="subtotal1" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$F{subtotal}]]></variableExpression>
 	</variable>
-	<variable name="total1" class="java.lang.Double" resetType="Page" calculation="Sum">
+	<variable name="total1" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$F{total}]]></variableExpression>
 	</variable>
 	<background>
@@ -276,51 +277,51 @@ WHERE
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="42">
+		<band height="30">
 			<textField>
-				<reportElement x="0" y="10" width="70" height="30" uuid="1ad87117-4c6d-45c6-9086-5ab153a4c176">
+				<reportElement x="0" y="10" width="70" height="20" uuid="1ad87117-4c6d-45c6-9086-5ab153a4c176">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b99c669e-c252-4226-827f-ee2f4162b8f2"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="80" y="10" width="120" height="30" uuid="1aa24722-49a5-4a83-a518-eb26fa45ad78">
+				<reportElement x="80" y="10" width="120" height="20" uuid="1aa24722-49a5-4a83-a518-eb26fa45ad78">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="65707b26-be26-4228-a54c-b7a292715a16"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{aluno}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="220" y="10" width="100" height="30" uuid="6153a2cb-a69c-4a9c-b7be-b27e4971e857">
+				<reportElement x="220" y="10" width="100" height="20" uuid="6153a2cb-a69c-4a9c-b7be-b27e4971e857">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="30d98ff7-6017-4166-b524-8ad41a372fc2"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{data_pedido}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="320" y="10" width="100" height="30" uuid="2e8c19f3-fe25-4dfc-b4a3-f90a6e8c4fe3">
+				<reportElement x="320" y="10" width="100" height="20" uuid="2e8c19f3-fe25-4dfc-b4a3-f90a6e8c4fe3">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="37caf3b7-0e49-4773-bccd-f1f66aea6b9f"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{qtd_itens}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="420" y="10" width="100" height="30" uuid="8a18b354-890e-4f61-b7ab-f79277bf8600">
+				<reportElement x="420" y="10" width="100" height="20" uuid="8a18b354-890e-4f61-b7ab-f79277bf8600">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="de24b277-9cc2-4ebe-abab-4f56131a4d8b"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{status} == 1 ? "PAGO" :  null]]></textFieldExpression>
 			</textField>
-			<textField pattern="¤#,##0.##;¤-#,##0.##">
-				<reportElement x="520" y="10" width="100" height="30" uuid="64803eb6-6528-40ed-b587-d7283d31c2ea">
+			<textField pattern="¤#,##0.##;¤-##0.##">
+				<reportElement x="520" y="10" width="100" height="20" uuid="64803eb6-6528-40ed-b587-d7283d31c2ea">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c7bcde42-90c8-4114-a22c-b47a98cde5f5"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{subtotal}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="620" y="10" width="100" height="30" uuid="a53c7ba0-dca4-434d-a4fe-980efba5b2c8">
+				<reportElement x="620" y="10" width="100" height="20" uuid="a53c7ba0-dca4-434d-a4fe-980efba5b2c8">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="add636b2-4ae0-4d13-b490-02d93cc540ba"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{tipo_curso} == 0 ? "CURSO ONLINE" :  $F{tipo_curso} == 1 ? "TAXA MATRICULA" :  $F{tipo_curso} == 2 ? "LINK EXTERNO" : $F{tipo_curso} == 3 ? "DOUTORADO/MESTRADO" : "CURSO ONLINE"]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="747" y="12" width="53" height="30" uuid="85f9aac2-ce3c-47f5-ba39-d1172e53d341">
+			<textField pattern="¤#,##0.##;¤-#,##0.##">
+				<reportElement x="747" y="12" width="53" height="18" uuid="85f9aac2-ce3c-47f5-ba39-d1172e53d341">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="af32f23c-0593-4678-a6b0-f7f855b0e616"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
@@ -328,17 +329,17 @@ WHERE
 		</band>
 	</detail>
 	<lastPageFooter>
-		<band height="32">
-			<textField pattern="¤#,##0.##;¤-#,##0.##">
-				<reportElement x="580" y="0" width="100" height="30" uuid="1d79deb4-e725-42cf-b419-b4441774846d"/>
+		<band height="20">
+			<textField pattern="¤#,##0.##;¤-##0.##">
+				<reportElement x="580" y="0" width="100" height="20" uuid="1d79deb4-e725-42cf-b419-b4441774846d"/>
 				<textFieldExpression><![CDATA[$V{subtotal1}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="480" y="0" width="100" height="30" uuid="1e49e5a9-fb2c-418a-9161-64dc58fdbcfb"/>
+				<reportElement x="480" y="0" width="100" height="20" uuid="1e49e5a9-fb2c-418a-9161-64dc58fdbcfb"/>
 				<text><![CDATA[Valor total:]]></text>
 			</staticText>
 			<textField pattern="¤#,##0.##;¤-##0.##">
-				<reportElement x="747" y="2" width="53" height="30" uuid="2d9a36a6-6c7e-4701-b84b-8d0865edb902"/>
+				<reportElement x="747" y="2" width="53" height="18" uuid="2d9a36a6-6c7e-4701-b84b-8d0865edb902"/>
 				<textFieldExpression><![CDATA[$V{total1}]]></textFieldExpression>
 			</textField>
 		</band>

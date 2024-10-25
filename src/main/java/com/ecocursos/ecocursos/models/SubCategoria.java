@@ -31,6 +31,6 @@ public class SubCategoria {
     private Categoria categoria;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "subCategoria")
+    @OneToMany(mappedBy = "subCategoria", cascade = CascadeType.ALL)
     private List<Curso> cursos;
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.21.3.final using JasperReports Library version 6.21.3-4a3078d20785ebe464f18037d738d12fc98c13cf  -->
-<!-- 2024-10-23T06:28:03 -->
+<!-- 2024-10-23T18:42:50 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="aluno_parceiro_matriculas" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5c724b7e-83d1-42e9-badf-a6492ca4eabe">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Ecocursos"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
@@ -42,7 +42,7 @@
 	<parameter name="sexo" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select a.id as aluno_id, a.nome as aluno, a.celular as contato, a.cpf, m.data_matricula, a.email, m.id as matricula, p.nome, c.titulo as curso, cert.id  as certificado  FROM aluno a
-inner join parceiro p on p.id = $P{parceiro}
+inner join parceiro p on p.id = a.parceiro_id
 INNER join matricula m on m.aluno_id = a.id
 inner join curso c on c.id = m.curso_id 
 left join certificado cert on cert.matricula_id = m.id

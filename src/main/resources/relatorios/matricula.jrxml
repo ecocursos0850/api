@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.21.3.final using JasperReports Library version 6.21.3-4a3078d20785ebe464f18037d738d12fc98c13cf  -->
-<!-- 2024-10-23T06:26:40 -->
+<!-- 2024-10-24T11:36:34 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="matricula" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5c724b7e-83d1-42e9-badf-a6492ca4eabe">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Ecocursos"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
@@ -78,10 +78,9 @@ and m.data_matricula between  $P{dataInicio}  and  $P{dataFinal}]]>
 		<property name="com.jaspersoft.studio.field.label" value="valor_matricula"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="matricula"/>
 	</field>
-	<field name="data_matricula" class="java.time.LocalDateTime">
+	<field name="data_matricula" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="data_matricula"/>
 		<property name="com.jaspersoft.studio.field.label" value="data_matricula"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="matricula"/>
 	</field>
 	<variable name="valor_curso1" class="java.lang.Double" resetType="Page" calculation="Sum">
 		<variableExpression><![CDATA[$F{valor_curso}]]></variableExpression>
@@ -92,10 +91,10 @@ and m.data_matricula between  $P{dataInicio}  and  $P{dataFinal}]]>
 	<variable name="valor_matricula1" class="java.lang.Double" resetType="Page" calculation="Sum">
 		<variableExpression><![CDATA[$F{valor_matricula}]]></variableExpression>
 	</variable>
-	<variable name="valor_curso3" class="java.lang.Double" resetType="Page" calculation="Sum">
+	<variable name="valor_curso3" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$F{valor_curso}]]></variableExpression>
 	</variable>
-	<variable name="valor_matricula2" class="java.lang.Double" resetType="Page" calculation="Sum">
+	<variable name="valor_matricula2" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$F{valor_matricula}]]></variableExpression>
 	</variable>
 	<background>
@@ -126,7 +125,7 @@ and m.data_matricula between  $P{dataInicio}  and  $P{dataFinal}]]>
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="24" splitType="Stretch">
+		<band height="19" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="0" width="71" height="19" uuid="2c8a9ea6-a4a7-4acc-b269-649369a96299">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6bff983e-b4e9-431e-86a6-c059b26a6534"/>
@@ -134,7 +133,7 @@ and m.data_matricula between  $P{dataInicio}  and  $P{dataFinal}]]>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Código]]></text>
+				<text><![CDATA[ID]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="80" y="0" width="100" height="19" uuid="46ee3068-abf0-4231-8a49-b724c1640236">
@@ -170,7 +169,7 @@ and m.data_matricula between  $P{dataInicio}  and  $P{dataFinal}]]>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Valor Curso]]></text>
+				<text><![CDATA[Vlr. Curso]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="700" y="0" width="100" height="19" uuid="21e2bc0d-aba5-4097-84b8-7f3c670d91a6">
@@ -179,7 +178,7 @@ and m.data_matricula between  $P{dataInicio}  and  $P{dataFinal}]]>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Valor Mat.]]></text>
+				<text><![CDATA[Vlr. Matrícula]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="180" y="-1" width="100" height="19" uuid="360ba2f9-c1de-428e-85a0-cda031abac76">
@@ -216,7 +215,7 @@ and m.data_matricula between  $P{dataInicio}  and  $P{dataFinal}]]>
 				<reportElement x="480" y="0" width="100" height="20" uuid="4d79d397-9e4f-4912-aa6d-9d0da9f10a10">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2121d221-f581-4635-a078-5ff2a304d943"/>
 				</reportElement>
-				<textFieldExpression><![CDATA[$F{parceiro}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{parceiro} == null ? "PLATAFORMA" : $F{parceiro}]]></textFieldExpression>
 			</textField>
 			<textField pattern="¤#,##0.##;¤-##0.##">
 				<reportElement x="600" y="0" width="80" height="18" uuid="bb0152fe-31ec-49bf-ab6a-c7c228185f5d">
@@ -225,17 +224,17 @@ and m.data_matricula between  $P{dataInicio}  and  $P{dataFinal}]]>
 				<textElement markup="styled"/>
 				<textFieldExpression><![CDATA[$F{valor_curso}]]></textFieldExpression>
 			</textField>
-			<textField pattern="¤#,##0.##;¤-##0.##">
+			<textField pattern="¤#,##0.##;¤-#,##0.##">
 				<reportElement x="700" y="0" width="100" height="18" uuid="3467ef20-87de-4a36-992e-5ced8a79b4b5">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="51bd5bdf-b1dc-4932-b145-cc91699c57ac"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{valor_matricula}]]></textFieldExpression>
 			</textField>
-			<textField pattern="M/d/yy h:mm a">
+			<textField pattern="M/d/yy">
 				<reportElement x="180" y="0" width="100" height="20" uuid="cd4ab5c4-2f5d-4357-8243-a134a48d5d8f">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="72c96d8f-8443-49ed-93e0-85e9acadf2e0"/>
 				</reportElement>
-				<textFieldExpression><![CDATA[$F{data_matricula}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new java.text.SimpleDateFormat("dd/MM/yyyy").format(new java.text.SimpleDateFormat("yyyy-mm-dd").parse($F{data_matricula}))]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
