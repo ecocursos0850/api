@@ -143,7 +143,7 @@ public class CursoService {
             if (curso.getCapa() == null) {
                 curso.setCapa(cursoExistente.getCapa());
             }
-            return repository.save(curso);
+            return repository.saveAndFlush(curso);
         }
         return null;
     }

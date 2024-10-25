@@ -30,7 +30,7 @@ public class Curso {
     private LocalDateTime dataCadastro;
 
     @JsonIncludeProperties({"id", "titulo"})
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "categoria_id")
     private Categoria categoria;
 
