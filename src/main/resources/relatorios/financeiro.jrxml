@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.21.3.final using JasperReports Library version 6.21.3-4a3078d20785ebe464f18037d738d12fc98c13cf  -->
+<!-- 2024-10-27T16:01:11 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="financeiro" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5c724b7e-83d1-42e9-badf-a6492ca4eabe">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sample DB"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Ecocursos"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
 		<box>
@@ -43,10 +44,11 @@
 	<parameter name="tipo_pagamento" class="java.lang.Integer"/>
 	<queryString>
 		<![CDATA[select ec.data_pagamento, ec.tipo_entrada_caixa, ec.tipo_pagamento, p.nome as parceiro, ec.valor from entrada_caixa ec
-left join parceiro p on p.id = ec.parceiro_id
+left join parceiro p on p.id = ec.parceiro_id 
 where (p.id = $P{parceiro} or $P{parceiro} is null)
 and (ec.tipo_entrada_caixa = $P{tipo_entrada_caixa} or $P{tipo_entrada_caixa} is null)
-and (ec.tipo_pagamento  = $P{tipo_pagamento} or $P{tipo_pagamento} is null)]]>
+and (ec.tipo_pagamento  = $P{tipo_pagamento} or $P{tipo_pagamento} is null)
+and ec.data_pagamento between $P{dataInicio} and $P{dataFinal}]]>
 	</queryString>
 	<field name="data_pagamento" class="java.time.LocalDateTime">
 		<property name="com.jaspersoft.studio.field.name" value="data_pagamento"/>
@@ -73,13 +75,16 @@ and (ec.tipo_pagamento  = $P{tipo_pagamento} or $P{tipo_pagamento} is null)]]>
 		<property name="com.jaspersoft.studio.field.label" value="valor"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="entrada_caixa"/>
 	</field>
-	<variable name="valor1" class="java.lang.Integer" resetType="Column" calculation="Count">
+	<variable name="valor1" class="java.lang.Integer" resetType="Column">
 		<variableExpression><![CDATA[$F{valor}]]></variableExpression>
 	</variable>
 	<variable name="valor2" class="java.lang.Double" resetType="Column" calculation="Sum">
 		<variableExpression><![CDATA[$F{valor}]]></variableExpression>
 	</variable>
-	<variable name="valor3" class="java.lang.Double" resetType="Page" calculation="Sum">
+	<variable name="valor3" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{valor}]]></variableExpression>
+	</variable>
+	<variable name="valor4" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$F{valor}]]></variableExpression>
 	</variable>
 	<background>
@@ -89,7 +94,7 @@ and (ec.tipo_pagamento  = $P{tipo_pagamento} or $P{tipo_pagamento} is null)]]>
 		<band height="10" splitType="Stretch"/>
 	</title>
 	<pageHeader>
-		<band height="44" splitType="Stretch">
+		<band height="43" splitType="Stretch">
 			<staticText>
 				<reportElement style="Table_CH" positionType="Float" mode="Transparent" x="0" y="0" width="300" height="20" uuid="862fba04-0bab-4047-b925-0f5627a6d409"/>
 				<box>
@@ -101,7 +106,7 @@ and (ec.tipo_pagamento  = $P{tipo_pagamento} or $P{tipo_pagamento} is null)]]>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[RELATÓRIO DE DECLARAÇÃO]]></text>
+				<text><![CDATA[RELATÓRIO DE FINANCEIRO]]></text>
 			</staticText>
 			<image hAlign="Right">
 				<reportElement stretchType="ContainerHeight" x="490" y="-10" width="310" height="53" uuid="d91abcfb-6e70-4744-be20-af85db5a6561"/>
@@ -121,7 +126,7 @@ and (ec.tipo_pagamento  = $P{tipo_pagamento} or $P{tipo_pagamento} is null)]]>
 				<text><![CDATA[Entrada Caixa]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="280" y="0" width="100" height="19" uuid="02b57144-6cce-4e6e-b733-e5e7fc03b161">
+				<reportElement x="180" y="0" width="100" height="19" uuid="02b57144-6cce-4e6e-b733-e5e7fc03b161">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b592ad48-a689-47c8-82ea-5398a6343606"/>
 				</reportElement>
 				<textElement>
@@ -130,7 +135,7 @@ and (ec.tipo_pagamento  = $P{tipo_pagamento} or $P{tipo_pagamento} is null)]]>
 				<text><![CDATA[Tipo Pagamento]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="480" y="0" width="100" height="19" uuid="4155b5c6-1dd2-4a84-83e1-954ecc83824f">
+				<reportElement x="380" y="0" width="100" height="19" uuid="4155b5c6-1dd2-4a84-83e1-954ecc83824f">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c1f40140-4e49-406f-9889-dfa0977f0833"/>
 				</reportElement>
 				<textElement>
@@ -147,15 +152,6 @@ and (ec.tipo_pagamento  = $P{tipo_pagamento} or $P{tipo_pagamento} is null)]]>
 				</textElement>
 				<text><![CDATA[Valor]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="110" y="1" width="140" height="19" uuid="748a1420-da7f-4bfc-82d4-95b7d93e3057">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2ff2b193-dd2c-4188-872c-6b8698e93667"/>
-				</reportElement>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Data de Pagamento]]></text>
-			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
@@ -167,37 +163,30 @@ and (ec.tipo_pagamento  = $P{tipo_pagamento} or $P{tipo_pagamento} is null)]]>
 				<textFieldExpression><![CDATA[$F{tipo_entrada_caixa} == 0 ? "Sindicato" : $F{tipo_entrada_caixa} == 1 ? "Venda pelo site" :  "Vendedor"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="280" y="0" width="100" height="20" uuid="25556e3b-08a5-4ddd-8702-dae7b4846cde">
+				<reportElement x="180" y="0" width="100" height="20" uuid="25556e3b-08a5-4ddd-8702-dae7b4846cde">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b592ad48-a689-47c8-82ea-5398a6343606"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{tipo_pagamento} == 0 ?  "Gratuito" : $F{tipo_pagamento} ==1  ? "Boleto" : $F{tipo_pagamento} == 2 ? "Crêdito" : $F{tipo_pagamento} == 3  ? "Pix": "null"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="480" y="0" width="100" height="19" uuid="2d9ae3a5-63d5-48a1-9eca-174ecfae662e">
+				<reportElement x="380" y="0" width="100" height="19" uuid="2d9ae3a5-63d5-48a1-9eca-174ecfae662e">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c1f40140-4e49-406f-9889-dfa0977f0833"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{parceiro}]]></textFieldExpression>
 			</textField>
-			<textField pattern="¤#,##0.##;¤-#,##0.##">
+			<textField pattern="¤#,##0.##;¤-##0.##">
 				<reportElement x="680" y="0" width="100" height="19" uuid="3bbe9528-9b47-4310-83be-a72dd264b1c2">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="abaf01bf-d634-4fd6-bfc5-b60d10baf66f"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{valor}]]></textFieldExpression>
 			</textField>
-			<textField pattern="dd/MM/yyyy">
-				<reportElement x="110" y="-1" width="140" height="20" uuid="e50d80a5-dc4d-49f5-a262-7d4e3174fd97">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2ff2b193-dd2c-4188-872c-6b8698e93667"/>
-				</reportElement>
-				<textFieldExpression><![CDATA[$F{data_pagamento}]]></textFieldExpression>
-				<patternExpression><![CDATA[$F{data_pagamento}]]></patternExpression>
-			</textField>
 		</band>
 	</detail>
 	<lastPageFooter>
-		<band height="19">
+		<band height="20">
 			<textField pattern="¤#,##0.##;¤-#,##0.##">
-				<reportElement x="680" y="0" width="100" height="19" uuid="543eefe0-4f9d-4d93-b141-05f66fd9f8d5"/>
-				<textFieldExpression><![CDATA[$V{valor3}]]></textFieldExpression>
+				<reportElement x="680" y="-2" width="100" height="22" uuid="b99cec4f-e7a1-4e6a-a8fa-e111b3d554fb"/>
+				<textFieldExpression><![CDATA[$V{valor4}]]></textFieldExpression>
 			</textField>
 		</band>
 	</lastPageFooter>
