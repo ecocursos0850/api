@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 import lombok.SneakyThrows;
 import org.springframework.http.HttpStatus;
@@ -92,11 +93,12 @@ public class DeclaracaoMatriculaController {
     @PostMapping("{id}/upload")
     public ResponseEntity<Void> upload(@PathVariable Integer id, @RequestParam("file") MultipartFile file, @RequestParam(name = "usuario") Integer idUsuario) {
         byte[] bytes = file.getBytes();
-        Path path = Paths.get("/var/www/html/Declaracao/" + file.getOriginalFilename());
+        String uuidString = UUID.randomUUID().toString() + ".pdf";
+        Path path = Paths.get("/var/www/html/Declaracao/" + uuidString);
         Files.write(path, bytes);
 
         DeclaracaoMatricula declaracaoMatricula = service.listarById(id);
-        declaracaoMatricula.setAnexoComprovante(file.getOriginalFilename());
+        declaracaoMatricula.setAnexoComprovante(uuidString);
         service.salvar(declaracaoMatricula, idUsuario);
         return ResponseEntity.noContent().build();
     }
