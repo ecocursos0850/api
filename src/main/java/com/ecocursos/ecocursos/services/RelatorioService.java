@@ -1,19 +1,16 @@
 package com.ecocursos.ecocursos.services;
 
-import java.net.URLDecoder;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.Connection;
-import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
-import org.aspectj.weaver.ast.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import com.ecocursos.ecocursos.exceptions.ErrorException;
 
+import net.sf.jasperreports.engine.JRParameter;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -31,6 +28,7 @@ public class RelatorioService {
             String caminhoJasper = jasperPath;
             JasperReport jasperReport =  JasperCompileManager.compileReport(caminhoJasper);
 
+            params.put(JRParameter.REPORT_LOCALE, new Locale("pt", "BR"));
             JasperPrint print = JasperFillManager.fillReport(jasperReport, params, connection);
             connection.close();    
             return JasperExportManager.exportReportToPdf(print);
