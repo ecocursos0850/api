@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.21.3.final using JasperReports Library version 6.21.3-4a3078d20785ebe464f18037d738d12fc98c13cf  -->
-<!-- 2024-10-24T11:38:10 -->
+<!-- 2024-10-30T20:07:58 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="vendas" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5c724b7e-83d1-42e9-badf-a6492ca4eabe">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Ecocursos"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
@@ -308,7 +308,7 @@ WHERE
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{status} == 1 ? "PAGO" :  null]]></textFieldExpression>
 			</textField>
-			<textField pattern="¤#,##0.##;¤-##0.##">
+			<textField pattern="¤#,##0.00;¤-#,##0.00">
 				<reportElement x="520" y="10" width="100" height="20" uuid="64803eb6-6528-40ed-b587-d7283d31c2ea">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c7bcde42-90c8-4114-a22c-b47a98cde5f5"/>
 				</reportElement>
@@ -320,7 +320,7 @@ WHERE
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{tipo_curso} == 0 ? "CURSO ONLINE" :  $F{tipo_curso} == 1 ? "TAXA MATRICULA" :  $F{tipo_curso} == 2 ? "LINK EXTERNO" : $F{tipo_curso} == 3 ? "DOUTORADO/MESTRADO" : "CURSO ONLINE"]]></textFieldExpression>
 			</textField>
-			<textField pattern="¤#,##0.##;¤-#,##0.##">
+			<textField pattern="¤#,##0.00;¤-#,##0.00">
 				<reportElement x="747" y="12" width="53" height="18" uuid="85f9aac2-ce3c-47f5-ba39-d1172e53d341">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="af32f23c-0593-4678-a6b0-f7f855b0e616"/>
 				</reportElement>
@@ -330,7 +330,7 @@ WHERE
 	</detail>
 	<lastPageFooter>
 		<band height="20">
-			<textField pattern="¤#,##0.##;¤-##0.##">
+			<textField pattern="¤#,##0.00;¤-#,##0.00">
 				<reportElement x="580" y="0" width="100" height="20" uuid="1d79deb4-e725-42cf-b419-b4441774846d"/>
 				<textFieldExpression><![CDATA[$V{subtotal1}]]></textFieldExpression>
 			</textField>
@@ -338,7 +338,7 @@ WHERE
 				<reportElement x="480" y="0" width="100" height="20" uuid="1e49e5a9-fb2c-418a-9161-64dc58fdbcfb"/>
 				<text><![CDATA[Valor total:]]></text>
 			</staticText>
-			<textField pattern="¤#,##0.##;¤-##0.##">
+			<textField pattern="¤#,##0.00;¤-#,##0.00">
 				<reportElement x="747" y="2" width="53" height="18" uuid="2d9a36a6-6c7e-4701-b84b-8d0865edb902"/>
 				<textFieldExpression><![CDATA[$V{total1}]]></textFieldExpression>
 			</textField>

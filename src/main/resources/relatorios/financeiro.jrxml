@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.21.3.final using JasperReports Library version 6.21.3-4a3078d20785ebe464f18037d738d12fc98c13cf  -->
-<!-- 2024-10-27T16:01:11 -->
+<!-- 2024-10-30T20:08:54 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="financeiro" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5c724b7e-83d1-42e9-badf-a6492ca4eabe">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Ecocursos"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
@@ -44,7 +44,7 @@
 	<parameter name="tipo_pagamento" class="java.lang.Integer"/>
 	<queryString>
 		<![CDATA[select ec.data_pagamento, ec.tipo_entrada_caixa, ec.tipo_pagamento, p.nome as parceiro, ec.valor from entrada_caixa ec
-left join parceiro p on p.id = ec.parceiro_id 
+left join parceiro p on p.id =  $P{parceiro} 
 where (p.id = $P{parceiro} or $P{parceiro} is null)
 and (ec.tipo_entrada_caixa = $P{tipo_entrada_caixa} or $P{tipo_entrada_caixa} is null)
 and (ec.tipo_pagamento  = $P{tipo_pagamento} or $P{tipo_pagamento} is null)
@@ -174,7 +174,7 @@ and ec.data_pagamento between $P{dataInicio} and $P{dataFinal}]]>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{parceiro}]]></textFieldExpression>
 			</textField>
-			<textField pattern="¤#,##0.##;¤-##0.##">
+			<textField pattern="¤#,##0.00;¤-#,##0.00">
 				<reportElement x="680" y="0" width="100" height="19" uuid="3bbe9528-9b47-4310-83be-a72dd264b1c2">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="abaf01bf-d634-4fd6-bfc5-b60d10baf66f"/>
 				</reportElement>
@@ -184,7 +184,7 @@ and ec.data_pagamento between $P{dataInicio} and $P{dataFinal}]]>
 	</detail>
 	<lastPageFooter>
 		<band height="20">
-			<textField pattern="¤#,##0.##;¤-#,##0.##">
+			<textField pattern="¤#,##0.00;¤-#,##0.00">
 				<reportElement x="680" y="-2" width="100" height="22" uuid="b99cec4f-e7a1-4e6a-a8fa-e111b3d554fb"/>
 				<textFieldExpression><![CDATA[$V{valor4}]]></textFieldExpression>
 			</textField>
