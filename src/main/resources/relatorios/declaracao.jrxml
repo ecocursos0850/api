@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.21.3.final using JasperReports Library version 6.21.3-4a3078d20785ebe464f18037d738d12fc98c13cf  -->
-<!-- 2024-10-24T11:36:10 -->
+<!-- 2024-10-30T20:06:00 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="declaracao" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5c724b7e-83d1-42e9-badf-a6492ca4eabe">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Ecocursos"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
@@ -211,7 +211,7 @@ and dm.data_cadastro between $P{dataInicio} and $P{dataFinal}]]>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
 			</textField>
-			<textField pattern="¤#,##0.##;¤-##0.##">
+			<textField pattern="¤#,##0.00;¤-#,##0.00">
 				<reportElement x="680" y="0" width="120" height="20" uuid="994f275b-e260-48f5-9f64-d06703b346c3">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="008353da-e1a1-47d2-9e72-0cac0b09d89f"/>
 				</reportElement>
@@ -257,7 +257,7 @@ and dm.data_cadastro between $P{dataInicio} and $P{dataFinal}]]>
 	</detail>
 	<lastPageFooter>
 		<band height="31">
-			<textField pattern="¤#,##0.##;¤-##0.##">
+			<textField pattern="¤#,##0.00;¤-#,##0.00">
 				<reportElement x="690" y="3" width="110" height="21" uuid="51358271-b641-43f2-a8b5-22c17468d9f1"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$V{valor2}]]></textFieldExpression>

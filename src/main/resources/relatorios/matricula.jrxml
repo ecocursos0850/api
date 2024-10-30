@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.21.3.final using JasperReports Library version 6.21.3-4a3078d20785ebe464f18037d738d12fc98c13cf  -->
-<!-- 2024-10-24T11:36:34 -->
+<!-- 2024-10-30T20:07:40 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="matricula" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5c724b7e-83d1-42e9-badf-a6492ca4eabe">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Ecocursos"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
@@ -217,14 +217,14 @@ and m.data_matricula between  $P{dataInicio}  and  $P{dataFinal}]]>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{parceiro} == null ? "PLATAFORMA" : $F{parceiro}]]></textFieldExpression>
 			</textField>
-			<textField pattern="¤#,##0.##;¤-##0.##">
+			<textField pattern="¤#,##0.00;¤-#,##0.00">
 				<reportElement x="600" y="0" width="80" height="18" uuid="bb0152fe-31ec-49bf-ab6a-c7c228185f5d">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2f0540f7-6f2e-4d8e-af60-c356d888f25e"/>
 				</reportElement>
 				<textElement markup="styled"/>
 				<textFieldExpression><![CDATA[$F{valor_curso}]]></textFieldExpression>
 			</textField>
-			<textField pattern="¤#,##0.##;¤-#,##0.##">
+			<textField pattern="¤#,##0.00;¤-#,##0.00">
 				<reportElement x="700" y="0" width="100" height="18" uuid="3467ef20-87de-4a36-992e-5ced8a79b4b5">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="51bd5bdf-b1dc-4932-b145-cc91699c57ac"/>
 				</reportElement>
@@ -240,11 +240,11 @@ and m.data_matricula between  $P{dataInicio}  and  $P{dataFinal}]]>
 	</detail>
 	<lastPageFooter>
 		<band height="20">
-			<textField pattern="¤#,##0.##;¤-#,##0.##">
+			<textField pattern="¤#,##0.00;¤-#,##0.00">
 				<reportElement x="600" y="0" width="80" height="20" uuid="65b1b0e5-da81-4d94-9ef9-b71a3fd826be"/>
 				<textFieldExpression><![CDATA[$V{valor_curso3}]]></textFieldExpression>
 			</textField>
-			<textField pattern="¤#,##0.##;¤-#,##0.##">
+			<textField pattern="¤#,##0.00;¤-#,##0.00">
 				<reportElement x="700" y="0" width="100" height="20" uuid="aed0c1e8-5454-49f4-b960-62c8fadc658c"/>
 				<textFieldExpression><![CDATA[$V{valor_matricula2}]]></textFieldExpression>
 			</textField>
