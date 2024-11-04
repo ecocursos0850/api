@@ -94,7 +94,6 @@ public class DeclaracaoMatriculaController {
     @PostMapping("{id}/upload")
     public ResponseEntity<Void> upload(@PathVariable Integer id, @RequestParam("file") MultipartFile file, @RequestParam(name = "usuario") Integer idUsuario) {
         byte[] bytes = file.getBytes();
-        String uuidString = UUID.randomUUID().toString() + ".pdf";
         String uuidString = UUID.randomUUID().toString() + ".jpg";
         Path path = Paths.get("/var/www/html/Declaracao/" + uuidString);
         Files.write(path, bytes);
