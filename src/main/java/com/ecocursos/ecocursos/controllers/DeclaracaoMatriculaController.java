@@ -85,9 +85,23 @@ public class DeclaracaoMatriculaController {
     }
 
     @PostMapping
-    public ResponseEntity<DeclaracaoMatricula> salvar(@RequestBody DeclaracaoMatricula declaracaoMatricula, @RequestParam(name = "usuario") Integer idUsuario) {
-            return ResponseEntity.status(HttpStatus.CREATED).body(service.salvar(declaracaoMatricula, idUsuario));
+    public ResponseEntity<DeclaracaoMatricula> salvar(
+            @RequestBody Map<String, Object> declaracaoMatriculaData, 
+            @RequestParam(name = "usuario") Integer idUsuario) {
+        
+        DeclaracaoMatricula declaracaoMatricula = new DeclaracaoMatricula();
+        declaracaoMatricula.setId((Integer) declaracaoMatriculaData.get("id"));
+        declaracaoMatricula.setCurso((Integer) declaracaoMatriculaData.get("curso"));
+        declaracaoMatricula.setStatus((Integer) declaracaoMatriculaData.get("status"));
+
+        String dataCadastroStr = (String) declaracaoMatriculaData.get("dataCadastro");
+        if (dataCadastroStr != null) {
+            declaracaoMatricula.setDataCadastro(LocalDate.parse(dataCadastroStr));
+        }
+        
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.salvar(declaracaoMatricula, idUsuario));
     }
+
 
     @SneakyThrows
     @PostMapping("{id}/upload")
