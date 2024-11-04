@@ -92,9 +92,21 @@ public class DeclaracaoMatriculaController {
         
         DeclaracaoMatricula declaracaoMatricula = new DeclaracaoMatricula();
         declaracaoMatricula.setId((Integer) declaracaoMatriculaData.get("id"));
-        declaracaoMatricula.setCurso((Integer) declaracaoMatriculaData.get("curso"));
-        declaracaoMatricula.setStatus((Integer) declaracaoMatriculaData.get("status"));
 
+        // Converter curso
+        Integer cursoId = (Integer) declaracaoMatriculaData.get("curso");
+        if (cursoId != null) {
+            Curso curso = cursoService.findById(cursoId);
+            declaracaoMatricula.setCurso(curso);
+        }
+
+        // Converter status
+        Integer statusValue = (Integer) declaracaoMatriculaData.get("status");
+        if (statusValue != null) {
+            declaracaoMatricula.setStatus(StatusDeclaracaoMatricula.valueOf(statusValue));
+        }
+
+        // Converter dataCadastro
         String dataCadastroStr = (String) declaracaoMatriculaData.get("dataCadastro");
         if (dataCadastroStr != null) {
             declaracaoMatricula.setDataCadastro(LocalDate.parse(dataCadastroStr));
@@ -102,7 +114,6 @@ public class DeclaracaoMatriculaController {
         
         return ResponseEntity.status(HttpStatus.CREATED).body(service.salvar(declaracaoMatricula, idUsuario));
     }
-
 
     @SneakyThrows
     @PostMapping("{id}/upload")
