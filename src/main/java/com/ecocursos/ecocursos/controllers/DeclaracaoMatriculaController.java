@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import com.ecocursos.ecocursos.services.CursoService;
 import java.util.Map;
 
 @RestController
