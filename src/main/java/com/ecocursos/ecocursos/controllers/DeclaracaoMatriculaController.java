@@ -3,7 +3,7 @@ package com.ecocursos.ecocursos.controllers;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalDate;
+import java.time.LocalDate; 
 import java.util.List;
 import java.util.UUID;
 
@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import java.util.Map;
-import java.time.LocalDate;
 
 @RestController
 @RequestMapping(value = "declaracao/matricula")
