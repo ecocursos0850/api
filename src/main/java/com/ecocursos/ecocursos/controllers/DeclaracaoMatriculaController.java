@@ -85,11 +85,9 @@ public class DeclaracaoMatriculaController {
     }
 
     @PostMapping
-    public ResponseEntity<DeclaracaoMatricula> salvar(
-            @RequestBody Map<String, Object> declaracaoMatriculaData, 
-            @RequestParam(name = "usuario") Integer idUsuario) {
-        
+    public ResponseEntity<DeclaracaoMatricula> salvar(@RequestBody DeclaracaoMatricula declaracaoMatricula, @RequestParam(name = "usuario") Integer idUsuario) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.salvar(declaracaoMatricula, idUsuario));
+            return ResponseEntity.status(HttpStatus.CREATED).body(service.salvar(declaracaoMatricula, idUsuario));
     }
 
     @SneakyThrows
