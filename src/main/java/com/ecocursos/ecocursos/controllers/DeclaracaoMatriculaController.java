@@ -20,9 +20,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.ecocursos.ecocursos.models.Curso;
 import com.ecocursos.ecocursos.services.CursoService;
+import com.ecocursos.ecocursos.models.enums.StatusDeclaracaoMatricula;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import java.util.Map;
+import java.time.LocalDate;
 
 @RestController
 @RequestMapping(value = "declaracao/matricula")
