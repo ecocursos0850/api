@@ -3,7 +3,7 @@ package com.ecocursos.ecocursos.controllers;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalDate; 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,7 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 @CrossOrigin("*")
 @RequiredArgsConstructor
 public class DeclaracaoMatriculaController {
-    
+
     private final DeclaracaoMatriculaService service;
 
     @GetMapping
@@ -94,6 +94,7 @@ public class DeclaracaoMatriculaController {
     @PostMapping("{id}/upload")
     public ResponseEntity<Void> upload(@PathVariable Integer id, @RequestParam("file") MultipartFile file, @RequestParam(name = "usuario") Integer idUsuario) {
         byte[] bytes = file.getBytes();
+        String uuidString = UUID.randomUUID().toString() + ".pdf";
         String uuidString = UUID.randomUUID().toString() + ".jpg";
         Path path = Paths.get("/var/www/html/Declaracao/" + uuidString);
         Files.write(path, bytes);
