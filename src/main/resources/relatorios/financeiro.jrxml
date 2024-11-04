@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.21.3.final using JasperReports Library version 6.21.3-4a3078d20785ebe464f18037d738d12fc98c13cf  -->
-<!-- 2024-10-30T20:08:54 -->
+<!-- 2024-11-04T07:02:42 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="financeiro" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5c724b7e-83d1-42e9-badf-a6492ca4eabe">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Ecocursos"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
@@ -43,7 +43,7 @@
 	<parameter name="tipo_entrada_caixa" class="java.lang.Integer"/>
 	<parameter name="tipo_pagamento" class="java.lang.Integer"/>
 	<queryString>
-		<![CDATA[select ec.data_pagamento, ec.tipo_entrada_caixa, ec.tipo_pagamento, p.nome as parceiro, ec.valor from entrada_caixa ec
+		<![CDATA[select ec.data_pagamento, ec.tipo_entrada_caixa, ec.tipo_pagamento, p.nome as parceiro, ec.valor, (select sum(dm.valor) from declaracao_matricula dm where dm.data_cadastro between $P{dataInicio} and $P{dataFinal}) as valorDeclaracao from entrada_caixa ec
 left join parceiro p on p.id =  $P{parceiro} 
 where (p.id = $P{parceiro} or $P{parceiro} is null)
 and (ec.tipo_entrada_caixa = $P{tipo_entrada_caixa} or $P{tipo_entrada_caixa} is null)
@@ -75,6 +75,10 @@ and ec.data_pagamento between $P{dataInicio} and $P{dataFinal}]]>
 		<property name="com.jaspersoft.studio.field.label" value="valor"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="entrada_caixa"/>
 	</field>
+	<field name="valorDeclaracao" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="valorDeclaracao"/>
+		<property name="com.jaspersoft.studio.field.label" value="valorDeclaracao"/>
+	</field>
 	<variable name="valor1" class="java.lang.Integer" resetType="Column">
 		<variableExpression><![CDATA[$F{valor}]]></variableExpression>
 	</variable>
@@ -86,6 +90,9 @@ and ec.data_pagamento between $P{dataInicio} and $P{dataFinal}]]>
 	</variable>
 	<variable name="valor4" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$F{valor}]]></variableExpression>
+	</variable>
+	<variable name="valorDeclaracao1" class="java.lang.Double" resetType="Page" calculation="Sum">
+		<variableExpression><![CDATA[$F{valorDeclaracao}]]></variableExpression>
 	</variable>
 	<background>
 		<band splitType="Stretch"/>
@@ -183,10 +190,30 @@ and ec.data_pagamento between $P{dataInicio} and $P{dataFinal}]]>
 		</band>
 	</detail>
 	<lastPageFooter>
-		<band height="20">
+		<band height="22">
 			<textField pattern="¤#,##0.00;¤-#,##0.00">
-				<reportElement x="680" y="-2" width="100" height="22" uuid="b99cec4f-e7a1-4e6a-a8fa-e111b3d554fb"/>
+				<reportElement x="280" y="0" width="100" height="22" uuid="b99cec4f-e7a1-4e6a-a8fa-e111b3d554fb"/>
 				<textFieldExpression><![CDATA[$V{valor4}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="180" y="0" width="100" height="22" uuid="9c906010-ab97-446d-8edb-95195a6d5e2e"/>
+				<textFieldExpression><![CDATA["Valor Subtotal"]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤#,##0.00;¤-#,##0.00">
+				<reportElement x="480" y="0" width="100" height="22" uuid="c2f6f37b-e35e-4460-ac22-4dec85604f3e"/>
+				<textFieldExpression><![CDATA[$F{valorDeclaracao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="380" y="0" width="100" height="22" uuid="ab4e86d6-1557-403b-97ff-48ad8fff8661"/>
+				<textFieldExpression><![CDATA["Valor Declaração"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="580" y="0" width="70" height="22" uuid="f717bdc5-134a-4dfb-8f71-73e5f6fcae98"/>
+				<textFieldExpression><![CDATA["Total"]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤#,##0.00;¤-#,##0.00">
+				<reportElement x="650" y="1" width="130" height="21" uuid="088f10c3-ce9c-4af5-9bd3-4deedb4f52ba"/>
+				<textFieldExpression><![CDATA[$V{valor4} + $F{valorDeclaracao}]]></textFieldExpression>
 			</textField>
 		</band>
 	</lastPageFooter>
