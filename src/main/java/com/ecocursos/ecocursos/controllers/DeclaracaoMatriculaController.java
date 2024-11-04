@@ -20,14 +20,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.ecocursos.ecocursos.models.Curso;
-import com.ecocursos.ecocursos.services.CursoService;
-import com.ecocursos.ecocursos.models.enums.StatusDeclaracaoMatricula;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.HttpStatus;
-import java.util.Map;
 
 @RestController
 @RequestMapping(value = "declaracao/matricula")
@@ -96,28 +88,6 @@ public class DeclaracaoMatriculaController {
     public ResponseEntity<DeclaracaoMatricula> salvar(
             @RequestBody Map<String, Object> declaracaoMatriculaData, 
             @RequestParam(name = "usuario") Integer idUsuario) {
-        
-        DeclaracaoMatricula declaracaoMatricula = new DeclaracaoMatricula();
-        declaracaoMatricula.setId((Integer) declaracaoMatriculaData.get("id"));
-
-        // Converter curso
-        Integer cursoId = (Integer) declaracaoMatriculaData.get("curso");
-        if (cursoId != null) {
-            Curso curso = cursoService.findById(cursoId);
-            declaracaoMatricula.setCurso(curso);
-        }
-
-        // Converter status
-        Integer statusValue = (Integer) declaracaoMatriculaData.get("status");
-        if (statusValue != null) {
-            declaracaoMatricula.setStatus(StatusDeclaracaoMatricula.valueOf(statusValue));
-        }
-
-        // Converter dataCadastro
-        String dataCadastroStr = (String) declaracaoMatriculaData.get("dataCadastro");
-        if (dataCadastroStr != null) {
-            declaracaoMatricula.setDataCadastro(LocalDate.parse(dataCadastroStr));
-        }
         
         return ResponseEntity.status(HttpStatus.CREATED).body(service.salvar(declaracaoMatricula, idUsuario));
     }
