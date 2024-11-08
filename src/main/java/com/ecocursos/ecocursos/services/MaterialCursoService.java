@@ -8,6 +8,7 @@ import org.aspectj.internal.lang.annotation.ajcDeclareAnnotation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ecocursos.ecocursos.exceptions.ErrorException;
 import com.ecocursos.ecocursos.models.MaterialCurso;
 import com.ecocursos.ecocursos.repositories.MaterialCursoRepository;
 
@@ -45,9 +46,13 @@ public class MaterialCursoService {
     }
 
     public void deletar(Integer id) {
-        MaterialCurso materialCurso = listarById(id);
-        if (materialCurso != null) {
-            repository.delete(materialCurso);
+        try {
+            MaterialCurso materialCurso = listarById(id);
+            if (materialCurso != null) {
+                repository.delete(id);
+            }
+        } catch(Exception e) {
+            throw new ErrorException("Erro ao deletar material");
         }
     }
 
