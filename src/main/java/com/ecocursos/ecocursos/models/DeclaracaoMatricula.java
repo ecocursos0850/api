@@ -43,7 +43,7 @@ public class DeclaracaoMatricula {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate inicioPeriodo;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate finalPeriodo;
 
     @Enumerated(EnumType.ORDINAL)
