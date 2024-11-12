@@ -40,12 +40,18 @@ public class DeclaracaoMatricula {
     @JoinColumn(name = "curso_id")
     private Curso curso;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    //private LocalDate inicioPeriodo;
+
+    //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    //private LocalDate finalPeriodo;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate inicioPeriodo;
-
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate finalPeriodo;
-
+    
     @Enumerated(EnumType.ORDINAL)
     private StatusDeclaracaoMatricula status;
 
