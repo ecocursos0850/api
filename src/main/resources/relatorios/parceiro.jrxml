@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.21.3.final using JasperReports Library version 6.21.3-4a3078d20785ebe464f18037d738d12fc98c13cf  -->
-<!-- 2024-10-30T20:09:00 -->
+<!-- 2024-11-14T07:00:33 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="parceiro" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5c724b7e-83d1-42e9-badf-a6492ca4eabe">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Ecocursos"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
@@ -42,7 +42,7 @@
 	<parameter name="sexo" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select cp.id, cp.cpf, p.nome, cp.nome as nome_cpf, cp.email, p.nome as parceiro from cpf_parceiro cp
-	inner join parceiro p on p.id = $P{parceiro}
+	inner join parceiro p on p.id = cp.parceiro_id
 	where (p.id = $P{parceiro} or $P{parceiro} is null)
 	and cp.timestamp_insert between $P{dataInicio} and $P{dataFinal}]]>
 	</queryString>
@@ -158,6 +158,9 @@
 				<reportElement x="80" y="0" width="170" height="21" uuid="30ccedb8-d721-4e87-85be-25f6cfa8fcab">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6b9b8467-637c-4e37-a1b1-ebe466d8fd66"/>
 				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{nome_cpf}]]></textFieldExpression>
 			</textField>
 			<textField>
