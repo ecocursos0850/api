@@ -69,6 +69,13 @@ public class ParceiroService {
         return list;
     }
 
+    public List<Parceiro> listarByNome(String nome) {
+        String query = "SELECT p FROM Parceiro p WHERE p.nome ILIKE CONCAT('%',:nome,'%')";
+        var list = em.createQuery(query, Parceiro.class);
+        list.setParameter("nome", nome);
+        return list.getResultList();
+    }
+
     public List<Parceiro> listarBySearch(Integer page, Integer size) {
         Pageable pageable = PageRequest.of(page, size);
         List<Parceiro> list = repository.listarByFirstAtivos(pageable);
