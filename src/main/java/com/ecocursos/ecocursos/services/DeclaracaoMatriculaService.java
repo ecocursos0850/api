@@ -184,6 +184,8 @@ public class DeclaracaoMatriculaService {
             declaracaoMatricula.setId(id);
             declaracaoMatricula.setDataCadastro(declaracaoMatriculaExistente.getDataCadastro());
             declaracaoMatricula.setMatricula(declaracaoMatriculaExistente.getMatricula());
+            if (declaracaoMatricula.getInicioPeriodo() == null) declaracaoMatricula.setInicioPeriodo(declaracaoMatriculaExistente.getInicioPeriodo());
+            if (declaracaoMatricula.getFinalPeriodo() == null) declaracaoMatricula.setFinalPeriodo(declaracaoMatriculaExistente.getFinalPeriodo());
             return repository.save(declaracaoMatricula);
         } catch (Exception e) {
             throw new ErrorException("Erro ao alterar declaração de matrícula");
