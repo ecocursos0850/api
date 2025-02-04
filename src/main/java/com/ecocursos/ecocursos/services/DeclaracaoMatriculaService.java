@@ -249,6 +249,7 @@ public class DeclaracaoMatriculaService {
         Paragraph ecoCursos = new Paragraph("ECOCURSOS – Educação a Distância", FontFactory.getFont(FontFactory.HELVETICA, 10, Font.BOLD));
         Paragraph cnpjEcocursos = new Paragraph("CNPJ 10.930.297/0001-48", FontFactory.getFont(FontFactory.HELVETICA,  10));
         conteudoProgramatico.setSpacingAfter(20f);
+        conteudoProgramatico.setAlignment(Element.ALIGN_JUSTIFIED);
         Image imagemAssinatura = Image.getInstance(ASSINATURA);
         imagemAssinatura.scalePercent(50);
         imagemAssinatura.setAlignment(Element.ALIGN_CENTER);
