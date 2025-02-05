@@ -45,9 +45,11 @@ application:
       refresh-token:
         expiration: '604800000'
 server:
-  port: 8080
-#  ssl:
-#    certificate: /etc/ssl/certificate.crt  
+  port: 8443
+  ssl:
+    key-store: /etc/letsencrypt/live/srv448021.hstgr.cloud/keystore.p12
+    key-store-password: 080326
+    key-alias: spring-boot-web-0
+#    certificate: /etc/ssl/certificate.crt
 #    certificatePrivateKey: /etc/ssl/private/private.key
 #    trustCertificate: /etc/ssl/ca_bundle.crt
-
