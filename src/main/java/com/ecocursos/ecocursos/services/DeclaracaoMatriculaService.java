@@ -255,8 +255,11 @@ public class DeclaracaoMatriculaService {
         imagemAssinatura.setAlignment(Element.ALIGN_CENTER);
         cnpjEcocursos.setSpacingAfter(60f);
         ambienteVirtual.setSpacingAfter(20f);
+        ambienteVirtual.setAlignment(Element.ALIGN_JUSTIFIED);
         objetivoGeral.setSpacingAfter(20f);
+        objetivoGeral.setAlignment(Element.ALIGN_JUSTIFIED);
         cursos.setSpacingAfter(20f);
+        cursos.setAlignment(Element.ALIGN_JUSTIFIED);
         dataAtual.setSpacingAfter(20f);
         titulo.setSpacingBefore(30f);
         paragraph.add(imagemLogo);
