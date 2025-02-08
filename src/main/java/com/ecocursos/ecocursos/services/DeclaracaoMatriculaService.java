@@ -269,21 +269,21 @@ public class DeclaracaoMatriculaService {
     
         // Outros parágrafos
         Paragraph ambienteVirtual = new Paragraph(
-            "Curso realizado em ambiente virtual, com tutoria durante todo o período de realização da capacitação...",
+            "Curso realizado em ambiente virtual, com tutoria durante todo o período de realização da capacitação e eventos síncronos ao longo do curso, além da atividade avaliativa de 10 questões, que somadas correspondem a 10 pontos, sendo necessário obter o mínimo de 6 pontos para aprovação.",
             fontePadrao
         );
         ambienteVirtual.setSpacingAfter(20f);
         ambienteVirtual.setAlignment(Element.ALIGN_JUSTIFIED);
     
         Paragraph objetivoGeral = new Paragraph(
-            "O objetivo geral é fornecer uma visão mais aprofundada sobre o tema...",
+            "O objetivo geral é fornecer uma visão mais aprofundada sobre o tema que dá nome a este curso tanto nos seus aspectos teóricos, como práticos e observacionais. Objetivo específico é discorrer sobre os temas citados no conteúdo programático.",
             fontePadrao
         );
         objetivoGeral.setSpacingAfter(20f);
         objetivoGeral.setAlignment(Element.ALIGN_JUSTIFIED);
     
         Paragraph cursos = new Paragraph(
-            "Os cursos livres de atualização e capacitação profissional são oferecidos na conformidade...",
+            "Os cursos livres de atualização e capacitação profissional são oferecidos na conformidade do que dispõe o Decreto Presidencial No. 5.154/2004, que regulamenta o § 2º do art. 36 e os arts. 39 a 41 da Lei No 9.394, de 20 de dezembro de 1996, que estabelece as diretrizes e bases da educação nacional, e dá outras providências. Lei n. 11.416/06 artigo 15, V para Adicional de Qualificação – Treinamentos dos Servidores Públicos Federais.",
             fontePadrao
         );
         cursos.setSpacingAfter(20f);
