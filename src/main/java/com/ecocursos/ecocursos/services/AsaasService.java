@@ -27,7 +27,7 @@ import lombok.SneakyThrows;
 public class AsaasService {
 
     private static final String token = "$aact_YTU5YTE0M2M2N2I4MTliNzk0YTI5N2U5MzdjNWZmNDQ6OjAwMDAwMDAwMDAwMDAzNTcwNTg6OiRhYWNoXzdkZTJkZjhkLTY4ZTktNGFkZS05MjgxLWI0ZjNhNDM4ODQyYQ==";
-    private static final String url = "https://api.asaas.com/v3";
+    private static final String url = "https://api.asaas.com";
 
     private CamelContext camelContext;
 
