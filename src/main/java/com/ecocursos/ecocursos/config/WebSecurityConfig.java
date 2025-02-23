@@ -27,7 +27,7 @@ public class WebSecurityConfig {
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
         .authorizeHttpRequests()
-        .requestMatchers("/api/v1/auth/**", "/api/v1/auth/authenticate", "/v3/api-docs", "/swagger-ui.html", "/swagger-ui/index.html", "/aluno", "/aluno/search","/aluno/recuperar", "/banner")
+        .requestMatchers("/api/v1/auth/**", "/api/v1/auth/authenticate", "/v3/api-docs", "/swagger-ui.html", "/swagger-ui/index.html", "/aluno", "/aluno/search","/aluno/recuperar", "/banner", "/pedido/webhook")
         .permitAll()
         .anyRequest()
         .authenticated()
