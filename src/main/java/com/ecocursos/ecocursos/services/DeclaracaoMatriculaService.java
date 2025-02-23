@@ -224,66 +224,105 @@ public class DeclaracaoMatriculaService {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PdfWriter writer = PdfWriter.getInstance(document, baos);
         writer.setPdfVersion(PdfWriter.PDF_VERSION_1_7);
-        Font fontParagraph = FontFactory.getFont(FontFactory.HELVETICA, 14);
-        Font fontAlun = FontFactory.getFont(FontFactory.HELVETICA, 24);
+    
+        // Fonte única padronizada para todo o documento
+        Font fontePadrao = FontFactory.getFont(FontFactory.HELVETICA, 12);
+        Font fonteNegrito = FontFactory.getFont(FontFactory.HELVETICA, 12, Font.BOLD);
+    
         document.open();
         document.setMarginMirroring(true);
-        Paragraph paragraph = new Paragraph();
+        
+        // Logo
         Image imagemLogo = Image.getInstance(LOGO);
         imagemLogo.scalePercent(5);
         imagemLogo.setAlignment(Element.ALIGN_CENTER);
-        Paragraph titulo = new Paragraph("DECLARAÇÃO", FontFactory.getFont(FontFactory.HELVETICA, 14, Font.BOLD));
-        Paragraph introducao = new Paragraph("O ECOCURSOS - Educação a distância, inscrito no CNPJ sob n. 10.930.297/0001-48, DECLARA que " + declaracaoMatricula.getAluno().getNome() + " participará/participou do curso de " + declaracaoMatricula.getCurso().getTitulo() + " no período de " +  declaracaoMatricula.getInicioPeriodo().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + " a " + declaracaoMatricula.getFinalPeriodo().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + ", com carga horaria de " + declaracaoMatricula.getCurso().getCargaHoraria() + " horas e contém o seguinte conteúdo programático: ");
+        
+        // Título
+        Paragraph titulo = new Paragraph("DECLARAÇÃO", fonteNegrito);
         titulo.setAlignment(Element.ALIGN_CENTER);
-        Paragraph conteudoProgramaticoTitulo = new Paragraph("Conteúdo programático".toUpperCase(), FontFactory.getFont(FontFactory.HELVETICA, 14, Font.BOLD));
-        String text = StringEscapeUtils.unescapeHtml4(declaracaoMatricula.getCurso().getConteudo());
-        Paragraph conteudoProgramatico = new Paragraph(new Paragraph(Jsoup.parse(text).text(), FontFactory.getFont(FontFactory.HELVETICA, 14)));
-        ConverterProperties converterProperties = new ConverterProperties();
-        HtmlConverter.convertToElements(conteudoProgramatico.toString(), converterProperties    );
+        
+        // Introdução
+        Paragraph introducao = new Paragraph(
+            "O ECOCURSOS - Educação a distância, inscrito no CNPJ sob n. 10.930.297/0001-48, DECLARA que " +
+            declaracaoMatricula.getAluno().getNome() +
+            " participará/participou do curso de " +
+            declaracaoMatricula.getCurso().getTitulo() +
+            " no período de " +
+            declaracaoMatricula.getInicioPeriodo().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) +
+            " a " +
+            declaracaoMatricula.getFinalPeriodo().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) +
+            ", com carga horária de " +
+            declaracaoMatricula.getCurso().getCargaHoraria() +
+            " horas e contém o seguinte conteúdo programático: ",
+            fontePadrao
+        );
         introducao.setSpacingAfter(20f);
-        Paragraph ambienteVirtual = new Paragraph(StringEscapeUtils.unescapeHtml4("Curso realizado em ambiente virtual, com tutoria durante todo o período de realização da capacitação e eventos síncronos ao longo do curso, além da atividade avaliativa de 10 questões, que somadas correspondem a 10 pontos, sendo necessário obter o mínimo de 6 pontos para aprovação."), FontFactory.getFont(FontFactory.HELVETICA, 14));
-        Paragraph objetivoGeral = new Paragraph(StringEscapeUtils.unescapeHtml4("O objetivo geral é fornecer uma visão mais aprofundada sobre o tema que dá nome a este curso tanto nos seus aspectos teóricos, como práticos e observacionais.\n" +
-                "Objetivo especifico é discorrer sobre os temas citados no conteúdo programático.\n"), FontFactory.getFont(FontFactory.HELVETICA, 14));
-        Paragraph cursos = new Paragraph(StringEscapeUtils.unescapeHtml4("Os cursos livres de atualização e capacitação profissional são oferecidos na conformidade do que dispõe o Decreto Presidencial No. 5.154/2004, que regulamenta o § 2º do art. 36 e os arts. 39 a 41 da Lei No 9.394, de 20 de dezembro de 1996, que estabelece as diretrizes e bases da educação nacional, e dá outras providências. Lei n. 11.416/06 artigo 15, V para Adicional de Qualificação – Treinamentos dos Servidores Públicos Federais."), FontFactory.getFont(FontFactory.HELVETICA, 14));
-        Paragraph dataAtual = new Paragraph(StringEscapeUtils.unescapeHtml4("Votuporanga/SP, " + LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")).toString()), FontFactory.getFont(FontFactory.HELVETICA, 14));
-        Paragraph ecoCursos = new Paragraph("ECOCURSOS – Educação a Distância", FontFactory.getFont(FontFactory.HELVETICA, 10, Font.BOLD));
-        Paragraph cnpjEcocursos = new Paragraph("CNPJ 10.930.297/0001-48", FontFactory.getFont(FontFactory.HELVETICA,  10));
+    
+        // Conteúdo programático
+        Paragraph conteudoProgramaticoTitulo = new Paragraph("CONTEÚDO PROGRAMÁTICO", fonteNegrito);
+        conteudoProgramaticoTitulo.setSpacingAfter(10f);
+    
+        String text = StringEscapeUtils.unescapeHtml4(declaracaoMatricula.getCurso().getConteudo());
+        Paragraph conteudoProgramatico = new Paragraph(Jsoup.parse(text).text(), fontePadrao);
         conteudoProgramatico.setSpacingAfter(20f);
+        conteudoProgramatico.setAlignment(Element.ALIGN_JUSTIFIED);
+    
+        // Outros parágrafos
+        Paragraph ambienteVirtual = new Paragraph(
+            "Curso realizado em ambiente virtual, com tutoria durante todo o período de realização da capacitação e eventos síncronos ao longo do curso, além da atividade avaliativa de 10 questões, que somadas correspondem a 10 pontos, sendo necessário obter o mínimo de 6 pontos para aprovação.",
+            fontePadrao
+        );
+        ambienteVirtual.setSpacingAfter(20f);
+        ambienteVirtual.setAlignment(Element.ALIGN_JUSTIFIED);
+    
+        Paragraph objetivoGeral = new Paragraph(
+            "O objetivo geral é fornecer uma visão mais aprofundada sobre o tema que dá nome a este curso tanto nos seus aspectos teóricos, como práticos e observacionais. Objetivo específico é discorrer sobre os temas citados no conteúdo programático.",
+            fontePadrao
+        );
+        objetivoGeral.setSpacingAfter(20f);
+        objetivoGeral.setAlignment(Element.ALIGN_JUSTIFIED);
+    
+        Paragraph cursos = new Paragraph(
+            "Os cursos livres de atualização e capacitação profissional são oferecidos na conformidade do que dispõe o Decreto Presidencial No. 5.154/2004, que regulamenta o § 2º do art. 36 e os arts. 39 a 41 da Lei No 9.394, de 20 de dezembro de 1996, que estabelece as diretrizes e bases da educação nacional, e dá outras providências. Lei n. 11.416/06 artigo 15, V para Adicional de Qualificação – Treinamentos dos Servidores Públicos Federais.",
+            fontePadrao
+        );
+        cursos.setSpacingAfter(20f);
+        cursos.setAlignment(Element.ALIGN_JUSTIFIED);
+    
+        Paragraph dataAtual = new Paragraph(
+            "Votuporanga/SP, " + LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+            fontePadrao
+        );
+        dataAtual.setSpacingAfter(20f);
+    
+        // Rodapé
+        Paragraph ecoCursos = new Paragraph("ECOCURSOS – Educação a Distância", fonteNegrito);
+        Paragraph cnpjEcocursos = new Paragraph("CNPJ 10.930.297/0001-48", fontePadrao);
+        Paragraph rua = new Paragraph("Rua Ponta Porã n. 3011-sala 2- CEP 15500-090 – Votuporanga/SP.", fonteNegrito);
+        Paragraph email = new Paragraph("E-mail: contato@ecocursos.com.br – web: www.ecocursos.com.br", fonteNegrito);
+    
+        // Assinatura
         Image imagemAssinatura = Image.getInstance(ASSINATURA);
         imagemAssinatura.scalePercent(50);
         imagemAssinatura.setAlignment(Element.ALIGN_CENTER);
-        cnpjEcocursos.setSpacingAfter(60f);
-        ambienteVirtual.setSpacingAfter(20f);
-        objetivoGeral.setSpacingAfter(20f);
-        cursos.setSpacingAfter(20f);
-        dataAtual.setSpacingAfter(20f);
-        titulo.setSpacingBefore(30f);
-        paragraph.add(imagemLogo);
-        LineSeparator separator = new LineSeparator(); // Você pode modificar o estilo da linha aqui
-        separator.setLineWidth(UnitValue.createPercentValue(100).getValue()); // Definindo a largura da linha como 100% da página
-        separator.setLineWidth(0.1f);
-        paragraph.add((Element) separator);
-        paragraph.add(titulo);
-        paragraph.add(introducao);
-        paragraph.add(conteudoProgramaticoTitulo);
-        paragraph.add(conteudoProgramatico);
-        paragraph.add(ambienteVirtual);
-        paragraph.add(objetivoGeral);
-        paragraph.add(cursos);
-        paragraph.add(dataAtual);
-        paragraph.add(ecoCursos);
-        paragraph.add(cnpjEcocursos);
-        paragraph.add(imagemAssinatura);
-        Paragraph rua = new Paragraph("Rua  Ponta Porã n. 3011-sala 2- CEP 15500-090 – Votuporanga/SP.", FontFactory.getFont(FontFactory.HELVETICA,  10, Font.BOLD));
-        rua.setAlignment(Element.ALIGN_CENTER);
-        Paragraph email = new Paragraph("E-mail: contato@ecocursos.com.br – web: www.ecocursos.com.br", FontFactory.getFont(FontFactory.HELVETICA,  10, Font.BOLD));
-        email.setAlignment(Element.ALIGN_CENTER);
-        paragraph.setAlignment(Element.ALIGN_CENTER);
-        paragraph.add(rua);
-        paragraph.add(email);
-        document.add(paragraph);
+    
+        // Adicionando elementos ao documento
+        document.add(imagemLogo);
+        document.add(titulo);
+        document.add(introducao);
+        document.add(conteudoProgramaticoTitulo);
+        document.add(conteudoProgramatico);
+        document.add(ambienteVirtual);
+        document.add(objetivoGeral);
+        document.add(cursos);
+        document.add(dataAtual);
+        document.add(ecoCursos);
+        document.add(cnpjEcocursos);
+        document.add(imagemAssinatura);
+        document.add(rua);
+        document.add(email);
+    
         document.close();
-        byte[] pdfBytes = baos.toByteArray();
-        return pdfBytes;
+        return baos.toByteArray();
     }
 }
