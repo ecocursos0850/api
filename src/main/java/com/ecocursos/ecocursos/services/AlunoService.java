@@ -103,7 +103,8 @@ public class AlunoService {
         aluno.setDataCadastro(LocalDateTime.now());
         aluno.setHorasDisponiveis(361);
         verificarIdade(aluno);
-        verificarAlunoParceiro(aluno);
+        // verificarAlunoParceiro(aluno);
+        aluno = verificarAlunoParceiro(aluno);
         aluno.setSenha(DigestUtils.md5DigestAsHex(aluno.getSenha().getBytes()));
         Aluno result = repository.save(aluno);
         // registrarAlunoIugu(aluno, result);
@@ -138,14 +139,25 @@ public class AlunoService {
         repository.saveReferencia(aluno.getReferencia(), aluno.getId());
     }
 
-    private void verificarAlunoParceiro(Aluno aluno) {
+    /*private void verificarAlunoParceiro(Aluno aluno) {
         if (cpfParceiroService.existsByCpf(aluno.getCpf())) {
             Integer idParceiro = cpfParceiroService.listarByCpf(aluno.getCpf()).getParceiro().getId();
             aluno.setParceiro(parceiroService.listarById(idParceiro));
         } else if (aluno.getParceiro() != null) {
             aluno.setParceiro(parceiroService.listarById(aluno.getParceiro().getId()));
         }
-    }
+    }*/
+
+    private Aluno verificarAlunoParceiro(Aluno aluno) {
+         if (cpfParceiroService.existsByCpf(aluno.getCpf())) {
+             Integer idParceiro = cpfParceiroService.listarByCpf(aluno.getCpf()).getParceiro().getId();
+             aluno.setParceiro(parceiroService.listarById(idParceiro));
+             cpfParceiroService.deletarByCpf(aluno.getCpf().trim().replaceAll("[^0-9]", ""));
+         } else if (aluno.getParceiro() != null) {
+             aluno.setParceiro(parceiroService.listarById(aluno.getParceiro().getId()));
+         }
+         return aluno;
+     }    
 
     public Aluno listarById(Integer id) {
         return repository.findById(id).orElse(null);
