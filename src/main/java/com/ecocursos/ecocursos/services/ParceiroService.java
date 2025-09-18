@@ -102,6 +102,12 @@ public class ParceiroService {
         if (parceiroExistente != null) {
             parceiro.setId(id);
             parceiro.setDataCadastro(parceiroExistente.getDataCadastro());
+            
+            // Preservar a logo existente se nenhuma nova logo for enviada
+            if (parceiro.getLogo() == null || parceiro.getLogo().length == 0) {
+                parceiro.setLogo(parceiroExistente.getLogo());
+            }
+            
             return repository.save(parceiro);
         }
         return null;
