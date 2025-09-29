@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -309,6 +310,7 @@ public class PedidoService {
         return repository.findById(id).orElse(null);
     }
 
+    @Transactional
     public Pedido salvar(Pedido pedido) {
         pedido.setDataPedido(LocalDateTime.now());
         pedido.setAluno(alunoService.listarById(pedido.getAluno().getId()));
