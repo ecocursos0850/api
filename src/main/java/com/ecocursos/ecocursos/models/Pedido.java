@@ -95,6 +95,9 @@ public class Pedido {
 
     private Double taxaMatricula;
 
+    @JsonProperty(access = Access.WRITE_ONLY)
+    private Integer totalParcelas;
+
     @Transient
     private CartaoCredito cartaoCredito;
 
@@ -113,7 +116,9 @@ public class Pedido {
 
     public static Map<String, Object> criarPedidoAsaas(Pedido pedido) {
         Map<String, Object> map = new HashMap<>();
-        if (pedido.getTipoPagamentos().get(0).equals(TipoPagamento.CARTAO_CREDITO)) {
+        double total = pedido.getTotal() == null ? pedido.getCursos().stream()
+                .mapToDouble(Curso::getPreco).sum() : pedido.getTotal();
+        if (pedido.getTipoPagamentos().contains(TipoPagamento.CARTAO_CREDITO) && pedido.getCartaoCredito() != null) {
             map.put("creditCard", criarCartaoCredito(pedido.getCartaoCredito()));
             map.put("creditCardHolderInfo", criarDadosTitularCartao(pedido.getDadosTitularCartao()));
             map.put("billingType", "CREDIT_CARD");
@@ -121,7 +126,12 @@ public class Pedido {
             map.put("billingType", "UNDEFINED");
         }
         map.put("customer", pedido.getAluno().getReferencia());
-        map.put("value", pedido.getTotal());
+        if (pedido.getTipoPagamentos().contains(TipoPagamento.CARTAO_CREDITO)) {
+            map.put("installmentCount", pedido.getTotalParcelas());
+            map.put("installmentValue", total / pedido.getTotalParcelas());
+            map.put("billingType", "CREDIT_CARD");
+        }
+        map.put("value", total);
         map.put("discount", criarDescontoPedido(pedido));
         map.put("dueDate", DateTimeFormatter.ofPattern("yyyy-MM-dd").format(LocalDate.now().plusDays(3)));
         map.put("description", "Pedido " + pedido.getId());
