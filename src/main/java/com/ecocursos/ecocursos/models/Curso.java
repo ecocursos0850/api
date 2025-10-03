@@ -40,7 +40,6 @@ public class Curso {
     @JoinColumn(name = "subcategoria_id")
     private SubCategoria subCategoria;
 
-    // @JsonProperty(access = com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY)
     @JsonIgnoreProperties({"curso"})
     @OneToMany(mappedBy = "curso", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<MaterialCurso> materiais;

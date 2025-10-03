@@ -403,6 +403,7 @@ public class PedidoService {
             x.setCargaHoraria(curso.getCargaHoraria());
             x.setPreco(curso.getPreco());
             x.setTipoCurso(curso.getTipoCurso());
+            x.setQtdParcelas(curso.getQtdParcelas());
             return x;
         }).collect(Collectors.toList());
     }
