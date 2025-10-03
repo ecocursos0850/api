@@ -64,7 +64,7 @@ public class Pedido {
     private StatusPedido status;
 
     @ElementCollection
-    private List<TipoPagamento> tipoPagamentos = new ArrayList<TipoPagamento>();
+    private List<TipoPagamento> tipoPagamentos = new ArrayList<>();
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT-3")
     private LocalDateTime dataPedido;
@@ -117,13 +117,23 @@ public class Pedido {
     @Transient
     private Boolean isPortal = false;
 
+    // =============================
+    // MÉTODOS PARA INTEGRAÇÃO ASAAS
+    // =============================
     public static Map<String, Object> criarPedidoAsaas(Pedido pedido) {
         Map<String, Object> map = new HashMap<>();
-        double total = pedido.getTotal() == null ? pedido.getCursos().stream()
-                .mapToDouble(Curso::getPreco).sum() : pedido.getTotal();
+
+        // Se não houver total, soma preços dos cursos
+        double total = pedido.getTotal() == null
+                ? pedido.getCursos().stream().mapToDouble(Curso::getPreco).sum()
+                : pedido.getTotal();
+
+        // Configuração de pagamento com cartão de crédito
         if (pedido.getTipoPagamentos().contains(TipoPagamento.CARTAO_CREDITO) && pedido.getCartaoCredito() != null) {
-            int totalParcelas = pedido.getTotalParcelas() == null ? pedido.getCursos().stream()
-                .mapToInt(curso -> Integer.parseInt(curso.getQtdParcelas())).sum() : pedido.getTotalParcelas();
+            int totalParcelas = pedido.getTotalParcelas() == null
+                    ? pedido.getCursos().stream().mapToInt(curso -> Integer.parseInt(curso.getQtdParcelas())).sum()
+                    : pedido.getTotalParcelas();
+
             map.put("installmentCount", totalParcelas);
             map.put("installmentValue", total / totalParcelas);
             map.put("creditCard", criarCartaoCredito(pedido.getCartaoCredito()));
@@ -132,20 +142,34 @@ public class Pedido {
         } else {
             map.put("billingType", "UNDEFINED");
         }
+
         map.put("customer", pedido.getAluno().getReferencia());
+
+        // Cenário de pagamento parcelado (portal)
         if (pedido.getTipoPagamentos().contains(TipoPagamento.CARTAO_CREDITO)
-            && pedido.getCartaoCredito() == null && (pedido.getIsPortal() != null && pedido.getIsPortal())
-        ) {
-            int totalParcelas = pedido.getTotalParcelas() == null ? pedido.getCursos().stream()
-                .mapToInt(curso -> Integer.parseInt(curso.getQtdParcelas())).sum() : pedido.getTotalParcelas();
+                && pedido.getCartaoCredito() == null
+                && Boolean.TRUE.equals(pedido.getIsPortal())) {
+
+            int totalParcelas = pedido.getTotalParcelas() == null
+                    ? pedido.getCursos().stream().mapToInt(curso -> Integer.parseInt(curso.getQtdParcelas())).sum()
+                    : pedido.getTotalParcelas();
+
             map.put("installmentCount", totalParcelas);
             map.put("installmentValue", total / totalParcelas);
             map.put("billingType", "CREDIT_CARD");
         }
+
+        // Valor final da cobrança
         map.put("value", total);
-        map.put("discount", criarDescontoPedido(pedido));
+
+        // Só manda desconto para o Asaas se for um pedido de portal
+        if (Boolean.TRUE.equals(pedido.getIsPortal())) {
+            map.put("discount", criarDescontoPedido(pedido));
+        }
+
         map.put("dueDate", DateTimeFormatter.ofPattern("yyyy-MM-dd").format(LocalDate.now().plusDays(3)));
         map.put("description", "Pedido " + pedido.getId());
+
         return map;
     }
 
@@ -177,4 +201,3 @@ public class Pedido {
         return map;
     }
 }
- 
