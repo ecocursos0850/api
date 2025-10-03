@@ -51,7 +51,7 @@ public class Pedido {
     @JoinColumn(name = "aluno_id")
     private Aluno aluno;
 
-    @JsonIncludeProperties({"id", "titulo", "categoria", "cargaHoraria", "preco", "tipoCurso"})
+    @JsonIncludeProperties({"id", "titulo", "categoria", "cargaHoraria", "preco", "tipoCurso", "qtdParcelas"})
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "pedido_curso",
@@ -114,21 +114,32 @@ public class Pedido {
     @JoinColumn(name = "pedido_pos_graduacao_portal_id")
     private PedidoPosGraduacaoPortal pedidoPosGraduacaoPortal;
 
+    @Transient
+    private Boolean isPortal = false;
+
     public static Map<String, Object> criarPedidoAsaas(Pedido pedido) {
         Map<String, Object> map = new HashMap<>();
         double total = pedido.getTotal() == null ? pedido.getCursos().stream()
                 .mapToDouble(Curso::getPreco).sum() : pedido.getTotal();
         if (pedido.getTipoPagamentos().contains(TipoPagamento.CARTAO_CREDITO) && pedido.getCartaoCredito() != null) {
+            int totalParcelas = pedido.getTotalParcelas() == null ? pedido.getCursos().stream()
+                .mapToInt(curso -> Integer.parseInt(curso.getQtdParcelas())).sum() : pedido.getTotalParcelas();
+            map.put("installmentCount", totalParcelas);
+            map.put("installmentValue", total / totalParcelas);
             map.put("creditCard", criarCartaoCredito(pedido.getCartaoCredito()));
             map.put("creditCardHolderInfo", criarDadosTitularCartao(pedido.getDadosTitularCartao()));
-            map.put("billingType", "CREDIT_CARD");
+            map.put("billingType", "UNDEFINED");
         } else {
             map.put("billingType", "UNDEFINED");
         }
         map.put("customer", pedido.getAluno().getReferencia());
-        if (pedido.getTipoPagamentos().contains(TipoPagamento.CARTAO_CREDITO)) {
-            map.put("installmentCount", pedido.getTotalParcelas());
-            map.put("installmentValue", total / pedido.getTotalParcelas());
+        if (pedido.getTipoPagamentos().contains(TipoPagamento.CARTAO_CREDITO)
+            && pedido.getCartaoCredito() == null && (pedido.getIsPortal() != null && pedido.getIsPortal())
+        ) {
+            int totalParcelas = pedido.getTotalParcelas() == null ? pedido.getCursos().stream()
+                .mapToInt(curso -> Integer.parseInt(curso.getQtdParcelas())).sum() : pedido.getTotalParcelas();
+            map.put("installmentCount", totalParcelas);
+            map.put("installmentValue", total / totalParcelas);
             map.put("billingType", "CREDIT_CARD");
         }
         map.put("value", total);
