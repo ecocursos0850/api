@@ -117,22 +117,19 @@ public class Pedido {
     @Transient
     private Boolean isPortal = false;
 
-    // =============================
-    // MÉTODOS PARA INTEGRAÇÃO ASAAS
-    // =============================
     public static Map<String, Object> criarPedidoAsaas(Pedido pedido) {
         Map<String, Object> map = new HashMap<>();
 
-        // Se não houver total, soma preços dos cursos
-        double total = pedido.getTotal() == null
-                ? pedido.getCursos().stream().mapToDouble(Curso::getPreco).sum()
-                : pedido.getTotal();
+        // Calcula valor total do pedido
+        double total = pedido.getTotal() == null 
+            ? pedido.getCursos().stream().mapToDouble(Curso::getPreco).sum() 
+            : pedido.getTotal();
 
-        // Configuração de pagamento com cartão de crédito
+        // Se pagamento for cartão de crédito com dados de cartão
         if (pedido.getTipoPagamentos().contains(TipoPagamento.CARTAO_CREDITO) && pedido.getCartaoCredito() != null) {
-            int totalParcelas = pedido.getTotalParcelas() == null
-                    ? pedido.getCursos().stream().mapToInt(curso -> Integer.parseInt(curso.getQtdParcelas())).sum()
-                    : pedido.getTotalParcelas();
+            int totalParcelas = (pedido.getTotalParcelas() != null) 
+                ? pedido.getTotalParcelas() 
+                : pedido.getCursos().stream().mapToInt(curso -> Integer.parseInt(curso.getQtdParcelas())).sum();
 
             map.put("installmentCount", totalParcelas);
             map.put("installmentValue", total / totalParcelas);
@@ -145,24 +142,24 @@ public class Pedido {
 
         map.put("customer", pedido.getAluno().getReferencia());
 
-        // Cenário de pagamento parcelado (portal)
+        // Se for portal (cartão mas sem dados do cartão no payload)
         if (pedido.getTipoPagamentos().contains(TipoPagamento.CARTAO_CREDITO)
-                && pedido.getCartaoCredito() == null
-                && Boolean.TRUE.equals(pedido.getIsPortal())) {
+            && pedido.getCartaoCredito() == null 
+            && Boolean.TRUE.equals(pedido.getIsPortal())) {
 
-            int totalParcelas = pedido.getTotalParcelas() == null
-                    ? pedido.getCursos().stream().mapToInt(curso -> Integer.parseInt(curso.getQtdParcelas())).sum()
-                    : pedido.getTotalParcelas();
+            int totalParcelas = (pedido.getTotalParcelas() != null) 
+                ? pedido.getTotalParcelas() 
+                : pedido.getCursos().stream().mapToInt(curso -> Integer.parseInt(curso.getQtdParcelas())).sum();
 
             map.put("installmentCount", totalParcelas);
             map.put("installmentValue", total / totalParcelas);
             map.put("billingType", "CREDIT_CARD");
         }
 
-        // Valor final da cobrança
+        // Valor final
         map.put("value", total);
 
-        // Só manda desconto para o Asaas se for um pedido de portal
+        // Só manda desconto para o Asaas se for pedido via portal
         if (Boolean.TRUE.equals(pedido.getIsPortal())) {
             map.put("discount", criarDescontoPedido(pedido));
         }
