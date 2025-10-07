@@ -1,10 +1,12 @@
-
 package com.ecocursos.ecocursos.models;
 
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "cpf_parceiro")
@@ -24,4 +26,7 @@ public class CpfParceiro {
     @JoinColumn(name = "parceiro_id")
     private Parceiro parceiro;
 
+    @CreationTimestamp
+    @Column(name = "timestamp_insert")
+    private LocalDateTime timestampInsert;
 }
