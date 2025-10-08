@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -31,10 +33,105 @@ public class CpfParceiroService {
     private EntityManager em;
 
     private static final Pattern CPF_PATTERN = Pattern.compile("[^0-9]");
+    private static final Pattern EMAIL_PATTERN = Pattern.compile("^[A-Za-z0-9+_.-]+@(.+)$");
 
     @SneakyThrows
     public List<CpfParceiro> salvar(MultipartFile multipartFile, Integer idParceiro) {
-        XSSFWorkbook workbook = new XSSFWorkbook(multipartFile.getInputStream());
+        String fileName = multipartFile.getOriginalFilename().toLowerCase();
+        
+        if (fileName.endsWith(".csv")) {
+            return processarCSV(multipartFile, idParceiro);
+        } else if (fileName.endsWith(".xlsx") || fileName.endsWith(".xls")) {
+            return processarExcel(multipartFile, idParceiro);
+        } else {
+            throw new IllegalArgumentException("Formato de arquivo não suportado. Use CSV ou Excel.");
+        }
+    }
+
+    @SneakyThrows
+    private List<CpfParceiro> processarCSV(MultipartFile multipartFile, Integer idParceiro) {
+        List<CpfParceiro> cpfs = new ArrayList<>();
+        Parceiro parceiro = parceiroService.listarById(idParceiro);
+
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(multipartFile.getInputStream()))) {
+            String line;
+            boolean isFirstLine = true;
+            
+            while ((line = reader.readLine()) != null) {
+                // Pular linha vazia
+                if (line.trim().isEmpty()) {
+                    continue;
+                }
+                
+                // Pular cabeçalho
+                if (isFirstLine) {
+                    isFirstLine = false;
+                    continue;
+                }
+                
+                CpfParceiro cpfParceiro = processarLinhaCSV(line, parceiro);
+                if (cpfParceiro != null) {
+                    cpfs.add(cpfParceiro);
+                }
+            }
+        }
+        
+        return salvarRegistrosValidos(cpfs);
+    }
+
+    private CpfParceiro processarLinhaCSV(String linha, Parceiro parceiro) {
+        // Dividir a linha por vírgula (formato CSV simples)
+        String[] colunas = linha.split(",");
+        
+        if (colunas.length < 1) {
+            return null; // Linha sem dados
+        }
+
+        String cpf = colunas[0].trim();
+        String email = colunas.length > 1 ? colunas[1].trim() : null;
+
+        // Validar CPF
+        if (cpf.isEmpty() || cpf.equalsIgnoreCase("cpf")) {
+            return null; // CPF vazio ou é cabeçalho
+        }
+
+        // Limpar e formatar CPF (remover pontos e traços)
+        cpf = limparCpf(cpf);
+        
+        // Validar se CPF tem 11 dígitos
+        if (cpf.length() != 11) {
+            return null; // CPF inválido
+        }
+
+        // Verificar se CPF já existe
+        if (repository.existsByCpf(cpf)) {
+            return null; // CPF já existe, não fazer nada
+        }
+
+        // Processar email
+        if (email == null || email.isEmpty() || !isEmailValido(email)) {
+            // Criar email padrão: cpf@ecocursos.com.br
+            email = cpf + "@ecocursos.com.br";
+        }
+
+        CpfParceiro cpfParceiro = new CpfParceiro();
+        cpfParceiro.setCpf(cpf);
+        cpfParceiro.setEmail(email.toLowerCase());
+        cpfParceiro.setParceiro(parceiro);
+
+        return cpfParceiro;
+    }
+
+    @SneakyThrows
+    private List<CpfParceiro> processarExcel(MultipartFile multipartFile, Integer idParceiro) {
+        Workbook workbook;
+        
+        if (multipartFile.getOriginalFilename().toLowerCase().endsWith(".xlsx")) {
+            workbook = new XSSFWorkbook(multipartFile.getInputStream());
+        } else {
+            workbook = new org.apache.poi.hssf.usermodel.HSSFWorkbook(multipartFile.getInputStream());
+        }
+        
         Sheet sheet = workbook.getSheetAt(0);
         List<CpfParceiro> cpfs = new ArrayList<>();
         Parceiro parceiro = parceiroService.listarById(idParceiro);
@@ -54,21 +151,18 @@ public class CpfParceiroService {
                 continue;
             }
 
-            CpfParceiro cpfParceiro = processarLinha(row, parceiro);
+            CpfParceiro cpfParceiro = processarLinhaExcel(row, parceiro);
             if (cpfParceiro != null) {
                 cpfs.add(cpfParceiro);
             }
         }
         
         workbook.close();
-        
-        // Salvar apenas os registros válidos que não existem
         return salvarRegistrosValidos(cpfs);
     }
 
-    private CpfParceiro processarLinha(Row row, Parceiro parceiro) {
+    private CpfParceiro processarLinhaExcel(Row row, Parceiro parceiro) {
         Iterator<Cell> cellIterator = row.cellIterator();
-        CpfParceiro cpfParceiro = new CpfParceiro();
         String cpf = null;
         String email = null;
 
@@ -104,16 +198,21 @@ public class CpfParceiroService {
         }
 
         // Processar email
-        if (email == null || email.trim().isEmpty()) {
+        if (email == null || email.trim().isEmpty() || !isEmailValido(email)) {
             // Criar email padrão: cpf@ecocursos.com.br
             email = cpf + "@ecocursos.com.br";
         }
 
+        CpfParceiro cpfParceiro = new CpfParceiro();
         cpfParceiro.setCpf(cpf);
-        cpfParceiro.setEmail(email.toLowerCase()); // Normalizar para minúsculo
+        cpfParceiro.setEmail(email.toLowerCase());
         cpfParceiro.setParceiro(parceiro);
 
         return cpfParceiro;
+    }
+
+    private boolean isEmailValido(String email) {
+        return EMAIL_PATTERN.matcher(email).matches();
     }
 
     private String limparCpf(String cpf) {
@@ -179,6 +278,7 @@ public class CpfParceiroService {
         return registrosSalvos;
     }
 
+    // Os outros métodos permanecem iguais...
     public boolean existsByCpf(String cpf) {
         return repository.existsByCpf(limparCpf(cpf));
     }
@@ -201,7 +301,9 @@ public class CpfParceiroService {
     }
 
     public void deletar(Integer id) {
-        repository.delete(repository.findById(id).get());
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
+        }
     }
 
     public void deletarByCpf(String cpf) {
