@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ecocursos.ecocursos.models.CpfParceiro;
+import com.ecocursos.ecocursos.models.dtos.ImportacaoResponse; 
 import com.ecocursos.ecocursos.services.CpfParceiroService;
 
 @RestController
