@@ -41,8 +41,14 @@ public class CpfParceiroController {
     }
 
     @PostMapping("parceiro/{id}")
-    public ResponseEntity<List<CpfParceiro>> salvar(@RequestParam("file")MultipartFile file, @PathVariable Integer id) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.salvar(file, id));
+    public ResponseEntity<ImportacaoResponse> salvar(@RequestParam("file") MultipartFile file, @PathVariable Integer id) {
+        ImportacaoResponse response = service.salvar(file, id);
+        
+        if (response.isSucesso()) {
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
     }
 
     @DeleteMapping("{id}")
