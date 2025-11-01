@@ -148,7 +148,7 @@ public class AlunoService {
         }
     }
 
-    private Aluno verificarAlunoParceiro(Aluno aluno) {
+    /*private Aluno verificarAlunoParceiro(Aluno aluno) {
          if (cpfParceiroService.existsByCpf(aluno.getCpf())) {
              Integer idParceiro = cpfParceiroService.listarByCpf(aluno.getCpf()).getParceiro().getId();
              aluno.setParceiro(parceiroService.listarById(idParceiro));
@@ -157,7 +157,7 @@ public class AlunoService {
              aluno.setParceiro(parceiroService.listarById(aluno.getParceiro().getId()));
          }
          return aluno;
-     }    
+     }*/    
 
     public Aluno listarById(Integer id) {
         return repository.findById(id).orElse(null);
