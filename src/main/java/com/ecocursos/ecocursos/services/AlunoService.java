@@ -103,7 +103,8 @@ public class AlunoService {
         aluno.setDataCadastro(LocalDateTime.now());
         aluno.setHorasDisponiveis(361);
         verificarIdade(aluno);
-        verificarAlunoParceiro(aluno);
+        // verificarAlunoParceiro(aluno);
+        aluno = verificarAlunoParceiro(aluno);
         aluno.setSenha(DigestUtils.md5DigestAsHex(aluno.getSenha().getBytes()));
         Aluno result = repository.save(aluno);
         // registrarAlunoIugu(aluno, result);
@@ -138,16 +139,16 @@ public class AlunoService {
         repository.saveReferencia(aluno.getReferencia(), aluno.getId());
     }
 
-    private void verificarAlunoParceiro(Aluno aluno) {
+    /*private void verificarAlunoParceiro(Aluno aluno) {
         if (cpfParceiroService.existsByCpf(aluno.getCpf())) {
             Integer idParceiro = cpfParceiroService.listarByCpf(aluno.getCpf()).getParceiro().getId();
             aluno.setParceiro(parceiroService.listarById(idParceiro));
         } else if (aluno.getParceiro() != null) {
             aluno.setParceiro(parceiroService.listarById(aluno.getParceiro().getId()));
         }
-    }
+    }*/
 
-    /*private Aluno verificarAlunoParceiro(Aluno aluno) {
+    private Aluno verificarAlunoParceiro(Aluno aluno) {
          if (cpfParceiroService.existsByCpf(aluno.getCpf())) {
              Integer idParceiro = cpfParceiroService.listarByCpf(aluno.getCpf()).getParceiro().getId();
              aluno.setParceiro(parceiroService.listarById(idParceiro));
@@ -156,7 +157,7 @@ public class AlunoService {
              aluno.setParceiro(parceiroService.listarById(aluno.getParceiro().getId()));
          }
          return aluno;
-     }*/    
+     }    
 
     public Aluno listarById(Integer id) {
         return repository.findById(id).orElse(null);
@@ -254,7 +255,6 @@ public class AlunoService {
     ) {
         String query = "select a from Aluno a ";
         String condicao = "where";
-        
         if (status != null) {
             query += condicao + " a.status = :status";
             condicao = " and ";
@@ -265,7 +265,6 @@ public class AlunoService {
         }
         if (dataNascimento != null) {
             query += condicao + " a.dataNascimento = :dataNascimento";
-            condicao = " and "; // ADICIONAR ESTA LINHA
         }
         if (sexo != null) {
             query += condicao + " a.sexo = :sexo";
@@ -303,12 +302,12 @@ public class AlunoService {
         if (periodoInicial != null) {
             q.setParameter("periodoInicial", periodoInicial);
         }
+
         if (periodoFinal != null) {
             q.setParameter("periodoFinal", periodoFinal);
         }
-        
         return q.getResultList();
-    }    
+    }
 
     public boolean existsById(Integer id) {
         return repository.existsById(id);
