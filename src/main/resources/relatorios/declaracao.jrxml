@@ -1,274 +1,305 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.21.3.final using JasperReports Library version 6.21.3-4a3078d20785ebe464f18037d738d12fc98c13cf  -->
-<!-- 2024-10-30T20:06:00 -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="declaracao" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5c724b7e-83d1-42e9-badf-a6492ca4eabe">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Ecocursos"/>
-	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Table_CH" mode="Opaque" backcolor="#BFE1FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<parameter name="curso" class="java.lang.Integer"/>
-	<parameter name="tipo_curso" class="java.lang.String"/>
-	<parameter name="parceiro" class="java.lang.String"/>
-	<parameter name="categoria" class="java.lang.String"/>
-	<parameter name="dataInicio" class="java.lang.String"/>
-	<parameter name="dataFinal" class="java.lang.String"/>
-	<parameter name="aluno" class="java.lang.String"/>
-	<parameter name="status" class="java.lang.String"/>
-	<parameter name="sexo" class="java.lang.String"/>
-	<parameter name="cpf" class="java.lang.String"/>
-	<queryString>
-		<![CDATA[select dm.id, dm.valor, c.titulo, a.nome, a.cpf, dm.data_cadastro, p.nome as parceiro, m.id as matricula, dm.status as status from declaracao_matricula dm
-inner join matricula m on m.id = dm.matricula_id
-inner join curso c on c.id = m.curso_id
-inner join aluno a on a.id = m.aluno_id
-inner join parceiro p on p.id = a.parceiro_id
-where (dm.status = $P{status} or $P{status} is null)
-and (a.cpf = $P{cpf} or $P{cpf} is null)
-and (a.parceiro_id = $P{parceiro} or $P{parceiro} is null)
-and dm.data_cadastro between $P{dataInicio} and $P{dataFinal}]]>
-	</queryString>
-	<field name="id" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.name" value="id"/>
-		<property name="com.jaspersoft.studio.field.label" value="id"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="declaracao_matricula"/>
-	</field>
-	<field name="valor" class="java.lang.Double">
-		<property name="com.jaspersoft.studio.field.name" value="valor"/>
-		<property name="com.jaspersoft.studio.field.label" value="valor"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="declaracao_matricula"/>
-	</field>
-	<field name="titulo" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="titulo"/>
-		<property name="com.jaspersoft.studio.field.label" value="titulo"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="curso"/>
-	</field>
-	<field name="nome" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="nome"/>
-		<property name="com.jaspersoft.studio.field.label" value="nome"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="aluno"/>
-	</field>
-	<field name="cpf" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="cpf"/>
-		<property name="com.jaspersoft.studio.field.label" value="cpf"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="aluno"/>
-	</field>
-	<field name="parceiro" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="nome"/>
-		<property name="com.jaspersoft.studio.field.label" value="parceiro"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="parceiro"/>
-	</field>
-	<field name="data_cadastro" class="java.sql.Date">
-		<property name="com.jaspersoft.studio.field.name" value="data_cadastro"/>
-		<property name="com.jaspersoft.studio.field.label" value="data_cadastro"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="declaracao_matricula"/>
-	</field>
-	<field name="matricula" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.name" value="id"/>
-		<property name="com.jaspersoft.studio.field.label" value="matricula"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="matricula"/>
-	</field>
-	<field name="status" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.name" value="status"/>
-		<property name="com.jaspersoft.studio.field.label" value="status"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="declaracao_matricula"/>
-	</field>
-	<variable name="valor1" class="java.lang.Integer" resetType="Column" calculation="Count">
-		<variableExpression><![CDATA[$F{valor}]]></variableExpression>
-	</variable>
-	<variable name="valor2" class="java.lang.Double" calculation="Sum">
-		<variableExpression><![CDATA[$F{valor}]]></variableExpression>
-	</variable>
-	<background>
-		<band splitType="Stretch"/>
-	</background>
-	<pageHeader>
-		<band height="50" splitType="Stretch">
-			<staticText>
-				<reportElement style="Table_CH" positionType="Float" mode="Transparent" x="0" y="0" width="300" height="20" uuid="862fba04-0bab-4047-b925-0f5627a6d409"/>
-				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[RELATÓRIO DE DECLARAÇÕES]]></text>
-			</staticText>
-			<image hAlign="Right">
-				<reportElement stretchType="ContainerHeight" x="490" y="-10" width="310" height="53" uuid="d91abcfb-6e70-4744-be20-af85db5a6561"/>
-				<imageExpression><![CDATA["https://www.ecocursos.com.br/assets/images/Logo1.png"]]></imageExpression>
-			</image>
-		</band>
-	</pageHeader>
-	<columnHeader>
-		<band height="20" splitType="Stretch">
-			<staticText>
-				<reportElement x="0" y="0" width="80" height="19" uuid="2c8a9ea6-a4a7-4acc-b269-649369a96299">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6bff983e-b4e9-431e-86a6-c059b26a6534"/>
-				</reportElement>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[ID]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="80" y="-1" width="100" height="20" uuid="46ee3068-abf0-4231-8a49-b724c1640236">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2f903824-8554-4120-94d0-8eb3741d2424"/>
-				</reportElement>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Nome do Aluno]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="180" y="-1" width="100" height="19" uuid="21406471-a40b-4682-ae0e-78160c0a32a8">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="59b72ef1-f8e9-4229-af8d-7c6793fd21d5"/>
-				</reportElement>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[CPF]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="680" y="0" width="120" height="19" uuid="8965abdf-7356-4129-96c1-74fb7c883289">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3525b3a7-1a82-4819-9536-8d4de6c21473"/>
-				</reportElement>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Valor]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="380" y="1" width="100" height="19" uuid="d5dccf2f-45cf-4406-9d22-4bef46ac2512">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c82713cb-881f-435e-bbc7-18248ea1c7ea"/>
-				</reportElement>
-				<textElement markup="html">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Curso]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="480" y="1" width="100" height="18" uuid="6ffe1371-9cd1-4a0b-8f4b-08ec6b5247c1">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2f903824-8554-4120-94d0-8eb3741d2424"/>
-				</reportElement>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Data de cadastro]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="580" y="0" width="100" height="20" uuid="cb61e665-249b-4137-8c10-a6c23637f05f">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d1bac015-8b0b-4422-9477-c99290dd0b41"/>
-				</reportElement>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Status]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="280" y="0" width="100" height="20" uuid="c454b718-7f2e-4e24-bb98-2baf88a0b55b">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="bafe96c1-f5a1-4abb-95bc-65dc3a870447"/>
-				</reportElement>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Parceiro]]></text>
-			</staticText>
-		</band>
-	</columnHeader>
-	<detail>
-		<band height="21">
-			<textField>
-				<reportElement x="0" y="0" width="80" height="20" uuid="b22fd50f-87c3-4208-a6c3-e8f8c512bc08">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="db15bde6-23ec-40fe-aeac-b1b290078403"/>
-				</reportElement>
-				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
-			</textField>
-			<textField pattern="¤#,##0.00;¤-#,##0.00">
-				<reportElement x="680" y="0" width="120" height="20" uuid="994f275b-e260-48f5-9f64-d06703b346c3">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="008353da-e1a1-47d2-9e72-0cac0b09d89f"/>
-				</reportElement>
-				<textFieldExpression><![CDATA[$F{valor}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="180" y="-1" width="100" height="20" uuid="8c11fc0c-08ff-4419-803f-a60838fdd11f">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="00456a4f-b204-49cf-9e5f-206ec78a5da8"/>
-				</reportElement>
-				<textFieldExpression><![CDATA[$F{cpf}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="80" y="0" width="100" height="19" uuid="44d5ff31-3079-4e48-82d4-3314a4d904ae">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f1b63509-4cbb-46a4-9bc7-050da0e432a9"/>
-				</reportElement>
-				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="380" y="2" width="100" height="19" uuid="a2323138-236c-4437-b210-2d8131f21005">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c82713cb-881f-435e-bbc7-18248ea1c7ea"/>
-				</reportElement>
-				<textFieldExpression><![CDATA[$F{titulo}]]></textFieldExpression>
-			</textField>
-			<textField pattern="dd/MM/yyyy">
-				<reportElement x="480" y="1" width="100" height="19" uuid="8ef795cd-90f4-4f4c-a4a6-506806890c8b">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b717ad1f-726d-4833-8633-c32dda2d8a53"/>
-				</reportElement>
-				<textFieldExpression><![CDATA[$F{data_cadastro}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="580" y="0" width="100" height="20" uuid="6397e8fe-2e4e-4ea7-ab23-f031aa0ed93e">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d1bac015-8b0b-4422-9477-c99290dd0b41"/>
-				</reportElement>
-				<textFieldExpression><![CDATA[$F{status} == 0 ? "APROVADA" : $F{status} == 1 ? "AGUARDANDO" : "REPROVADO"]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="280" y="2" width="100" height="19" uuid="60338598-28ce-475c-9988-afc745f0172e">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="bafe96c1-f5a1-4abb-95bc-65dc3a870447"/>
-				</reportElement>
-				<textFieldExpression><![CDATA[$F{parceiro}]]></textFieldExpression>
-			</textField>
-		</band>
-	</detail>
-	<lastPageFooter>
-		<band height="31">
-			<textField pattern="¤#,##0.00;¤-#,##0.00">
-				<reportElement x="690" y="3" width="110" height="21" uuid="51358271-b641-43f2-a8b5-22c17468d9f1"/>
-				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$V{valor2}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="580" y="3" width="100" height="20" uuid="65dd6f74-5772-4654-a176-2e31df2c0388"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Valor total]]></text>
-			</staticText>
-		</band>
-	</lastPageFooter>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" 
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports 
+              http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" 
+              name="declaracao" pageWidth="842" pageHeight="595" orientation="Landscape" 
+              columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" 
+              uuid="5c724b7e-83d1-42e9-badf-a6492ca4eabe">
+    
+    <property name="com.jaspersoft.studio.data.defaultdataadapter" value="Ecocursos"/>
+    
+    <parameter name="parceiro" class="java.lang.Integer"/>
+    <parameter name="dataInicio" class="java.lang.String"/>
+    <parameter name="dataFinal" class="java.lang.String"/>
+    <parameter name="cpf" class="java.lang.String"/>
+    <parameter name="status" class="java.lang.Integer"/>
+    
+    <queryString>
+        <![CDATA[
+        SELECT 
+            dm.id, 
+            dm.valor, 
+            c.titulo, 
+            a.nome, 
+            a.cpf, 
+            dm.data_cadastro, 
+            p.nome as parceiro, 
+            m.id as matricula, 
+            dm.status as status 
+        FROM declaracao_matricula dm
+        INNER JOIN matricula m ON m.id = dm.matricula_id
+        INNER JOIN curso c ON c.id = m.curso_id
+        INNER JOIN aluno a ON a.id = m.aluno_id
+        INNER JOIN parceiro p ON p.id = a.parceiro_id
+        WHERE (dm.status = $P{status} OR $P{status} IS NULL)
+        AND (a.cpf = $P{cpf} OR $P{cpf} IS NULL OR $P{cpf} = '')
+        AND (a.parceiro_id = $P{parceiro} OR $P{parceiro} IS NULL)
+        AND (
+            ($P{dataInicio} IS NULL AND $P{dataFinal} IS NULL) OR
+            (dm.data_cadastro BETWEEN $P{dataInicio} AND $P{dataFinal})
+        )
+        ORDER BY dm.data_cadastro DESC
+        ]]>
+    </queryString>
+    
+    <field name="id" class="java.lang.Integer"/>
+    <field name="valor" class="java.lang.Double"/>
+    <field name="titulo" class="java.lang.String"/>
+    <field name="nome" class="java.lang.String"/>
+    <field name="cpf" class="java.lang.String"/>
+    <field name="data_cadastro" class="java.sql.Timestamp"/>
+    <field name="parceiro" class="java.lang.String"/>
+    <field name="matricula" class="java.lang.Integer"/>
+    <field name="status" class="java.lang.Integer"/>
+    
+    <variable name="total_registros" class="java.lang.Integer" calculation="Count">
+        <variableExpression><![CDATA[$F{id}]]></variableExpression>
+    </variable>
+    
+    <variable name="valor_total" class="java.lang.Double" calculation="Sum">
+        <variableExpression><![CDATA[$F{valor}]]></variableExpression>
+    </variable>
+    
+    <title>
+        <band height="80">
+            <staticText>
+                <reportElement x="0" y="0" width="500" height="30" uuid="862fba04-0bab-4047-b925-0f5627a6d409"/>
+                <textElement>
+                    <font size="18" isBold="true"/>
+                </textElement>
+                <text><![CDATA[RELATÓRIO DE DECLARAÇÕES]]></text>
+            </staticText>
+            
+            <textField>
+                <reportElement x="0" y="35" width="500" height="20" uuid="a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d"/>
+                <textElement>
+                    <font size="10"/>
+                </textElement>
+                <textFieldExpression><![CDATA[
+                    "Período: " + 
+                    ($P{dataInicio} != null ? $P{dataInicio} : "Últimos 6 meses") + 
+                    " a " + 
+                    ($P{dataFinal} != null ? $P{dataFinal} : "Data atual")
+                ]]></textFieldExpression>
+            </textField>
+            
+            <textField>
+                <reportElement x="0" y="55" width="500" height="20" uuid="b2c3d4e5-f6a7-4b8c-9d0e-1f2a3b4c5d6e"/>
+                <textElement>
+                    <font size="10"/>
+                </textElement>
+                <textFieldExpression><![CDATA[
+                    "Status: " + 
+                    ($P{status} == null ? "Todos" : 
+                     $P{status} == 0 ? "APROVADA" : 
+                     $P{status} == 1 ? "AGUARDANDO" : "REPROVADA")
+                ]]></textFieldExpression>
+            </textField>
+            
+            <line>
+                <reportElement x="0" y="75" width="802" height="1" uuid="c3d4e5f6-a7b8-4c9d-0e1f-2a3b4c5d6e7f"/>
+            </line>
+        </band>
+    </title>
+    
+    <columnHeader>
+        <band height="30">
+            <staticText>
+                <reportElement x="0" y="0" width="50" height="30" uuid="2c8a9ea6-a4a7-4acc-b269-649369a96299"/>
+                <textElement verticalAlignment="Middle">
+                    <font size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[ID]]></text>
+            </staticText>
+            
+            <staticText>
+                <reportElement x="50" y="0" width="120" height="30" uuid="46ee3068-abf0-4231-8a49-b724c1640236"/>
+                <textElement verticalAlignment="Middle">
+                    <font size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Aluno]]></text>
+            </staticText>
+            
+            <staticText>
+                <reportElement x="170" y="0" width="100" height="30" uuid="21406471-a40b-4682-ae0e-78160c0a32a8"/>
+                <textElement verticalAlignment="Middle">
+                    <font size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[CPF]]></text>
+            </staticText>
+            
+            <staticText>
+                <reportElement x="270" y="0" width="120" height="30" uuid="c454b718-7f2e-4e24-bb98-2baf88a0b55b"/>
+                <textElement verticalAlignment="Middle">
+                    <font size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Parceiro]]></text>
+            </staticText>
+            
+            <staticText>
+                <reportElement x="390" y="0" width="150" height="30" uuid="d5dccf2f-45cf-4406-9d22-4bef46ac2512"/>
+                <textElement verticalAlignment="Middle">
+                    <font size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Curso]]></text>
+            </staticText>
+            
+            <staticText>
+                <reportElement x="540" y="0" width="80" height="30" uuid="6ffe1371-9cd1-4a0b-8f4b-08ec6b5247c1"/>
+                <textElement verticalAlignment="Middle">
+                    <font size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Data]]></text>
+            </staticText>
+            
+            <staticText>
+                <reportElement x="620" y="0" width="80" height="30" uuid="cb61e665-249b-4137-8c10-a6c23637f05f"/>
+                <textElement verticalAlignment="Middle">
+                    <font size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Status]]></text>
+            </staticText>
+            
+            <staticText>
+                <reportElement x="700" y="0" width="102" height="30" uuid="8965abdf-7356-4129-96c1-74fb7c883289"/>
+                <textElement verticalAlignment="Middle">
+                    <font size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Valor (R$)]]></text>
+            </staticText>
+        </band>
+    </columnHeader>
+    
+    <detail>
+        <band height="25">
+            <textField>
+                <reportElement x="0" y="0" width="50" height="25" uuid="b22fd50f-87c3-4208-a6c3-e8f8c512bc08"/>
+                <textElement verticalAlignment="Middle">
+                    <font size="9"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+            </textField>
+            
+            <textField>
+                <reportElement x="50" y="0" width="120" height="25" uuid="44d5ff31-3079-4e48-82d4-3314a4d904ae"/>
+                <textElement verticalAlignment="Middle">
+                    <font size="9"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+            </textField>
+            
+            <textField>
+                <reportElement x="170" y="0" width="100" height="25" uuid="8c11fc0c-08ff-4419-803f-a60838fdd11f"/>
+                <textElement verticalAlignment="Middle">
+                    <font size="9"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{cpf}]]></textFieldExpression>
+            </textField>
+            
+            <textField>
+                <reportElement x="270" y="0" width="120" height="25" uuid="60338598-28ce-475c-9988-afc745f0172e"/>
+                <textElement verticalAlignment="Middle">
+                    <font size="9"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{parceiro}]]></textFieldExpression>
+            </textField>
+            
+            <textField>
+                <reportElement x="390" y="0" width="150" height="25" uuid="a2323138-236c-4437-b210-2d8131f21005"/>
+                <textElement verticalAlignment="Middle">
+                    <font size="9"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{titulo}]]></textFieldExpression>
+            </textField>
+            
+            <textField>
+                <reportElement x="540" y="0" width="80" height="25" uuid="8ef795cd-90f4-4f4c-a4a6-506806890c8b"/>
+                <textElement verticalAlignment="Middle">
+                    <font size="9"/>
+                </textElement>
+                <textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format($F{data_cadastro})]]></textFieldExpression>
+            </textField>
+            
+            <textField>
+                <reportElement x="620" y="0" width="80" height="25" uuid="6397e8fe-2e4e-4ea7-ab23-f031aa0ed93e"/>
+                <textElement verticalAlignment="Middle">
+                    <font size="9"/>
+                </textElement>
+                <textFieldExpression><![CDATA[
+                    $F{status} == 0 ? "APROVADA" : 
+                    $F{status} == 1 ? "AGUARDANDO" : 
+                    "REPROVADA"
+                ]]></textFieldExpression>
+            </textField>
+            
+            <textField>
+                <reportElement x="700" y="0" width="102" height="25" uuid="994f275b-e260-48f5-9f64-d06703b346c3"/>
+                <textElement verticalAlignment="Middle">
+                    <font size="9"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{valor} != null ? new java.text.DecimalFormat("R$ #,##0.00").format($F{valor}) : "R$ 0,00"]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+    
+    <summary>
+        <band height="50">
+            <line>
+                <reportElement x="0" y="0" width="802" height="1" uuid="d4e5f6a7-b8c9-4d0e-1f2a-3b4c5d6e7f8a"/>
+            </line>
+            
+            <staticText>
+                <reportElement x="0" y="10" width="200" height="20" uuid="e5f6a7b8-c9d0-4e1f-2a3b-4c5d6e7f8a9b"/>
+                <textElement>
+                    <font size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Total de Declarações:]]></text>
+            </staticText>
+            
+            <textField>
+                <reportElement x="200" y="10" width="100" height="20" uuid="f6a7b8c9-d0e1-4f2a-3b4c-5d6e7f8a9b0c"/>
+                <textElement>
+                    <font size="10" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$V{total_registros}]]></textFieldExpression>
+            </textField>
+            
+            <staticText>
+                <reportElement x="400" y="10" width="150" height="20" uuid="a7b8c9d0-e1f2-4a3b-4c5d-6e7f8a9b0c1d"/>
+                <textElement>
+                    <font size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Valor Total:]]></text>
+            </staticText>
+            
+            <textField>
+                <reportElement x="550" y="10" width="150" height="20" uuid="b8c9d0e1-f2a3-4b4c-5d6e-7f8a9b0c1d2e"/>
+                <textElement>
+                    <font size="10" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[new java.text.DecimalFormat("R$ #,##0.00").format($V{valor_total})]]></textFieldExpression>
+            </textField>
+        </band>
+    </summary>
+    
+    <pageFooter>
+        <band height="30">
+            <textField>
+                <reportElement x="0" y="10" width="400" height="20" uuid="c9d0e1f2-a3b4-4c5d-6e7f-8a9b0c1d2e3f"/>
+                <textElement>
+                    <font size="9"/>
+                </textElement>
+                <textFieldExpression><![CDATA["Emitido em: " + new java.util.Date()]]></textFieldExpression>
+            </textField>
+            
+            <textField>
+                <reportElement x="400" y="10" width="402" height="20" uuid="d0e1f2a3-b4c5-4d6e-7f8a-9b0c1d2e3f4a"/>
+                <textElement textAlignment="Right">
+                    <font size="9"/>
+                </textElement>
+                <textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER} + " de " + $V{PAGE_COUNT}]]></textFieldExpression>
+            </textField>
+        </band>
+    </pageFooter>
 </jasperReport>
