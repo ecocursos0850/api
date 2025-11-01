@@ -255,6 +255,7 @@ public class AlunoService {
     ) {
         String query = "select a from Aluno a ";
         String condicao = "where";
+        
         if (status != null) {
             query += condicao + " a.status = :status";
             condicao = " and ";
@@ -265,6 +266,7 @@ public class AlunoService {
         }
         if (dataNascimento != null) {
             query += condicao + " a.dataNascimento = :dataNascimento";
+            condicao = " and "; // ADICIONAR ESTA LINHA
         }
         if (sexo != null) {
             query += condicao + " a.sexo = :sexo";
@@ -302,12 +304,12 @@ public class AlunoService {
         if (periodoInicial != null) {
             q.setParameter("periodoInicial", periodoInicial);
         }
-
         if (periodoFinal != null) {
             q.setParameter("periodoFinal", periodoFinal);
         }
+        
         return q.getResultList();
-    }
+    }    
 
     public boolean existsById(Integer id) {
         return repository.existsById(id);
