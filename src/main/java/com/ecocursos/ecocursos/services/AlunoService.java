@@ -139,14 +139,14 @@ public class AlunoService {
         repository.saveReferencia(aluno.getReferencia(), aluno.getId());
     }
 
-    /*private void verificarAlunoParceiro(Aluno aluno) {
+    private void verificarAlunoParceiro(Aluno aluno) {
         if (cpfParceiroService.existsByCpf(aluno.getCpf())) {
             Integer idParceiro = cpfParceiroService.listarByCpf(aluno.getCpf()).getParceiro().getId();
             aluno.setParceiro(parceiroService.listarById(idParceiro));
         } else if (aluno.getParceiro() != null) {
             aluno.setParceiro(parceiroService.listarById(aluno.getParceiro().getId()));
         }
-    }*/
+    }
 
     private Aluno verificarAlunoParceiro(Aluno aluno) {
          if (cpfParceiroService.existsByCpf(aluno.getCpf())) {
