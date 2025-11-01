@@ -103,8 +103,7 @@ public class AlunoService {
         aluno.setDataCadastro(LocalDateTime.now());
         aluno.setHorasDisponiveis(361);
         verificarIdade(aluno);
-        // verificarAlunoParceiro(aluno);
-        aluno = verificarAlunoParceiro(aluno);
+        verificarAlunoParceiro(aluno);
         aluno.setSenha(DigestUtils.md5DigestAsHex(aluno.getSenha().getBytes()));
         Aluno result = repository.save(aluno);
         // registrarAlunoIugu(aluno, result);
